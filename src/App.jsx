@@ -1,5 +1,9 @@
+import PesquisarNorma from "./pages/PesquisarNorma"
+
 function App() {
-    return <h1 className="text-red-500">Olá</h1>
+  return (
+    <PesquisarNorma />
+  );
 }
 
-export default App
+export default App;
