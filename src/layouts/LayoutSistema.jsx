@@ -3,7 +3,7 @@ import { Outlet } from "react-router";
 import Menu from "../components/Menu";
 import Header from "../components/Header";
 
-export default function Layout() {
+export default function LayoutSistema() {
   return (
     <div className="flex h-screen bg-gray-200">
       <Menu />

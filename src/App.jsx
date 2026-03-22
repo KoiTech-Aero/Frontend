@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router";
 
-import Layout from "./layouts/LayoutSistema";
 import PesquisarNorma from "./pages/PesquisarNorma";
+import LayoutSistema from "./layouts/LayoutSistema";
+import VisualizarNorma from "./pages/VisualizarNorma";
 
 export default function App() {
   return (
@@ -13,8 +14,9 @@ export default function App() {
         </Route> */}
 
         {/* Rotas do privadas (sistema) */}
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<LayoutSistema />}>
           <Route path="/pesquisarNorma" element={<PesquisarNorma />} />
+          <Route path="/visualizarNorma" element={<VisualizarNorma />} />
         </Route>
       </Routes>
     </BrowserRouter>
