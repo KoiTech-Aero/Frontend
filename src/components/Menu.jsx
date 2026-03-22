@@ -1,7 +1,7 @@
 import { PanelsTopLeft, Plus, Tag } from "lucide-react";
 import { Link } from "react-router";
 
-function Menu() {
+export default function Menu() {
   const btnClass = "bg-blue-500 p-6 rounded-xl text-white font-bold";
 
   return (
@@ -33,5 +33,3 @@ function Menu() {
     </div>
   );
 }
-
-export default Menu;

@@ -1,6 +1,6 @@
 import { Search } from "lucide-react";
 
-function BarraPesquisa() {
+export default function BarraPesquisa() {
   return (
     <div className="bg-amber-50 w-4xl p-5 flex rounded-4xl gap-2 text-xl">
       <Search />
@@ -13,5 +13,3 @@ function BarraPesquisa() {
     </div>
   );
 }
-
-export default BarraPesquisa;

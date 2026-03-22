@@ -1,4 +1,4 @@
-function Header() {
+export default function Header() {
   return (
     <div className="bg-amber-50 p-6 w-full">
       <h1 className="text-3xl font-bold">CENTRAL DE NORMAS</h1>
@@ -6,5 +6,3 @@ function Header() {
     </div>
   );
 }
-
-export default Header;

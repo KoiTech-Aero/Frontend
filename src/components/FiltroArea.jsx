@@ -1,6 +1,6 @@
 import { Funnel } from "lucide-react";
 
-function FiltroArea() {
+export default function FiltroArea() {
   return (
     <div className="bg-amber-50 w-7xl p-5 gap-5 flex flex-col rounded-2xl">
       <div className="flex gap-2">
@@ -16,5 +16,3 @@ function FiltroArea() {
     </div>
   );
 }
-
-export default FiltroArea;
