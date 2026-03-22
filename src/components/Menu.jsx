@@ -8,7 +8,7 @@ function Menu() {
     <div className="bg-slate-900 w-75 p-6 h-screen flex flex-col justify-between">
       <div className="flex flex-col gap-5">
         <button className={btnClass}>
-          <Link to="/" className="flex gap-2">
+          <Link to="/pesquisarNorma" className="flex gap-2">
             <PanelsTopLeft />
             Normas Ativas
           </Link>
