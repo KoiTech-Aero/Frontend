@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import PesquisarNorma from "./pages/PesquisarNorma";
 import LayoutSistema from "./layouts/LayoutSistema";
 import VisualizarNorma from "./pages/VisualizarNorma";
+import CadastrarNorma from "./pages/CadastrarNorma";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/" element={<LayoutSistema />}>
           <Route path="/pesquisarNorma" element={<PesquisarNorma />} />
           <Route path="/visualizarNorma" element={<VisualizarNorma />} />
+          <Route path="/cadastrarNorma" element={<CadastrarNorma />} />
         </Route>
       </Routes>
     </BrowserRouter>

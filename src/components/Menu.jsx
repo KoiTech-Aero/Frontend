@@ -14,7 +14,7 @@ export default function Menu() {
           </Link>
         </button>
         <button className={btnClass}>
-          <Link to="" className="flex gap-2">
+          <Link to="/cadastrarNorma" className="flex gap-2">
             <Plus />
             Cadastrar Normas
           </Link>
