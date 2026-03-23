@@ -4,7 +4,7 @@ import NormaPreview from "../components/NormaPreview";
 
 export default function PesquisarNorma() {
   return (
-    <div className="overflow-y-auto flex flex-col items-center gap-5 p-2">
+    <div className="overflow-y-auto w-[90%] flex flex-col items-center gap-5 px-2">
       <FiltroArea />
       <BarraPesquisa />
       <NormaPreview />
