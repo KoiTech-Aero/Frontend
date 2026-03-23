@@ -39,7 +39,7 @@ export default function VisualizarNorma({ norma: normaProp }) {
           <h3 className="text-xl font-bold">Resumo</h3>
         </div>
 
-        <p className="border-4 rounded-md p-4 border-gray-300 bg-gray-100 font-medium">
+        <p className="border-4 rounded-md p-4 mt-4 border-gray-300 bg-gray-100 font-medium">
           {norma.resumo}
         </p>
       </div>
@@ -90,7 +90,7 @@ export default function VisualizarNorma({ norma: normaProp }) {
           <h3 className="text-xl font-bold">Normas Relacionadas</h3>
         </div>
 
-        <div className="grid grid-cols-2 pt-5 gap-5 mx-5">
+        <div className="grid grid-cols-2 pt-5 gap-5 mx-5 cursor-pointer">
           {norma.relacionadas.map((rel, index) => (
             <div
               key={index}
