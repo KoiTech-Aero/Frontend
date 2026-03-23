@@ -7,9 +7,9 @@ export default function VisualizarNorma({ norma: normaProp }) {
     titulo: "Título Norma",
     resumo: "Lorem ipsum dolor sit amet...",
     versoes: [
-      { id: 1, nome: "Versão 1", data: "01/01/2025", status: "Ativa" },
-      { id: 2, nome: "Versão 2", data: "01/06/2025", status: "Inativa" },
-      { id: 3, nome: "Versão 3", data: "01/06/2025", status: "Inativa" }
+      { id: 3, nome: "Versão 3", data: "01/08/2025", status: "Ativa" },
+      { id: 2, nome: "Versão 2", data: "01/07/2025", status: "Inativa" },
+      { id: 1, nome: "Versão 1", data: "01/06/2025", status: "Inativa" },
     ],
     relacionadas: [
       { codigo: "NRB 200", titulo: "Outra norma" },
@@ -21,7 +21,7 @@ export default function VisualizarNorma({ norma: normaProp }) {
   const norma = normaProp || normaMock;
 
   return (
-    <div className="overflow-y-auto flex flex-col w-5xl mx-auto border-4 rounded-2xl border-gray-300 bg-amber-50">
+    <div className="overflow-y-auto w-[90%] flex flex-col rounded-2xl bg-amber-50">
       {/* Header */}
       <div className="m-5 flex flex-col gap-1">
         <h5 className="text-sm w-fit px-2 rounded-sm bg-blue-200 border border-blue-400 text-blue-500">
@@ -36,7 +36,7 @@ export default function VisualizarNorma({ norma: normaProp }) {
       <div className="m-5">
         <div className="flex items-center gap-2">
           <FileText />
-          <h3 className="text-xl font-bold">Resumo</h3>
+          <h3 className="text-xl font-bold">Escopo</h3>
         </div>
 
         <p className="border-4 rounded-md p-4 mt-4 border-gray-300 bg-gray-100 font-medium">
@@ -48,12 +48,17 @@ export default function VisualizarNorma({ norma: normaProp }) {
 
       {/* Versões */}
       <div className="m-5">
-        <div className="flex items-center gap-2">
-          <History />
-          <h3 className="text-xl font-bold">Versões</h3>
+        <div className="flex justify-between">
+          <div className="flex items-center gap-2">
+            <History />
+            <h3 className="text-xl font-bold">Versões</h3>
+          </div>
+          <button className="bg-blue-600 text-white font-bold rounded-md cursor-pointer px-2 py-0.5 transition duration-1000 ease-in-out hover:bg-blue-700">
+            Adicionar Versão
+          </button>
         </div>
 
-        <div className="flex flex-col gap-3 mt-4">
+        <div className="flex flex-col gap-3 mt-4 cursor-default">
           {norma.versoes.map((versao) => (
             <div
               key={versao.id}
@@ -94,7 +99,7 @@ export default function VisualizarNorma({ norma: normaProp }) {
           {norma.relacionadas.map((rel, index) => (
             <div
               key={index}
-              className="flex gap-2 border-4 rounded-md border-gray-300 bg-gray-100 p-2"
+              className="flex gap-2 border-4 rounded-md border-gray-300 bg-gray-100 p-2 transition duration-1000 ease-in-out hover:bg-gray-200"
             >
               <h5 className="text-sm px-2 rounded-sm bg-blue-200 border border-blue-400 text-blue-500">
                 {rel.codigo}
@@ -102,6 +107,10 @@ export default function VisualizarNorma({ norma: normaProp }) {
               <h1 className="font-medium">{rel.titulo}</h1>
             </div>
           ))}
+
+          <div className="flex gap-2 border-4 rounded-md border-gray-300 bg-gray-100 p-2 border-dotted justify-center transition duration-1000 ease-in-out hover:bg-gray-200">
+            <h1 className="font-medium ">Adicionar Relação</h1>
+          </div>
         </div>
       </div>
     </div>

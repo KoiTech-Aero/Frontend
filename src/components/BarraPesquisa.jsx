@@ -2,7 +2,7 @@ import { Search } from "lucide-react";
 
 export default function BarraPesquisa() {
   return (
-    <div className="bg-amber-50 w-4xl p-5 flex rounded-4xl gap-2 text-xl items-center">
+    <div className="bg-amber-50 w-[70%] p-5 flex rounded-4xl gap-2 text-xl items-center">
       <Search />
       <input
         type="text"
