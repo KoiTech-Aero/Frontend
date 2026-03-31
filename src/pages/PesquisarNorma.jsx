@@ -31,8 +31,12 @@ export default function PesquisarNorma() {
       );
   }, []);
 
-  const normasFiltradas = normas.filter((norma) =>
-    norma.titulo.toLowerCase().includes(busca.toLowerCase()),
+  const normasFiltradas = normas.filter(
+    (norma) =>
+      norma.titulo.toLowerCase().includes(busca.toLowerCase()) ||
+      norma.codigo.toLowerCase().includes(busca.toLowerCase()) ||
+      norma.area_tecnica.toLowerCase().includes(busca.toLowerCase()) ||
+      norma.orgao_emissor.toLowerCase().includes(busca.toLowerCase()),
   );
 
   return (
