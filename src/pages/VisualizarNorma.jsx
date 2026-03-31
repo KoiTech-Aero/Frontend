@@ -58,7 +58,7 @@ export default function VisualizarNorma() {
 
               <div className="flex items-center gap-3">
                 <p className="bg-green-500 text-white rounded-2xl px-4 py-1 text-sm">
-                  {versao.status ? "norma revisada" : "norma inativa"}
+                  {versao.status ? "revisada" : "obsoleta"}
                 </p>
 
                 <button

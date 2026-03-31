@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function PesquisarNorma() {
   const [normas, setNormas] = useState([]);
+  const [busca, setBusca] = useState("");
 
   useEffect(() => {
     fetch(`http://localhost:3000/normas/true`)
@@ -30,23 +31,30 @@ export default function PesquisarNorma() {
       );
   }, []);
 
+  const normasFiltradas = normas.filter((norma) =>
+    norma.titulo.toLowerCase().includes(busca.toLowerCase()),
+  );
+
   return (
     <div className="overflow-y-auto w-[90%] flex flex-col items-center gap-5 px-2">
       <FiltroArea />
-      <BarraPesquisa />
+      <BarraPesquisa setBusca={setBusca} />
 
       <div className="grid grid-cols-3 gap-5 mt-10 w-[70%]">
-        {normas.map((norma) => {
+        {normasFiltradas.map((norma) => {
           const versaoAtiva = norma.versoes.find((v) => v.status);
           return (
             <NormaPreview
+              itens={normasFiltradas}
               key={norma.id}
               objeto={norma}
               codigo={norma.codigo}
               titulo={norma.titulo}
-              status={versaoAtiva?.status ? "norma revisada" : "norma inativa"}
+              status={versaoAtiva?.status ? "revisada" : "obsoleta"}
               area_tecnica={norma.area_tecnica}
-              dataPublicacao={new Date (versaoAtiva?.data_publicacao).toLocaleDateString()}
+              dataPublicacao={new Date(
+                versaoAtiva?.data_publicacao,
+              ).toLocaleDateString()}
             />
           );
         })}
