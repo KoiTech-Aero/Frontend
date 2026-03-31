@@ -1,24 +1,11 @@
 import { FileText, History, Link as LinkIcon } from "lucide-react";
+import { useLocation } from "react-router";
 
-export default function VisualizarNorma({ norma: normaProp }) {
-  // mock interno (temporário)
-  const normaMock = {
-    codigo: "NRB 123",
-    titulo: "Título Norma",
-    resumo: "Lorem ipsum dolor sit amet...",
-    versoes: [
-      { id: 3, nome: "Versão 3", data: "01/08/2025", status: "Ativa" },
-      { id: 2, nome: "Versão 2", data: "01/07/2025", status: "Inativa" },
-      { id: 1, nome: "Versão 1", data: "01/06/2025", status: "Inativa" },
-    ],
-    relacionadas: [
-      { codigo: "NRB 200", titulo: "Outra norma" },
-      { codigo: "NRB 300", titulo: "Mais uma norma" },
-    ],
-  };
+export default function VisualizarNorma() {
+  const location = useLocation();
+  const norma = location.state?.norma;
 
-  // usa o que vier por props, senão usa mock
-  const norma = normaProp || normaMock;
+  if (!norma) return <p>Nenhuma norma recebida</p>;
 
   return (
     <div className="overflow-y-auto w-[90%] flex flex-col rounded-2xl bg-amber-50">
@@ -40,7 +27,7 @@ export default function VisualizarNorma({ norma: normaProp }) {
         </div>
 
         <p className="border-4 rounded-md p-4 mt-4 border-gray-300 bg-gray-100 font-medium">
-          {norma.resumo}
+          {norma.escopo}
         </p>
       </div>
 
@@ -61,17 +48,17 @@ export default function VisualizarNorma({ norma: normaProp }) {
         <div className="flex flex-col gap-3 mt-4 cursor-default">
           {norma.versoes.map((versao) => (
             <div
-              key={versao.id}
+              key={versao.versao_numero}
               className="flex justify-between items-center p-3 border-4 rounded-md border-gray-300 bg-gray-100"
             >
               <div>
-                <h4 className="text-lg font-bold">{versao.nome}</h4>
-                <p className="text-gray-600 font-light">{versao.data}</p>
+                <h4 className="text-lg font-bold">{versao.descricao}</h4>
+                <p className="text-gray-600 font-light">{versao.data_publicacao}</p>
               </div>
 
               <div className="flex items-center gap-3">
                 <p className="bg-green-500 text-white rounded-2xl px-4 py-1 text-sm">
-                  {versao.status}
+                  {versao.status ? "norma revisada" : "norma inativa"}
                 </p>
 
                 <button
@@ -96,7 +83,7 @@ export default function VisualizarNorma({ norma: normaProp }) {
         </div>
 
         <div className="grid grid-cols-2 pt-5 gap-5 mx-5 cursor-pointer">
-          {norma.relacionadas.map((rel, index) => (
+          {/* {norma.relacionadas.map((rel, index) => (
             <div
               key={index}
               className="flex gap-2 border-4 rounded-md border-gray-300 bg-gray-100 p-2 transition duration-1000 ease-in-out hover:bg-gray-200"
@@ -106,7 +93,7 @@ export default function VisualizarNorma({ norma: normaProp }) {
               </h5>
               <h1 className="font-medium">{rel.titulo}</h1>
             </div>
-          ))}
+          ))} */}
 
           <div className="flex gap-2 border-4 rounded-md border-gray-300 bg-gray-100 p-2 border-dotted justify-center transition duration-1000 ease-in-out hover:bg-gray-200">
             <h1 className="font-medium ">Adicionar Relação</h1>

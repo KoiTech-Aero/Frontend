@@ -15,10 +15,14 @@ export default function PesquisarNorma() {
             id: d.id,
             codigo: d.codigo,
             titulo: d.titulo,
+            escopo: d.escopo,
             area_tecnica: d.area_tecnica,
             orgao_emissor: d.orgao_emissor,
-            versaos: d.versaos.map((v) => ({
+            versoes: d.versoes.map((v) => ({
+              versao_numero: v.versao_numero,
               data_publicacao: v.data_publicacao,
+              descricao: v.descricao,
+              path_file: v.path_file,
               status: v.status,
             })),
           })),
@@ -33,13 +37,14 @@ export default function PesquisarNorma() {
 
       <div className="grid grid-cols-3 gap-5 mt-10 w-[70%]">
         {normas.map((norma) => {
-          const versaoAtiva = norma.versaos.find((v) => v.status);
+          const versaoAtiva = norma.versoes.find((v) => v.status);
           return (
             <NormaPreview
               key={norma.id}
+              objeto={norma}
               codigo={norma.codigo}
               titulo={norma.titulo}
-              status={versaoAtiva?.status ? "norma ativa" : "norma inativa"}
+              status={versaoAtiva?.status ? "norma revisada" : "norma inativa"}
               area_tecnica={norma.area_tecnica}
               dataPublicacao={new Date (versaoAtiva?.data_publicacao).toLocaleDateString()}
             />
