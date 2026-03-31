@@ -40,6 +40,7 @@ export default function PesquisarNorma() {
               codigo={norma.codigo}
               titulo={norma.titulo}
               status={versaoAtiva?.status ? "norma ativa" : "norma inativa"}
+              area_tecnica={norma.area_tecnica}
               dataPublicacao={new Date (versaoAtiva?.data_publicacao).toLocaleDateString()}
             />
           );

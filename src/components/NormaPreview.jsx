@@ -13,7 +13,7 @@ export default function NormaPreview(props) {
         <h1 className="text-2xl font-bold mt-2">{props.titulo}</h1>
       </div>
       <div className="flex gap-1">
-        <p className="text-gray-600">Área</p>
+        <p className="text-gray-600">{props.area_tecnica}</p>
         <p>|</p>
         <p className="text-gray-400">
           Última atualização: {props.dataPublicacao}
