@@ -19,7 +19,8 @@ export default function NormaPreview(props) {
           Última atualização: {props.dataPublicacao}
         </p>
       </div>
-      <Link to="/visualizarNorma">
+
+      <Link to="/visualizarNorma" state={{ norma: props.objeto }}>
         <button className="w-full bg-gray-200 mt-5 px-4 py-2 rounded-md text-gray-700 font-light text-lg cursor-pointer transition duration-1000 ease-in-out hover:bg-gray-300">
           Visualizar Norma
         </button>
