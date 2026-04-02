@@ -54,11 +54,11 @@ export default function PesquisarNorma() {
               objeto={norma}
               codigo={norma.codigo}
               titulo={norma.titulo}
-              status={versaoAtiva?.status ? "revisada" : "obsoleta"}
               area_tecnica={norma.area_tecnica}
               dataPublicacao={new Date(
                 versaoAtiva?.data_publicacao,
               ).toLocaleDateString()}
+              status={versaoAtiva?.status ? "revisada" : "obsoleta"}
             />
           );
         })}

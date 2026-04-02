@@ -1,9 +1,12 @@
 import { FileText, History, Link as LinkIcon } from "lucide-react";
 import { useLocation } from "react-router";
+import { useNavigate } from "react-router";
 
 export default function VisualizarNorma() {
   const location = useLocation();
   const norma = location.state?.norma;
+
+  const navigate = useNavigate();
 
   if (!norma) return <p>Nenhuma norma recebida</p>;
 
@@ -19,7 +22,7 @@ export default function VisualizarNorma() {
 
       <hr className="border-2 border-gray-300" />
 
-      {/* Resumo */}
+      {/* Escopo */}
       <div className="m-5">
         <div className="flex items-center gap-2">
           <FileText />
@@ -52,7 +55,8 @@ export default function VisualizarNorma() {
               className="flex justify-between items-center p-3 border-4 rounded-md border-gray-300 bg-gray-100"
             >
               <div>
-                <h4 className="text-lg font-bold">{versao.descricao}</h4>
+                <h4 className="text-lg font-bold">{versao.versao_numero}</h4>
+                <p className="text-gray-600 font-light">{versao.descricao}</p>
                 <p className="text-gray-600 font-light">{versao.data_publicacao}</p>
               </div>
 
@@ -62,7 +66,9 @@ export default function VisualizarNorma() {
                 </p>
 
                 <button
-                  onClick={() => console.log("Versão:", versao.id)}
+                  onClick={() =>
+                    navigate("/visualizarVersao", { state: { norma, versao } })
+                  }
                   className="font-bold text-gray-500 cursor-pointer hover:text-blue-500"
                 >
                   Visualizar

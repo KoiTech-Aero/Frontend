@@ -5,6 +5,7 @@ import LayoutSistema from "./layouts/LayoutSistema";
 import VisualizarNorma from "./pages/VisualizarNorma";
 import CadastrarNorma from "./pages/CadastrarNorma";
 import CadastrarVersao from "./pages/CadastrarVersao";
+import VisualizarVersao from "./pages/VisualizarVersao";
 
 export default function App() {
   return (
@@ -18,9 +19,10 @@ export default function App() {
         {/* Rotas do privadas (sistema) */}
         <Route path="/" element={<LayoutSistema />}>
           <Route path="/pesquisarNorma" element={<PesquisarNorma />} />
-          <Route path="/visualizarNorma" element={<VisualizarNorma />} />
           <Route path="/cadastrarNorma" element={<CadastrarNorma />} />
           <Route path="/cadastrarVersao" element={<CadastrarVersao />} />
+          <Route path="/visualizarNorma" element={<VisualizarNorma />} />
+          <Route path="/visualizarVersao" element={<VisualizarVersao />} />
         </Route>
       </Routes>
     </BrowserRouter>
