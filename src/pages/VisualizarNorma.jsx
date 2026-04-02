@@ -43,13 +43,19 @@ export default function VisualizarNorma() {
             <History />
             <h3 className="text-xl font-bold">Versões</h3>
           </div>
-          <button className="bg-blue-600 text-white font-bold rounded-md cursor-pointer px-2 py-0.5 transition duration-1000 ease-in-out hover:bg-blue-700">
+
+          <button
+            className="bg-blue-600 text-white font-bold rounded-md cursor-pointer px-2 py-0.5 transition duration-1000 ease-in-out hover:bg-blue-700"
+            onClick={() =>
+              navigate("/cadastrarVersao", { state: { norma } })
+            }
+          >
             Adicionar Versão
           </button>
         </div>
 
         <div className="flex flex-col gap-3 mt-4 cursor-default">
-          {norma.versoes.map((versao) => (
+          {norma.versoes.slice().reverse().map((versao) => (
             <div
               key={versao.versao_numero}
               className="flex justify-between items-center p-3 border-4 rounded-md border-gray-300 bg-gray-100"
@@ -57,7 +63,9 @@ export default function VisualizarNorma() {
               <div>
                 <h4 className="text-lg font-bold">{versao.versao_numero}</h4>
                 <p className="text-gray-600 font-light">{versao.descricao}</p>
-                <p className="text-gray-600 font-light">{versao.data_publicacao}</p>
+                <p className="text-gray-600 font-light">
+                  {versao.data_publicacao}
+                </p>
               </div>
 
               <div className="flex items-center gap-3">
