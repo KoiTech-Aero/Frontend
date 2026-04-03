@@ -195,7 +195,7 @@ export default function CadastrarNorma() {
             >
               Salvar Norma no Sistema
             </button>
-            <button className="w-50 border-4 rounded-md p-1 border-gray-300 bg-gray-100 cursor-pointer transition duration-1000 ease-in-out hover:bg-gray-200">
+            <button onClick={() => navigate("/")} className="w-50 border-4 rounded-md p-1 border-gray-300 bg-gray-100 cursor-pointer transition duration-1000 ease-in-out hover:bg-gray-200">
               Cancelar
             </button>
           </div>
