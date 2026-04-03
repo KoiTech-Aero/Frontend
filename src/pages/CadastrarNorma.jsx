@@ -173,11 +173,10 @@ export default function CadastrarNorma() {
               <h1>Arquivo .pdf</h1>
               <input
                 className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 transition duration-1000 ease-in-out hover:bg-gray-200 cursor-pointer"
-                type="text"
+                type="file"
+                accept="application/pdf"
                 required
-                placeholder="URL do arquivo PDF"
-                value={path_file}
-                onChange={(e) => setPathFile(e.target.value)}
+                onChange={(e) => setPathFile(e.target.files[0])}
               />
             </div>
           </div>
