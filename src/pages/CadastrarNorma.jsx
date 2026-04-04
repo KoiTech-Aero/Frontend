@@ -171,12 +171,19 @@ export default function CadastrarNorma() {
           <div className="flex justify-between items-center gap-x-30">
             <div className="w-full">
               <h1>Arquivo .pdf</h1>
-              <input
+              {/* <input
                 className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 transition duration-1000 ease-in-out hover:bg-gray-200 cursor-pointer"
                 type="file"
                 accept="application/pdf"
                 required
                 onChange={(e) => setPathFile(e.target.files[0])}
+              /> */}
+              <input
+                className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 transition duration-1000 ease-in-out hover:bg-gray-200"
+                type="text"
+                required
+                value={path_file}
+                onChange={(e) => setPathFile(e.target.value)}
               />
             </div>
           </div>
@@ -188,7 +195,7 @@ export default function CadastrarNorma() {
             >
               Salvar Norma no Sistema
             </button>
-            <button className="w-50 border-4 rounded-md p-1 border-gray-300 bg-gray-100 cursor-pointer transition duration-1000 ease-in-out hover:bg-gray-200">
+            <button onClick={() => navigate("/")} className="w-50 border-4 rounded-md p-1 border-gray-300 bg-gray-100 cursor-pointer transition duration-1000 ease-in-out hover:bg-gray-200">
               Cancelar
             </button>
           </div>
