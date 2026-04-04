@@ -1,17 +1,85 @@
 import { FileText, History, Link as LinkIcon } from "lucide-react";
-import { useLocation } from "react-router";
-import { useNavigate } from "react-router";
+import { useEffect, useState, useRef } from "react";
+import { useLocation, useNavigate } from "react-router";
 
 export default function VisualizarNorma() {
-  const location = useLocation();
-  const norma = location.state?.norma;
-
   const navigate = useNavigate();
+  const location = useLocation();
 
+  const norma = location.state?.norma;
+  const [referencias, setReferencias] = useState([]);
+
+  // auto-scroll ao atualizar o componente
+  const containerRef = useRef(null);
+  useEffect(() => {
+    containerRef.current?.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [norma?.id]);
+
+  // redirecionar para norma selecionada
+  // na seção de normas referênciadas
+  async function redirectNormaReferencia(idNorma) {
+    try {
+      const response = await fetch("http://localhost:3000/normas");
+
+      if (!response.ok) throw new Error("Erro ao buscar normas");
+
+      const data = await response.json();
+      const normaEncontrada = data.find((d) => d.id === idNorma);
+
+      if (!normaEncontrada) {
+        console.error("Norma não encontrada");
+        return;
+      }
+
+      navigate("/visualizarNorma", {
+        state: { norma: normaEncontrada },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  // busca todas as normas referênciadas
+  useEffect(() => {
+    if (!norma?.id) return;
+
+    async function loadReferencias() {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/normas/${norma.id}/referencias`,
+        );
+
+        if (!response.ok) throw new Error("Erro ao buscar referências");
+
+        const data = await response.json();
+
+        setReferencias(
+          data.map((d) => ({
+            id: d.id,
+            codigo: d.codigo,
+            titulo: d.titulo,
+          })),
+        );
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    loadReferencias();
+  }, [norma?.id]);
+
+  // tratamento caso haja inconsistência nos dados
+  // da norma selecionada na tela de pesquisa
   if (!norma) return <p>Nenhuma norma recebida</p>;
 
   return (
-    <div className="overflow-y-auto w-[90%] flex flex-col rounded-2xl bg-amber-50">
+    <div
+      ref={containerRef}
+      className="overflow-y-auto w-[90%] flex flex-col rounded-2xl bg-amber-50"
+    >
       {/* Header */}
       <div className="m-5 flex flex-col gap-1">
         <h5 className="text-sm w-fit px-2 rounded-sm bg-blue-200 border border-blue-400 text-blue-500">
@@ -54,11 +122,11 @@ export default function VisualizarNorma() {
 
         <div className="flex flex-col gap-3 mt-4 cursor-default">
           {norma.versoes
-            .slice()
+            ?.slice()
             .reverse()
             .map((versao) => (
               <div
-                key={versao.versao_numero}
+                key={versao.id}
                 className="flex justify-between items-center p-3 border-4 rounded-md border-gray-300 bg-gray-100"
               >
                 <div>
@@ -102,17 +170,25 @@ export default function VisualizarNorma() {
         </div>
 
         <div className="grid grid-cols-2 pt-5 gap-5 mx-5 cursor-pointer">
-          {/* {norma.relacionadas.map((rel, index) => (
+          {referencias.map((ref) => (
             <div
-              key={index}
-              className="flex gap-2 border-4 rounded-md border-gray-300 bg-gray-100 p-2 transition duration-1000 ease-in-out hover:bg-gray-200"
+              key={ref.id}
+              className="flex justify-between border-4 rounded-md border-gray-300 bg-gray-100 p-2 transition duration-1000 ease-in-out hover:bg-gray-200"
             >
-              <h5 className="text-sm px-2 rounded-sm bg-blue-200 border border-blue-400 text-blue-500">
-                {rel.codigo}
-              </h5>
-              <h1 className="font-medium">{rel.titulo}</h1>
+              <div className="flex align-center">
+                <h5 className="text-sm px-2 rounded-sm bg-blue-200 border border-blue-400 text-blue-500">
+                  {ref.codigo}
+                </h5>
+                <h1 className="font-medium mx-5">{ref.titulo}</h1>
+              </div>
+              <button
+                onClick={() => redirectNormaReferencia(ref.id)}
+                className="bg-blue-600 text-white font-bold rounded-md cursor-pointer px-2 py-0.5 transition duration-1000 ease-in-out hover:bg-blue-700"
+              >
+                ir para norma
+              </button>
             </div>
-          ))} */}
+          ))}
 
           <div className="flex gap-2 border-4 rounded-md border-gray-300 bg-gray-100 p-2 border-dotted justify-center transition duration-1000 ease-in-out hover:bg-gray-200">
             <h1 className="font-medium ">Adicionar Relação</h1>
