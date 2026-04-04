@@ -71,6 +71,64 @@ export default function VisualizarNorma() {
     loadReferencias();
   }, [norma?.id]);
 
+
+  // associar normas cadastrada
+  const [mostrarRelacoes, setMostrarRelacoes] = useState(false);
+  const [todasNormas, setTodasNormas] = useState([]);
+
+  async function loadTodasNormas() {
+    try {
+      const response = await fetch("http://localhost:3000/normas");
+
+      if (!response.ok) throw new Error("Erro ao buscar normas");
+
+      const data = await response.json();
+
+      // remove a própria norma da lista
+      const filtradas = data.filter((n) => n.id !== norma.id);
+
+      setTodasNormas(filtradas);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function adicionarRelacao(idRelacionada) {
+    const confirmar = window.confirm("Deseja associar esta norma?");
+
+    if (!confirmar) return;
+    
+    try {
+      await fetch(
+        `http://localhost:3000/normas/${norma.id}/associar`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            relacionadaId: idRelacionada,
+          }),
+        }
+      );
+
+      // atualizar lista na tela
+      console.log(idRelacionada)
+      setMostrarRelacoes(false);
+
+      // recarregar referências
+      const response = await fetch(
+        `http://localhost:3000/normas/${norma.id}/referencias`
+      );
+      const data = await response.json();
+
+      setReferencias(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+
   // tratamento caso haja inconsistência nos dados
   // da norma selecionada na tela de pesquisa
   if (!norma) return <p>Nenhuma norma recebida</p>;
@@ -190,10 +248,45 @@ export default function VisualizarNorma() {
             </div>
           ))}
 
-          <div className="flex gap-2 border-4 rounded-md border-gray-300 bg-gray-100 p-2 border-dotted justify-center transition duration-1000 ease-in-out hover:bg-gray-200">
+          <div
+            onClick={() => {
+              setMostrarRelacoes(true);
+              loadTodasNormas();
+            }}
+            className="flex gap-2 border-4 rounded-md border-gray-300 bg-gray-100 p-2 border-dotted justify-center transition duration-1000 ease-in-out hover:bg-gray-200"
+          >
             <h1 className="font-medium ">Adicionar Relação</h1>
           </div>
         </div>
+
+        {/* MODAL */}
+        {mostrarRelacoes && (
+          <div className="fixed top-0 left-0 w-full h-full bg-black/30 flex justify-center items-center">
+            <div className="bg-white p-5 rounded-lg w-[400px] max-h-[500px] overflow-y-auto">
+              <h2 className="text-lg font-bold mb-3">Selecionar Norma</h2>
+
+              {todasNormas.map((n) => (
+                <div
+                  key={n.id}
+                  className="border p-2 mb-2 rounded cursor-pointer hover:bg-gray-100"
+                  onClick={() => adicionarRelacao(n.id)}
+                >
+                  <span className="bg-blue-200 px-2 mr-2 rounded">
+                    {n.codigo}
+                  </span>
+                  {n.titulo}
+                </div>
+              ))}
+
+              <button
+                onClick={() => setMostrarRelacoes(false)}
+                className="mt-3 bg-gray-400 text-white px-3 py-1 rounded"
+              >
+                Fechar
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
