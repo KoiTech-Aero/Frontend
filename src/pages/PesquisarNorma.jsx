@@ -41,7 +41,7 @@ export default function PesquisarNorma() {
 
   return (
     <div className="overflow-y-auto w-[90%] flex flex-col items-center gap-5 px-2">
-      <FiltroArea />
+      {/* <FiltroArea /> */}
       <BarraPesquisa setBusca={setBusca} />
 
       <div className="grid grid-cols-3 gap-5 mt-10 w-[90%]">
