@@ -2,7 +2,7 @@ import { Link } from "react-router";
 
 export default function NormaPreview(props) {
   return (
-    <div className="bg-amber-50 h-60 rounded-2xl p-5">
+    <div className="bg-amber-50 rounded-2xl p-5">
       <div className="flex flex-col">
         <div className="flex justify-between">
           <h2 className="text-sm w-fit px-2 rounded-sm bg-blue-200 border border-blue-400 text-blue-500">
