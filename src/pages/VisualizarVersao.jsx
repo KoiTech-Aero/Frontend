@@ -5,7 +5,7 @@ export default function VisualizarVersao() {
   const norma = location.state?.norma;
   const versao = location.state?.versao;
 
-  const data_publicacao = new Date(versao.data_publicacao).toLocaleDateString()
+  const data_publicacao = new Date(versao.data_publicacao).toLocaleDateString();
 
   const navigate = useNavigate();
 
@@ -31,6 +31,15 @@ export default function VisualizarVersao() {
         <p className="border-4 rounded-md p-4 mt-4 border-gray-300 bg-gray-100 font-medium">
           {versao.descricao}
         </p>
+      </div>
+
+      <div className="m-5">
+        <h3 className="text-xl font-bold mb-2">Documento</h3>
+
+        <iframe
+          src={`http://localhost:3000${versao.path_file}`}
+          className="w-full h-dvh border-4 border-gray-300 rounded-md"
+        />
       </div>
 
       <div className="m-5 flex flex-col gap-1">
