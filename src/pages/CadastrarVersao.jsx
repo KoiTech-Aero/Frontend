@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export default function CadastrarVersao() {
   const location = useLocation();
-   const norma = location.state?.norma;
+  const norma = location.state?.norma;
 
   const navigate = useNavigate();
 
@@ -13,10 +13,19 @@ export default function CadastrarVersao() {
   const [data_publicacao, setDataPublicacao] = useState(
     new Date().toISOString().split("T")[0],
   );
-  const [path_file, setPathFile] = useState("");
+  const [path_file, setPathFile] = useState(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append("id_norma", id_norma);
+    formData.append("versao_numero", versao_numero);
+    formData.append("descricao", descricao);
+    formData.append("data_publicacao", data_publicacao);
+    formData.append("status", "true");
+    formData.append("file", path_file);
 
     const novaVersao = {
       id_norma,
@@ -27,32 +36,25 @@ export default function CadastrarVersao() {
       status: true,
     };
 
-    console.log(novaVersao);
-
     try {
       const response = await fetch("http://localhost:3000/addVersao", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(novaVersao),
+        body: formData,
       });
 
-      const data = await response;
-      console.log("Resposta:", data);
+      const data = await response.json();
+      console.log(data);
 
       const normaAtualizada = {
         ...norma,
         versoes: [...norma.versoes, novaVersao],
       };
 
-      console.log(norma);
-
       alert("Versão cadastrada com sucesso!");
-
       navigate("/visualizarNorma", { state: { norma: normaAtualizada } });
     } catch (error) {
-      console.error("Erro ao enviar:", error);
+      console.error(error);
+      alert("Erro de conexão com o servidor.");
     }
   }
 
@@ -119,19 +121,12 @@ export default function CadastrarVersao() {
           <div className="flex justify-between items-center gap-x-30">
             <div className="w-full">
               <h1>Arquivo .pdf</h1>
-              {/* <input
+              <input
                 className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 transition duration-1000 ease-in-out hover:bg-gray-200 cursor-pointer"
                 type="file"
                 accept="application/pdf"
                 required
                 onChange={(e) => setPathFile(e.target.files[0])}
-              /> */}
-              <input
-                className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 transition duration-1000 ease-in-out hover:bg-gray-200"
-                type="text"
-                required
-                value={path_file}
-                onChange={(e) => setPathFile(e.target.value)}
               />
             </div>
           </div>
@@ -144,8 +139,9 @@ export default function CadastrarVersao() {
               Salvar Norma no Sistema
             </button>
             <button
+              type="button"
               className="w-50 border-4 rounded-md p-1 border-gray-300 bg-gray-100 cursor-pointer transition duration-1000 ease-in-out hover:bg-gray-200"
-              onClick={() => navigate("/visualizarNorma", {state: {norma}})}
+              onClick={() => navigate("/visualizarNorma", { state: { norma } })}
             >
               Cancelar
             </button>
