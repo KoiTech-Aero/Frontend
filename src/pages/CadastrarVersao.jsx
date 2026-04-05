@@ -47,7 +47,12 @@ export default function CadastrarVersao() {
 
       const normaAtualizada = {
         ...norma,
-        versoes: [...norma.versoes, novaVersao],
+        versoes: norma.versoes
+          .map((v) => ({
+            ...v,
+            status: false,
+          }))
+          .concat(novaVersao),
       };
 
       alert("Versão cadastrada com sucesso!");
