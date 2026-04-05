@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from "react-router";
+import { FileText, Info, History, Calendar1 } from "lucide-react";
 
 export default function VisualizarVersao() {
   const location = useLocation();
@@ -12,20 +13,40 @@ export default function VisualizarVersao() {
   return (
     <div className="overflow-y-auto w-[90%] flex flex-col rounded-2xl bg-amber-50">
       {/* Header */}
-      <div className="m-5 flex justify-between align-center">
-        <h5 className="text-xl w-fit px-2 rounded-sm bg-blue-200 border border-blue-400 text-blue-500">
-          Versão número: {versao.versao_numero}
-        </h5>
-        <h5 className="text-xl w-fit px-2 rounded-sm bg-green-200 border border-blue-400 text-green-500">
-          Data de publicação: {data_publicacao}
-        </h5>
-        <h5 className="text-xl w-fit px-2 rounded-sm bg-green-200 border border-blue-400 text-green-500">
-          {versao.status ? "revisada" : "obsoleta"}
+      <div className="m-5 flex justify-start align-center">
+        <h5
+          className={`text-white rounded-2xl px-4 py-1 text-lg font-bold ${
+            versao.status ? "bg-green-500" : "bg-red-500"
+          }`}
+        >
+          {versao.status ? "Revisada" : "Obsoleta"}
         </h5>
       </div>
 
+      <div className="m-5 flex justify-between items-center gap-x-30">
+        <div className="w-full">
+          <div className="flex gap-2">
+            <History />
+            <h3 className="text-xl font-bold">Número da Versão</h3>
+          </div>
+          <p className="border-4 rounded-md p-4 mt-4 border-gray-300 bg-gray-100 font-medium">
+            {versao.versao_numero}
+          </p>
+        </div>
+        <div className="w-full">
+          <div className="flex gap-2">
+            <Calendar1 />
+            <h3 className="text-xl font-bold">Data de Publicação</h3>
+          </div>
+          <p className="border-4 rounded-md p-4 mt-4 border-gray-300 bg-gray-100 font-medium">
+            {data_publicacao}
+          </p>
+        </div>
+      </div>
+
       <div className="m-5">
-        <div className="flex items-center gap-2">
+        <div className="flex gap-2">
+          <Info />
           <h3 className="text-xl font-bold">Descrição</h3>
         </div>
         <p className="border-4 rounded-md p-4 mt-4 border-gray-300 bg-gray-100 font-medium">
@@ -34,7 +55,10 @@ export default function VisualizarVersao() {
       </div>
 
       <div className="m-5">
-        <h3 className="text-xl font-bold mb-2">Documento</h3>
+        <div className="flex gap-2">
+          <FileText />
+          <h3 className="text-xl font-bold mb-2">Documento</h3>
+        </div>
 
         <iframe
           src={`http://localhost:3000${versao.path_file}`}
@@ -42,7 +66,7 @@ export default function VisualizarVersao() {
         />
       </div>
 
-      <div className="m-5 flex flex-col gap-1">
+      <div className="m-5 flex justify-end">
         <button
           className="bg-blue-600 text-white font-bold rounded-md cursor-pointer px-2 py-0.5 transition duration-1000 ease-in-out hover:bg-blue-700"
           onClick={() => navigate("/visualizarNorma", { state: { norma } })}

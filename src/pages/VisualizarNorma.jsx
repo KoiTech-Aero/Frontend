@@ -71,7 +71,6 @@ export default function VisualizarNorma() {
     loadReferencias();
   }, [norma?.id]);
 
-
   // associar normas cadastrada
   const [mostrarRelacoes, setMostrarRelacoes] = useState(false);
   const [todasNormas, setTodasNormas] = useState([]);
@@ -97,28 +96,25 @@ export default function VisualizarNorma() {
     const confirmar = window.confirm("Deseja associar esta norma?");
 
     if (!confirmar) return;
-    
+
     try {
-      await fetch(
-        `http://localhost:3000/normas/${norma.id}/associar`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            relacionadaId: idRelacionada,
-          }),
-        }
-      );
+      await fetch(`http://localhost:3000/normas/${norma.id}/associar`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          relacionadaId: idRelacionada,
+        }),
+      });
 
       // atualizar lista na tela
-      console.log(idRelacionada)
+      console.log(idRelacionada);
       setMostrarRelacoes(false);
 
       // recarregar referências
       const response = await fetch(
-        `http://localhost:3000/normas/${norma.id}/referencias`
+        `http://localhost:3000/normas/${norma.id}/referencias`,
       );
       const data = await response.json();
 
@@ -127,7 +123,6 @@ export default function VisualizarNorma() {
       console.error(err);
     }
   }
-
 
   // tratamento caso haja inconsistência nos dados
   // da norma selecionada na tela de pesquisa
@@ -198,8 +193,12 @@ export default function VisualizarNorma() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <p className="bg-green-500 text-white rounded-2xl px-4 py-1 text-sm">
-                    {versao.status ? "revisada" : "obsoleta"}
+                  <p
+                    className={`text-white rounded-2xl px-4 py-1 text-sm font-bold ${
+                      versao.status ? "bg-green-500" : "bg-red-500"
+                    }`}
+                  >
+                    {versao.status ? "Revisada" : "Obsoleta"}
                   </p>
 
                   <button
@@ -233,7 +232,7 @@ export default function VisualizarNorma() {
               key={ref.id}
               className="flex justify-between border-4 rounded-md border-gray-300 bg-gray-100 p-2 transition duration-1000 ease-in-out hover:bg-gray-200"
             >
-              <div className="flex align-center">
+              <div className="flex items-center">
                 <h5 className="text-sm px-2 rounded-sm bg-blue-200 border border-blue-400 text-blue-500">
                   {ref.codigo}
                 </h5>
@@ -243,7 +242,7 @@ export default function VisualizarNorma() {
                 onClick={() => redirectNormaReferencia(ref.id)}
                 className="bg-blue-600 text-white font-bold rounded-md cursor-pointer px-2 py-0.5 transition duration-1000 ease-in-out hover:bg-blue-700"
               >
-                ir para norma
+                Ir para norma
               </button>
             </div>
           ))}
@@ -253,16 +252,16 @@ export default function VisualizarNorma() {
               setMostrarRelacoes(true);
               loadTodasNormas();
             }}
-            className="flex gap-2 border-4 rounded-md border-gray-300 bg-gray-100 p-2 border-dotted justify-center transition duration-1000 ease-in-out hover:bg-gray-200"
+            className="flex gap-2 border-4 rounded-md border-gray-300 bg-gray-100 p-2 border-dotted justify-center items-center transition duration-1000 ease-in-out hover:bg-gray-200"
           >
-            <h1 className="font-medium ">Adicionar Relação</h1>
+            <h1 className="font-medium">Adicionar Relação</h1>
           </div>
         </div>
 
         {/* MODAL */}
         {mostrarRelacoes && (
           <div className="fixed top-0 left-0 w-full h-full bg-black/30 flex justify-center items-center">
-            <div className="bg-white p-5 rounded-lg w-[400px] max-h-[500px] overflow-y-auto">
+            <div className="bg-white p-5 rounded-lg w-100 max-h-125 overflow-y-auto">
               <h2 className="text-lg font-bold mb-3">Selecionar Norma</h2>
 
               {todasNormas.map((n) => (
@@ -277,13 +276,14 @@ export default function VisualizarNorma() {
                   {n.titulo}
                 </div>
               ))}
-
-              <button
-                onClick={() => setMostrarRelacoes(false)}
-                className="mt-3 bg-gray-400 text-white px-3 py-1 rounded"
-              >
-                Fechar
-              </button>
+              <div className="w-full flex justify-end">
+                <button
+                  onClick={() => setMostrarRelacoes(false)}
+                  className="mt-3 bg-gray-400 text-white px-3 py-1 rounded cursor-pointer hover:bg-gray-500 transition duration-1000 ease-in-out"
+                >
+                  Fechar
+                </button>
+              </div>
             </div>
           </div>
         )}

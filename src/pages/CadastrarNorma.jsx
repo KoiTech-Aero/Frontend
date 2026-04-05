@@ -84,7 +84,7 @@ export default function CadastrarNorma() {
                 className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 transition duration-1000 ease-in-out hover:bg-gray-200"
                 type="text"
                 required
-                placeholder="Informe a área principal da norma"
+                placeholder="Informe a área da norma"
                 value={area_tecnica}
                 onChange={(e) => setAreaTecnica(e.target.value)}
               />
@@ -142,9 +142,10 @@ export default function CadastrarNorma() {
             <div className="w-full">
               <h1>Data de publicação</h1>
               <input
-                className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 transition duration-1000 ease-in-out hover:bg-gray-200 cursor-default"
+                className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100"
                 type="text"
                 required
+                disabled
                 value={data_publicacao}
                 onChange={(e) => setDataPublicacao(e.target.value)}
               />
@@ -162,16 +163,27 @@ export default function CadastrarNorma() {
             ></textarea>
           </div>
 
-          <div className="flex justify-between items-center gap-x-30">
-            <div className="w-full">
-              <h1>Arquivo .pdf</h1>
-              <input
-                className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 transition duration-1000 ease-in-out hover:bg-gray-200 cursor-pointer"
-                type="file"
-                accept="application/pdf"
-                required
-                onChange={(e) => setPathFile(e.target.files[0])}
-              />
+          <div>
+            <h1>Arquivo .pdf</h1>
+            <div className="flex justify-between items-center">
+              <label className="cursor-pointer bg-blue-500 text-white px-2 py-1 rounded-lg font-bold">
+                Escolher Arquivo
+                <input
+                  className="w-full hidden border-4 rounded-md p-2 border-gray-300 bg-gray-100 transition duration-1000 ease-in-out hover:bg-gray-200 cursor-pointer"
+                  type="file"
+                  accept="application/pdf"
+                  required
+                  onChange={(e) => setPathFile(e.target.files[0]?.name)}
+                />
+              </label>
+
+              {path_file ? (
+                <p className="text-sm align-baseline justify-baseline">
+                  <b>Arquivo selecionado:</b> {path_file}
+                </p>
+              ) : (
+                <p></p>
+              )}
             </div>
           </div>
 
