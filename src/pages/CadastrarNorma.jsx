@@ -15,7 +15,7 @@ export default function CadastrarNorma() {
   const [data_publicacao, setDataPublicacao] = useState(
     new Date().toISOString().split("T")[0],
   );
-  const [path_file, setPathFile] = useState("");
+  const [path_file, setPathFile] = useState(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -173,13 +173,13 @@ export default function CadastrarNorma() {
                   type="file"
                   accept="application/pdf"
                   required
-                  onChange={(e) => setPathFile(e.target.files[0]?.name)}
+                  onChange={(e) => setPathFile(e.target.files[0])}
                 />
               </label>
 
               {path_file ? (
                 <p className="text-sm align-baseline justify-baseline">
-                  <b>Arquivo selecionado:</b> {path_file}
+                  <b>Arquivo selecionado:</b> {path_file.name}
                 </p>
               ) : (
                 <p></p>
