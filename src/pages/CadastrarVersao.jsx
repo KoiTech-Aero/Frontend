@@ -27,15 +27,6 @@ export default function CadastrarVersao() {
     formData.append("status", "true");
     formData.append("file", path_file);
 
-    const novaVersao = {
-      id_norma,
-      versao_numero,
-      descricao,
-      data_publicacao,
-      path_file,
-      status: true,
-    };
-
     try {
       const response = await fetch("http://localhost:3000/addVersao", {
         method: "POST",
@@ -43,11 +34,20 @@ export default function CadastrarVersao() {
       });
 
       const data = await response.json();
-      console.log(data);
+
+      const novaVersao = {
+        ...data,
+        status: true,
+      };
 
       const normaAtualizada = {
         ...norma,
-        versoes: [...norma.versoes, novaVersao],
+        versoes: norma.versoes
+          .map((v) => ({
+            ...v,
+            status: false,
+          }))
+          .concat(novaVersao),
       };
 
       alert("Versão cadastrada com sucesso!");
