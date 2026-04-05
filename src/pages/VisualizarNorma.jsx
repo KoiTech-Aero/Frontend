@@ -77,7 +77,7 @@ export default function VisualizarNorma() {
 
   async function loadTodasNormas() {
     try {
-      const response = await fetch("http://localhost:3000/normas");
+      const response = await fetch("http://localhost:3000/normas/true");
 
       if (!response.ok) throw new Error("Erro ao buscar normas");
 
