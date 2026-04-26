@@ -6,6 +6,7 @@ import VisualizarNorma from "./pages/VisualizarNorma";
 import CadastrarNorma from "./pages/CadastrarNorma";
 import CadastrarVersao from "./pages/CadastrarVersao";
 import VisualizarVersao from "./pages/VisualizarVersao";
+import SolicitarNorma from "./pages/SolicitarNorma";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/cadastrarVersao" element={<CadastrarVersao />} />
           <Route path="/visualizarNorma" element={<VisualizarNorma />} />
           <Route path="/visualizarVersao" element={<VisualizarVersao />} />
+          <Route path="/solicitarNorma" element={<SolicitarNorma />} />
         </Route>
       </Routes>
     </BrowserRouter>
