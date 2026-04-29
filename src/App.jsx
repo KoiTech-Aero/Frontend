@@ -27,7 +27,7 @@ export default function App() {
           <Route path="/visualizarNorma" element={<VisualizarNorma />} />
           <Route path="/visualizarVersao" element={<VisualizarVersao />} />
           <Route path="/solicitarNorma" element={<SolicitarNorma />} />
-          <Route path="/editarUsuario/:id" element={<EditarUsuario />} />
+          <Route path="/editarUsuario" element={<EditarUsuario />} />
         </Route>
       </Routes>
     </BrowserRouter>
