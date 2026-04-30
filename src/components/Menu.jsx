@@ -25,6 +25,12 @@ export default function Menu() {
             Solicitar Normas
           </button>
         </Link>
+        <Link to="/cadastrarUsuario">
+          <button className={btn}>
+            <Plus />
+            Cadastrar Usuario
+          </button>
+        </Link>
       </div>
 
       {/* aplicação futura */}

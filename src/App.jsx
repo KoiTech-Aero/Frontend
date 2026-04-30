@@ -8,6 +8,7 @@ import CadastrarVersao from "./pages/CadastrarVersao";
 import VisualizarVersao from "./pages/VisualizarVersao";
 import SolicitarNorma from "./pages/SolicitarNorma";
 import EditarUsuario from "./pages/EditarUsuario";
+import CadastrarUsuario from "./pages/CadastrarUsuario";
 
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
           <Route path="/visualizarNorma" element={<VisualizarNorma />} />
           <Route path="/visualizarVersao" element={<VisualizarVersao />} />
           <Route path="/solicitarNorma" element={<SolicitarNorma />} />
+          <Route path="/cadastrarUsuario" element={<CadastrarUsuario />} />
           <Route path="/editarUsuario" element={<EditarUsuario />} />
         </Route>
       </Routes>
