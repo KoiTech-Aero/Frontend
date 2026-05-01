@@ -44,6 +44,16 @@ export default function Menu() {
           </Link>
         )}
 
+        {/* CADASTRAR USUÁRIO */}
+        {temPermissao(usuario, PERMISSOES.PESQUISAR) && (
+          <Link to="/cadastrarUsuario">
+            <button className={btn}>
+              <PanelsTopLeft />
+              Cadastrar Usuário
+            </button>
+          </Link>
+        )}
+
         {/* SOLICITAR */}
         {temPermissao(usuario, PERMISSOES.SOLICITAR) && (
           <Link to="/solicitarNorma">

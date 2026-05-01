@@ -91,6 +91,15 @@ export default function App() {
             />
 
             <Route
+              path="/cadastrarUsuario"
+              element={
+                <RotaPrivada permissao={PERMISSOES.CADASTRAR_USUARIO}>
+                  <CadastrarUsuario />
+                </RotaPrivada>
+              }
+            />
+
+            <Route
               path="/editarUsuario"
               element={
                 <RotaPrivada permissao={PERMISSOES.EDITAR_USUARIO}>
