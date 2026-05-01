@@ -2,9 +2,10 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 
-/* import { loginRequest } from "../services/api"; */
+import { loginRequest } from "../services/api";
 
 export default function Login() {
+  // com rota de login
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
@@ -14,46 +15,15 @@ export default function Login() {
   async function handleLogin(e) {
     e.preventDefault();
 
-    // com rota de login
-    /* const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
-
-    const { login } = useContext(AuthContext);
-    const navigate = useNavigate();
-
-    async function handleLogin(e) {
-      e.preventDefault();
-
-      try {
-        const data = await loginRequest(email, senha);
-
-        login(data);
-        navigate("/pesquisarNorma");
-      } catch (error) {
-        console.error(error);
-        alert(error.message);
-      }
-    } */
-
-    // sem rota de login
     try {
-      const response = await fetch("http://localhost:3000/usuarios");
-      const usuarios = await response.json();
+      const data = await loginRequest(email, senha);
+      console.log(data)
 
-      const usuarioEncontrado = usuarios.find(
-        (u) => u.email === email && u.senha === senha,
-      );
-
-      if (!usuarioEncontrado) {
-        alert("Email ou senha inválidos");
-        return;
-      }
-
-      login(usuarioEncontrado);
+      login(data.usuario, data.token);
       navigate("/pesquisarNorma");
     } catch (error) {
       console.error(error);
-      alert("Erro ao fazer login");
+      alert(error.message);
     }
   }
 

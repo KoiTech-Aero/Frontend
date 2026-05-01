@@ -2,7 +2,7 @@ import { ROLES } from "./roles";
 import { PERMISSOES } from "./permissoes";
 
 export const ROLE_PERMISSIONS = {
-  [ROLES.ADMIN]: [
+  [ROLES.GESTOR]: [
     PERMISSOES.PESQUISAR,
     PERMISSOES.CADASTRAR_NORMA,
     PERMISSOES.CADASTRAR_VERSAO,
