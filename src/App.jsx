@@ -16,6 +16,7 @@ import CadastrarVersao from "./pages/CadastrarVersao";
 import VisualizarVersao from "./pages/VisualizarVersao";
 import SolicitarNorma from "./pages/SolicitarNorma";
 import EditarUsuario from "./pages/EditarUsuario";
+import CadastrarUsuario from "./pages/CadastrarUsuario";
 
 export default function App() {
   return (
