@@ -89,6 +89,7 @@ export default function CadastrarUsuario() {
 							>
 								<option value="Engenheiro">Engenheiro</option>
 								<option value="Gestor">Gestor</option>
+								<option value="Vizualizador">Vizualizador</option>
 							</select>
 						</div>
 					</div>
