@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export default function EditarUsuario() {
   const { id } = useParams();
@@ -9,6 +11,7 @@ export default function EditarUsuario() {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("Engenheiro");
   const [status, setStatus] = useState(true);
+  const { usuario } = useContext(AuthContext);
 
   useEffect(() => {
     fetch(`http://localhost:3000/usuarios/${id}`)
@@ -23,6 +26,15 @@ export default function EditarUsuario() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    if (!status) {
+      const confirmar = window.confirm("Tem certeza que deseja desativar este usuário?");
+      if (!confirmar) return;
+    } 
+    else {
+      const confirmar = window.confirm("Tem certeza que deseja ativar este usuário?");
+      if (!confirmar) return;
+    }
 
     try {
       const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
@@ -40,6 +52,7 @@ export default function EditarUsuario() {
       console.error(error);
     }
   }
+  
 
   return (
     <form onSubmit={handleSubmit}>
