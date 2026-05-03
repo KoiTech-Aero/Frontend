@@ -116,7 +116,7 @@ export default function Menu() {
               }`}
             >
               <Plus size={20} />
-              Cadastrar
+              Normas
             </div>
           </Link>
         )}
