@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+}
+
+@theme {
+  --color-white: #fff;
+  --color-red: #6c2139;
+  --color-red-hover: #621e33;
+  --color-red-dark: #51192b;
+  --color-muted: rgba(255, 255, 255, 0.5);
+
+  --font-mono: "Anonymous Pro", monospace;
+  --font-sans: "Albert Sans", sans-serif;
+}
