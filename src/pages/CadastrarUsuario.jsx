@@ -37,7 +37,7 @@ export default function CadastrarUsuario() {
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
             Cadastrar usuário
           </h1>
-          <h2 className="text-md md:text-md text-gray-500">
+          <h2 className="text-md text-gray-500">
             Adicione os dados do usuário.
           </h2>
         </div>

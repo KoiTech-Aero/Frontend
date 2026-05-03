@@ -56,7 +56,7 @@ export default function SolicitarNorma() {
 
   return (
     <form onSubmit={handleSubmit} className="w-full flex justify-center">
-      <div className="w-full max-w-3xl bg-amber-50 rounded-2xl flex flex-col">
+      <div className="w-full max-w-3xl bg-white rounded-2xl flex flex-col">
         {/* HEADER */}
         <div className="m-5 flex flex-col">
           <h1 className="text-3xl font-bold">Solicitação de Norma</h1>
@@ -72,7 +72,7 @@ export default function SolicitarNorma() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
             {/* TÍTULO */}
             <div className="md:col-span-2">
-              <label className="text-sm font-semibold">Título *</label>
+              <h1 className="font-medium">Título</h1>
               <input
                 name="titulo"
                 value={formData.titulo}
@@ -85,7 +85,7 @@ export default function SolicitarNorma() {
 
             {/* MOTIVO */}
             <div className="md:col-span-2">
-              <label className="text-sm font-semibold">Motivo *</label>
+              <h1 className="font-medium">Motivo</h1>
               <textarea
                 name="motivo"
                 value={formData.motivo}
@@ -97,7 +97,7 @@ export default function SolicitarNorma() {
 
             {/* CÓDIGO */}
             <div>
-              <label className="text-sm font-semibold">Código da Norma</label>
+              <h1 className="font-medium">Código da Norma</h1>
               <input
                 name="codigo_norma"
                 value={formData.codigo_norma}
@@ -110,7 +110,7 @@ export default function SolicitarNorma() {
 
             {/* VERSÃO */}
             <div>
-              <label className="text-sm font-semibold">Versão</label>
+              <h1 className="font-medium">Versão</h1>
               <input
                 name="versao_norma"
                 value={formData.versao_norma}
@@ -123,7 +123,7 @@ export default function SolicitarNorma() {
 
             {/* ÓRGÃO */}
             <div className="md:col-span-2">
-              <label className="text-sm font-semibold">Órgão Emissor</label>
+              <h1 className="font-medium">Órgão Emissor</h1>
               <input
                 name="orgao_emissor"
                 value={formData.orgao_emissor}

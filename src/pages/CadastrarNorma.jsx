@@ -53,7 +53,7 @@ export default function CadastrarNorma() {
 
   return (
     <form onSubmit={handleSubmit} className="w-full flex justify-center">
-      <div className="overflow-y-auto w-full max-w-4xl flex flex-col rounded-2xl bg-amber-50">
+      <div className="overflow-y-auto w-full max-w-4xl flex flex-col rounded-2xl bg-white">
 
         {/* HEADER */}
         <div className="m-5 flex flex-col">
@@ -73,7 +73,7 @@ export default function CadastrarNorma() {
           {/* LINHA 1 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <h1>Código da Norma</h1>
+              <h1 className="font-medium">Código da Norma</h1>
               <input
                 className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 hover:bg-gray-200"
                 type="text"
@@ -84,7 +84,7 @@ export default function CadastrarNorma() {
             </div>
 
             <div>
-              <h1>Área</h1>
+              <h1 className="font-medium">Área</h1>
               <input
                 className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 hover:bg-gray-200"
                 type="text"
@@ -98,7 +98,7 @@ export default function CadastrarNorma() {
           {/* LINHA 2 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <h1>Título da Norma</h1>
+              <h1 className="font-medium">Título da Norma</h1>
               <input
                 className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 hover:bg-gray-200"
                 type="text"
@@ -109,7 +109,7 @@ export default function CadastrarNorma() {
             </div>
 
             <div>
-              <h1>Órgão emissor</h1>
+              <h1 className="font-medium">Órgão emissor</h1>
               <input
                 className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 hover:bg-gray-200"
                 type="text"
@@ -122,7 +122,7 @@ export default function CadastrarNorma() {
 
           {/* ESCOPO */}
           <div>
-            <h1>Escopo</h1>
+            <h1 className="font-medium">Escopo</h1>
             <textarea
               value={escopo}
               required
@@ -134,7 +134,7 @@ export default function CadastrarNorma() {
           {/* LINHA 3 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <h1>Número da versão</h1>
+              <h1 className="font-medium">Número da versão</h1>
               <input
                 className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 hover:bg-gray-200"
                 type="text"
@@ -145,7 +145,7 @@ export default function CadastrarNorma() {
             </div>
 
             <div>
-              <h1>Data de publicação</h1>
+              <h1 className="font-medium">Data de publicação</h1>
               <input
                 className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100"
                 type="text"
@@ -157,7 +157,7 @@ export default function CadastrarNorma() {
 
           {/* DESCRIÇÃO */}
           <div>
-            <h1>Descrição da versão</h1>
+            <h1 className="font-medium">Descrição da versão</h1>
             <textarea
               value={descricao}
               required
@@ -168,7 +168,7 @@ export default function CadastrarNorma() {
 
           {/* ARQUIVO */}
           <div>
-            <h1>Arquivo .pdf</h1>
+            <h1 className="font-medium">Arquivo .pdf</h1>
 
             <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-5">
               <label className="cursor-pointer bg-blue-500 text-white px-3 py-2 rounded-lg font-bold text-center">
