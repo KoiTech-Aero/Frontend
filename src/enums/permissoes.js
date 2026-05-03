@@ -6,4 +6,5 @@ export const PERMISSOES = Object.freeze({
   SOLICITAR: "solicitar",
   CADASTRAR_USUARIO: "cadastrar_usuario",
   EDITAR_USUARIO: "editar_usuario",
+  VISUALIZAR_USUARIO: "visualizar_usuario",
 });
