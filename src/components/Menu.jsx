@@ -45,11 +45,21 @@ export default function Menu() {
         )}
 
         {/* CADASTRAR USUÁRIO */}
-        {temPermissao(usuario, PERMISSOES.PESQUISAR) && (
+        {temPermissao(usuario, PERMISSOES.CADASTRAR_USUARIO) && (
           <Link to="/cadastrarUsuario">
             <button className={btn}>
               <PanelsTopLeft />
               Cadastrar Usuário
+            </button>
+          </Link>
+        )}
+
+        {/* EDITAR USUÁRIO */}
+        {temPermissao(usuario, PERMISSOES.EDITAR_USUARIO) && (
+          <Link to="/editarUsuario">
+            <button className={btn}>
+              <PanelsTopLeft />
+              Editar Usuário
             </button>
           </Link>
         )}
