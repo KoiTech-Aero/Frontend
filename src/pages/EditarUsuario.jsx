@@ -1,27 +1,38 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 export default function EditarUsuario() {
-  const { id } = useParams();
   const navigate = useNavigate();
 
   const [nome, setNome] = useState("");
+  const [novoNome, setNovoNome] = useState("");
   const [email, setEmail] = useState("");
+  const [novoEmail, setNovoEmail] = useState("");
+  const [novaSenha, setNovaSenha] = useState("");
+  const [confirmacaoSenha, setConfirmacaoSenha] = useState("");
   const [role, setRole] = useState("Engenheiro");
   const [status, setStatus] = useState(true);
   const { usuario } = useContext(AuthContext);
+  const { id } = useParams();
+  console.log("ID:", id);
 
   useEffect(() => {
+    if (!id) {
+      return <p>ID inválido</p>;
+    }
     fetch(`http://localhost:3000/usuarios/${id}`)
-      .then((res) => res.json())
+      .then((res) => {
+        return res.json();
+      })
       .then((data) => {
         setNome(data.nome);
         setEmail(data.email);
         setRole(data.role);
         setStatus(data.status);
-      });
+      })
+      .catch((err) => console.error("erro:", err));
   }, [id]);
 
   async function handleSubmit(e) {
@@ -50,7 +61,7 @@ export default function EditarUsuario() {
       console.log(data);
 
       alert("Usuário atualizado com sucesso!");
-      navigate("/listarUsuarios");
+      navigate("/visualizarUsuario");
     } catch (error) {
       console.error(error);
     }
@@ -73,27 +84,73 @@ export default function EditarUsuario() {
 
         {/* FORM */}
         <div className="m-5 md:m-10 flex flex-col gap-5">
-          {/* NOME + EMAIL */}
+          {/* NOME + NOVO NOME */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <h1 className="font-medium">Nome</h1>
               <input
                 className="w-full border-4 rounded-md p-2 border-gray-300 bg-blue-50 text-gray-900"
                 type="text"
-                required
+                disabled
                 value={nome}
                 onChange={(e) => setNome(e.target.value)}
               />
             </div>
 
             <div>
+              <h1 className="font-medium">Novo nome</h1>
+              <input
+                className="w-full border-4 rounded-md p-2 border-gray-300 bg-blue-50 text-gray-900"
+                type="text"
+                value={novoNome}
+                onChange={(e) => setNovoNome(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {/* EMAIL + NOVO EMAIL */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
               <h1 className="font-medium">Email</h1>
               <input
                 className="w-full border-4 rounded-md p-2 border-gray-300 bg-blue-50 text-gray-900"
                 type="email"
-                required
+                disabled
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <h1 className="font-medium">Novo email</h1>
+              <input
+                className="w-full border-4 rounded-md p-2 border-gray-300 bg-blue-50 text-gray-900"
+                type="email"
+                value={novoEmail}
+                onChange={(e) => setNovoEmail(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {/* NOVA SENHA + CONFIRMACAO SENHA */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="w-full">
+              <h1 className="text-gray-900 font-medium mb-1">Nova senha</h1>
+              <input
+                className="w-full border-4 rounded-md p-2 border-gray-300 bg-blue-50 text-gray-900"
+                type="password"
+                value={novaSenha}
+                onChange={(e) => setNovaSenha(e.target.value)}
+              />
+            </div>
+
+            <div className="w-full">
+              <h1 className="text-gray-900 font-medium mb-1">Confirmar senha</h1>
+              <input
+                className="w-full border-4 rounded-md p-2 border-gray-300 bg-blue-50 text-gray-900"
+                type="password"
+                value={confirmacaoSenha}
+                onChange={(e) => setConfirmacaoSenha(e.target.value)}
               />
             </div>
           </div>
@@ -109,6 +166,7 @@ export default function EditarUsuario() {
               >
                 <option value="Engenheiro">Engenheiro</option>
                 <option value="Gestor">Gestor</option>
+                <option value="Visualizador">Visualizador</option>
               </select>
             </div>
 

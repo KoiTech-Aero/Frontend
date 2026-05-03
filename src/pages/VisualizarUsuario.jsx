@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function ListarUsuarios() {
+export default function VisualizarUsuario() {
   const [usuarios, setUsuarios] = useState([]);
   const navigate = useNavigate();
 
@@ -49,7 +49,7 @@ export default function ListarUsuarios() {
             </p>
 
             <button
-              onClick={() => navigate(`/editarUsuario`,{state: {id:usuario.id}})}
+              onClick={() => navigate(`/editarUsuario/${usuario.id}`)}
               className="bg-blue-600 text-white font-bold rounded-md px-4 py-2 cursor-pointer"
             >
               Editar

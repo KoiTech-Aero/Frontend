@@ -101,7 +101,7 @@ export default function App() {
             />
 
             <Route
-              path="/editarUsuario"
+              path="/editarUsuario/:id"
               element={
                 <RotaPrivada permissao={PERMISSOES.EDITAR_USUARIO}>
                   <EditarUsuario />
