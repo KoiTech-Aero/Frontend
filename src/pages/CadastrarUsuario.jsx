@@ -23,7 +23,7 @@ export default function CadastrarUsuario() {
 			const data = await response.json();
 
 			alert("Usuário Criado com sucesso!");
-			navigate("/listarUsuarios");
+			navigate("/visualizarUsuario");
 		} catch (error) {
 			console.error(error);
 		}
