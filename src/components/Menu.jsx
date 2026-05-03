@@ -69,6 +69,15 @@ export default function Menu() {
             </Link>
           )}
 
+          {temPermissao(usuario, PERMISSOES.VISUALIZAR_USUARIO) && (
+            <Link to="/visualizarUsuario">
+              <button className={btn}>
+                <User />
+                Visualizar Usuário
+              </button>
+            </Link>
+          )}
+
           {temPermissao(usuario, PERMISSOES.SOLICITAR) && (
             <Link to="/solicitarNorma">
               <button className={btn}>

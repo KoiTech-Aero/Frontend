@@ -17,6 +17,7 @@ import VisualizarVersao from "./pages/VisualizarVersao";
 import SolicitarNorma from "./pages/SolicitarNorma";
 import EditarUsuario from "./pages/EditarUsuario";
 import CadastrarUsuario from "./pages/CadastrarUsuario";
+import VisualizarUsuario from "./pages/VisualizarUsuario";
 
 export default function App() {
   return (
@@ -104,6 +105,15 @@ export default function App() {
               element={
                 <RotaPrivada permissao={PERMISSOES.EDITAR_USUARIO}>
                   <EditarUsuario />
+                </RotaPrivada>
+              }
+            />
+
+            <Route
+              path="/visualizarUsuario"
+              element={
+                <RotaPrivada permissao={PERMISSOES.VISUALIZAR_USUARIO}>
+                  <VisualizarUsuario />
                 </RotaPrivada>
               }
             />
