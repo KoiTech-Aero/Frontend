@@ -131,14 +131,14 @@ export default function VisualizarNorma() {
   return (
     <div
       ref={containerRef}
-      className="overflow-y-auto w-[90%] flex flex-col rounded-2xl bg-amber-50"
+      className="overflow-y-auto w-full max-w-5xl mx-auto flex flex-col rounded-2xl bg-white"
     >
       {/* Header */}
       <div className="m-5 flex flex-col gap-1">
         <h5 className="text-sm w-fit px-2 rounded-sm bg-blue-200 border border-blue-400 text-blue-500">
           {norma.codigo}
         </h5>
-        <h1 className="text-3xl font-bold">{norma.titulo}</h1>
+        <h1 className="text-2xl md:text-3xl font-bold">{norma.titulo}</h1>
       </div>
 
       <hr className="border-2 border-gray-300" />
@@ -147,10 +147,10 @@ export default function VisualizarNorma() {
       <div className="m-5">
         <div className="flex items-center gap-2">
           <FileText />
-          <h3 className="text-xl font-bold">Escopo</h3>
+          <h3 className="text-lg md:text-xl font-bold">Escopo</h3>
         </div>
 
-        <p className="border-4 rounded-md p-4 mt-4 border-gray-300 bg-gray-100 font-medium">
+        <p className="border-4 rounded-md p-3 md:p-4 mt-4 border-gray-300 bg-gray-100 font-medium">
           {norma.escopo}
         </p>
       </div>
@@ -159,31 +159,33 @@ export default function VisualizarNorma() {
 
       {/* Versões */}
       <div className="m-5">
-        <div className="flex justify-between">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
           <div className="flex items-center gap-2">
             <History />
-            <h3 className="text-xl font-bold">Versões</h3>
+            <h3 className="text-lg md:text-xl font-bold">Versões</h3>
           </div>
 
           <button
-            className="bg-blue-600 text-white font-bold rounded-md cursor-pointer px-2 py-0.5 transition duration-1000 ease-in-out hover:bg-blue-700"
+            className="bg-blue-600 text-white font-bold rounded-md px-3 py-1 hover:bg-blue-700"
             onClick={() => navigate("/cadastrarVersao", { state: { norma } })}
           >
             Adicionar Versão
           </button>
         </div>
 
-        <div className="flex flex-col gap-3 mt-4 cursor-default">
+        <div className="flex flex-col gap-3 mt-4">
           {norma.versoes
             ?.slice()
             .reverse()
             .map((versao) => (
               <div
                 key={versao.id}
-                className="flex justify-between items-center p-3 border-4 rounded-md border-gray-300 bg-gray-100"
+                className="flex flex-col md:flex-row md:justify-between md:items-center gap-3 p-3 border-4 rounded-md border-gray-300 bg-gray-100"
               >
                 <div>
-                  <h4 className="text-lg font-bold">{versao.versao_numero}</h4>
+                  <h4 className="text-base md:text-lg font-bold">
+                    {versao.versao_numero}
+                  </h4>
                   <p className="text-gray-600 font-light">{versao.descricao}</p>
                   <p className="text-gray-600 font-light">
                     {new Date(versao.data_publicacao).toLocaleDateString(
@@ -192,7 +194,7 @@ export default function VisualizarNorma() {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
                   <p
                     className={`text-white rounded-2xl px-4 py-1 text-sm font-bold ${
                       versao.status ? "bg-green-500" : "bg-red-500"
@@ -207,7 +209,7 @@ export default function VisualizarNorma() {
                         state: { norma, versao },
                       })
                     }
-                    className="font-bold text-gray-500 cursor-pointer hover:text-blue-500"
+                    className="font-bold text-gray-500 hover:text-blue-500 text-center w-full md:w-auto md:text-left"
                   >
                     Visualizar
                   </button>
@@ -223,24 +225,25 @@ export default function VisualizarNorma() {
       <div className="m-5">
         <div className="flex items-center gap-2">
           <LinkIcon />
-          <h3 className="text-xl font-bold">Normas Relacionadas</h3>
+          <h3 className="text-lg md:text-xl font-bold">Normas Relacionadas</h3>
         </div>
 
-        <div className="grid grid-cols-2 pt-5 gap-5 mx-5 cursor-pointer">
+        <div className="grid grid-cols-1 md:grid-cols-2 pt-5 gap-4 md:gap-5 mx-0 md:mx-5">
           {referencias.map((ref) => (
             <div
               key={ref.id}
-              className="flex justify-between border-4 rounded-md border-gray-300 bg-gray-100 p-2 transition duration-1000 ease-in-out hover:bg-gray-200"
+              className="flex flex-col md:flex-row md:justify-between md:items-center gap-3 border-4 rounded-md border-gray-300 bg-gray-100 p-3 hover:bg-gray-200"
             >
-              <div className="flex items-center">
+              <div className="flex flex-wrap items-center gap-2">
                 <h5 className="text-sm px-2 rounded-sm bg-blue-200 border border-blue-400 text-blue-500">
                   {ref.codigo}
                 </h5>
-                <h1 className="font-medium mx-5">{ref.titulo}</h1>
+                <h1 className="font-medium">{ref.titulo}</h1>
               </div>
+
               <button
                 onClick={() => redirectNormaReferencia(ref.id)}
-                className="bg-blue-600 text-white font-bold rounded-md cursor-pointer px-2 py-0.5 transition duration-1000 ease-in-out hover:bg-blue-700"
+                className="bg-blue-600 text-white font-bold rounded-md px-2 py-1 hover:bg-blue-700 w-full md:w-auto"
               >
                 Ir para norma
               </button>
@@ -252,16 +255,16 @@ export default function VisualizarNorma() {
               setMostrarRelacoes(true);
               loadTodasNormas();
             }}
-            className="flex gap-2 border-4 rounded-md border-gray-300 bg-gray-100 p-2 border-dotted justify-center items-center transition duration-1000 ease-in-out hover:bg-gray-200"
+            className="flex flex-col gap-2 border-4 rounded-md border-gray-300 bg-gray-100 p-6 border-dotted justify-center items-center hover:bg-gray-200"
           >
-            <h1 className="font-medium">Adicionar Relação</h1>
+            <h1 className="font-medium text-center">Adicionar Relação</h1>
           </div>
         </div>
 
         {/* MODAL */}
         {mostrarRelacoes && (
-          <div className="fixed top-0 left-0 w-full h-full bg-black/30 flex justify-center items-center">
-            <div className="bg-white p-5 rounded-lg w-100 max-h-125 overflow-y-auto">
+          <div className="fixed inset-0 bg-black/30 flex justify-center items-center px-4">
+            <div className="bg-white p-5 rounded-lg w-full max-w-md max-h-[80vh] overflow-y-auto">
               <h2 className="text-lg font-bold mb-3">Selecionar Norma</h2>
 
               {todasNormas.map((n) => (
@@ -276,10 +279,11 @@ export default function VisualizarNorma() {
                   {n.titulo}
                 </div>
               ))}
+
               <div className="w-full flex justify-end">
                 <button
                   onClick={() => setMostrarRelacoes(false)}
-                  className="mt-3 bg-gray-400 text-white px-3 py-1 rounded cursor-pointer hover:bg-gray-500 transition duration-1000 ease-in-out"
+                  className="mt-3 bg-gray-400 text-white px-3 py-1 rounded hover:bg-gray-500"
                 >
                   Fechar
                 </button>

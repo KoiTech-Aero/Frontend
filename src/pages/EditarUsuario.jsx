@@ -28,11 +28,14 @@ export default function EditarUsuario() {
     e.preventDefault();
 
     if (!status) {
-      const confirmar = window.confirm("Tem certeza que deseja desativar este usuário?");
+      const confirmar = window.confirm(
+        "Tem certeza que deseja desativar este usuário?",
+      );
       if (!confirmar) return;
-    } 
-    else {
-      const confirmar = window.confirm("Tem certeza que deseja ativar este usuário?");
+    } else {
+      const confirmar = window.confirm(
+        "Tem certeza que deseja ativar este usuário?",
+      );
       if (!confirmar) return;
     }
 
@@ -52,22 +55,28 @@ export default function EditarUsuario() {
       console.error(error);
     }
   }
-  
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="overflow-y-auto w-[90%] flex flex-col rounded-2xl bg-white">
+    <form onSubmit={handleSubmit} className="w-full flex justify-center">
+      <div className="overflow-y-auto w-full max-w-3xl flex flex-col rounded-2xl bg-white">
+        {/* HEADER */}
         <div className="m-5 flex flex-col">
-          <h1 className="text-3xl font-bold text-gray-900">Editar usuário</h1>
-          <h2 className="text-md text-gray-500">Atualize os dados do usuário.</h2>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+            Editar usuário
+          </h1>
+          <h2 className="text-md text-gray-500">
+            Atualize os dados do usuário.
+          </h2>
         </div>
 
         <hr className="border-2 border-gray-200" />
 
-        <div className="m-10 flex flex-col gap-5">
-          <div className="flex justify-between items-center gap-x-30">
-            <div className="w-full">
-              <h1 className="text-gray-900 font-medium mb-1">Nome</h1>
+        {/* FORM */}
+        <div className="m-5 md:m-10 flex flex-col gap-5">
+          {/* NOME + EMAIL */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <h1 className="font-medium">Nome</h1>
               <input
                 className="w-full border-4 rounded-md p-2 border-gray-300 bg-blue-50 text-gray-900"
                 type="text"
@@ -76,8 +85,9 @@ export default function EditarUsuario() {
                 onChange={(e) => setNome(e.target.value)}
               />
             </div>
-            <div className="w-full">
-              <h1 className="text-gray-900 font-medium mb-1">Email</h1>
+
+            <div>
+              <h1 className="font-medium">Email</h1>
               <input
                 className="w-full border-4 rounded-md p-2 border-gray-300 bg-blue-50 text-gray-900"
                 type="email"
@@ -88,9 +98,10 @@ export default function EditarUsuario() {
             </div>
           </div>
 
-          <div className="flex justify-between items-center gap-x-30">
-            <div className="w-full">
-              <h1 className="text-gray-900 font-medium mb-1">Função</h1>
+          {/* FUNÇÃO + STATUS */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <h1 className="font-medium">Função</h1>
               <select
                 className="w-full border-4 rounded-md p-2 border-gray-300 bg-blue-50 text-gray-900"
                 value={role}
@@ -100,8 +111,9 @@ export default function EditarUsuario() {
                 <option value="Gestor">Gestor</option>
               </select>
             </div>
-            <div className="w-full">
-              <h1 className="text-gray-900 font-medium mb-1">Status</h1>
+
+            <div>
+              <h1 className="font-medium">Status</h1>
               <select
                 className="w-full border-4 rounded-md p-2 border-gray-300 bg-blue-50 text-gray-900"
                 value={status}
@@ -113,16 +125,19 @@ export default function EditarUsuario() {
             </div>
           </div>
 
-          <div className="flex justify-between gap-x-10">
+          {/* BOTÕES 75 / 25 */}
+          <div className="flex flex-col md:flex-row gap-3 md:gap-5 w-full">
             <button
               type="submit"
-              className="w-125 bg-blue-600 text-white font-bold rounded-md cursor-pointer p-2"
+              className="w-full md:w-[75%] bg-blue-600 text-white font-bold rounded-md p-2 cursor-pointer"
             >
               Salvar alterações
             </button>
+
             <button
+              type="button"
               onClick={() => navigate("/listarUsuarios")}
-              className="w-50 border-4 rounded-md p-1 border-gray-300 bg-white text-gray-900 cursor-pointer"
+              className="w-full md:w-[25%] border-4 rounded-md p-1 border-gray-300 bg-white text-gray-900 cursor-pointer"
             >
               Cancelar
             </button>
