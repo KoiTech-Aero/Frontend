@@ -1,67 +1,118 @@
-import { useState, useEffect } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useContext } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 export default function EditarUsuario() {
-  const navigate = useNavigate();
+  const { id } = useParams();
+  const { usuario, updateUsuario } = useContext(AuthContext);
+
+  const [original, setOriginal] = useState(null);
 
   const [nome, setNome] = useState("");
   const [novoNome, setNovoNome] = useState("");
+
   const [email, setEmail] = useState("");
   const [novoEmail, setNovoEmail] = useState("");
+
   const [novaSenha, setNovaSenha] = useState("");
   const [confirmacaoSenha, setConfirmacaoSenha] = useState("");
+
   const [role, setRole] = useState("Engenheiro");
   const [status, setStatus] = useState(true);
-  const { usuario } = useContext(AuthContext);
-  const { id } = useParams();
-  console.log("ID:", id);
+
+  const isSelfEdit = usuario?.id === id;
 
   useEffect(() => {
-    if (!id) {
-      return <p>ID inválido</p>;
-    }
+    if (!id) return;
+
     fetch(`http://localhost:3000/usuarios/${id}`)
-      .then((res) => {
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((data) => {
+        setOriginal(data);
         setNome(data.nome);
         setEmail(data.email);
         setRole(data.role);
         setStatus(data.status);
       })
-      .catch((err) => console.error("erro:", err));
+      .catch((err) => console.error(err));
   }, [id]);
+
+  if (!original) return null;
+
+  // detectar mudanças
+  const houveMudanca =
+    novoNome.trim() !== "" ||
+    novoEmail.trim() !== "" ||
+    novaSenha.trim() !== "" ||
+    role !== original.role ||
+    status !== original.status;
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!status) {
-      const confirmar = window.confirm(
-        "Tem certeza que deseja desativar este usuário?",
-      );
-      if (!confirmar) return;
-    } else {
-      const confirmar = window.confirm(
-        "Tem certeza que deseja ativar este usuário?",
-      );
-      if (!confirmar) return;
+    if (!houveMudanca) {
+      alert("Nenhuma alteração foi feita.");
+      return;
+    }
+
+    if (status !== original.status) {
+      const msg = status
+        ? "Tem certeza que deseja ativar este usuário?"
+        : "Tem certeza que deseja desativar este usuário?";
+
+      if (!window.confirm(msg)) return;
     }
 
     try {
+      const body = {};
+
+      if (novaSenha.trim()) {
+        if (novaSenha !== confirmacaoSenha) {
+          alert("As senhas não coincidem");
+          return;
+        }
+
+        body.senha = novaSenha;
+      }
+
+      if (novoNome.trim()) body.nome = novoNome;
+      if (novoEmail.trim()) body.email = novoEmail;
+      if (novaSenha.trim()) body.senha = novaSenha;
+
+      if (!isSelfEdit) {
+        if (role !== original.role) body.role = role;
+        if (status !== original.status) body.status = status;
+      }
+
+      console.log(body);
+
       const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nome, email, role, status }),
+        body: JSON.stringify(body),
       });
 
       const data = await response.json();
-      console.log(data);
+
+      // atualiza contexto
+      if (usuario.id === id) {
+        updateUsuario(data);
+      }
+
+      // atualiza valores atuais
+      setOriginal(data);
+      setNome(data.nome);
+      setEmail(data.email);
+      setRole(data.role);
+      setStatus(data.status);
+
+      // limpa campos opcionais
+      setNovoNome("");
+      setNovoEmail("");
+      setNovaSenha("");
+      setConfirmacaoSenha("");
 
       alert("Usuário atualizado com sucesso!");
-      navigate("/visualizarUsuario");
     } catch (error) {
       console.error(error);
     }
@@ -69,12 +120,9 @@ export default function EditarUsuario() {
 
   return (
     <form onSubmit={handleSubmit} className="w-full flex justify-center">
-      <div className="overflow-y-auto w-full max-w-3xl flex flex-col rounded-2xl bg-white">
-        {/* HEADER */}
-        <div className="m-5 flex flex-col">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
-            Editar usuário
-          </h1>
+      <div className="w-full max-w-3xl flex flex-col rounded-2xl bg-white">
+        <div className="m-5">
+          <h1 className="text-2xl md:text-3xl font-bold">Editar usuário</h1>
           <h2 className="text-md text-gray-500">
             Atualize os dados do usuário.
           </h2>
@@ -82,100 +130,97 @@ export default function EditarUsuario() {
 
         <hr className="border-2 border-gray-200" />
 
-        {/* FORM */}
         <div className="m-5 md:m-10 flex flex-col gap-5">
-          {/* NOME + NOVO NOME */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* NOME */}
+          <div className="grid md:grid-cols-2 gap-5">
             <div>
-              <h1 className="font-medium">Nome</h1>
+              <h1 className="font-medium">Nome atual</h1>
               <input
-                className="w-full border-4 rounded-md p-2 border-gray-300 bg-blue-50 text-gray-900"
-                type="text"
                 disabled
                 value={nome}
-                onChange={(e) => setNome(e.target.value)}
+                className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 hover:bg-gray-200"
               />
             </div>
 
             <div>
               <h1 className="font-medium">Novo nome</h1>
               <input
-                className="w-full border-4 rounded-md p-2 border-gray-300 bg-blue-50 text-gray-900"
-                type="text"
                 value={novoNome}
                 onChange={(e) => setNovoNome(e.target.value)}
+                className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 hover:bg-gray-200"
               />
             </div>
           </div>
 
-          {/* EMAIL + NOVO EMAIL */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* EMAIL */}
+          <div className="grid md:grid-cols-2 gap-5">
             <div>
-              <h1 className="font-medium">Email</h1>
+              <h1 className="font-medium">Email atual</h1>
               <input
-                className="w-full border-4 rounded-md p-2 border-gray-300 bg-blue-50 text-gray-900"
-                type="email"
                 disabled
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 hover:bg-gray-200"
               />
             </div>
 
             <div>
               <h1 className="font-medium">Novo email</h1>
               <input
-                className="w-full border-4 rounded-md p-2 border-gray-300 bg-blue-50 text-gray-900"
-                type="email"
                 value={novoEmail}
                 onChange={(e) => setNovoEmail(e.target.value)}
+                className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 hover:bg-gray-200"
               />
             </div>
           </div>
 
-          {/* NOVA SENHA + CONFIRMACAO SENHA */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div className="w-full">
-              <h1 className="text-gray-900 font-medium mb-1">Nova senha</h1>
-              <input
-                className="w-full border-4 rounded-md p-2 border-gray-300 bg-blue-50 text-gray-900"
-                type="password"
-                value={novaSenha}
-                onChange={(e) => setNovaSenha(e.target.value)}
-              />
-            </div>
+          {/* SENHA */}
+          <div className="grid md:grid-cols-2 gap-5">
+            <input
+              type="password"
+              placeholder="Nova senha"
+              value={novaSenha}
+              onChange={(e) => setNovaSenha(e.target.value)}
+              className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 hover:bg-gray-200"
+            />
 
-            <div className="w-full">
-              <h1 className="text-gray-900 font-medium mb-1">Confirmar senha</h1>
-              <input
-                className="w-full border-4 rounded-md p-2 border-gray-300 bg-blue-50 text-gray-900"
-                type="password"
-                value={confirmacaoSenha}
-                onChange={(e) => setConfirmacaoSenha(e.target.value)}
-              />
-            </div>
+            <input
+              type="password"
+              placeholder="Confirmar senha"
+              value={confirmacaoSenha}
+              onChange={(e) => setConfirmacaoSenha(e.target.value)}
+              className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 hover:bg-gray-200"
+            />
           </div>
 
-          {/* FUNÇÃO + STATUS */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div>
-              <h1 className="font-medium">Função</h1>
+          {/* ROLE + STATUS */}
+          <div className="grid md:grid-cols-2 gap-5">
+            {/* FUNÇÃO */}
+            <div className="flex flex-col">
+              <h1 className="font-medium mb-1">Função</h1>
               <select
-                className="w-full border-4 rounded-md p-2 border-gray-300 bg-blue-50 text-gray-900"
+                disabled={isSelfEdit}
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
+                className={`w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 hover:bg-gray-200 ${
+                  isSelfEdit ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
-                <option value="Engenheiro">Engenheiro</option>
-                <option value="Gestor">Gestor</option>
-                <option value="Visualizador">Visualizador</option>
+                <option>Engenheiro</option>
+                <option>Gestor</option>
+                <option>Visualizador</option>
               </select>
             </div>
 
-            <div>
-              <h1 className="font-medium">Status</h1>
+            {/* STATUS */}
+            <div className="flex flex-col">
+              <h1 className="font-medium mb-1">Status</h1>
               <select
-                className="w-full border-4 rounded-md p-2 border-gray-300 bg-blue-50 text-gray-900"
+                disabled={isSelfEdit}
                 value={status}
                 onChange={(e) => setStatus(e.target.value === "true")}
+                className={`w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 hover:bg-gray-200 ${
+                  isSelfEdit ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
                 <option value="true">Ativo</option>
                 <option value="false">Inativo</option>
@@ -183,21 +228,23 @@ export default function EditarUsuario() {
             </div>
           </div>
 
-          {/* BOTÕES 75 / 25 */}
-          <div className="flex flex-col md:flex-row gap-3 md:gap-5 w-full">
-            <button
-              type="submit"
-              className="w-full md:w-[75%] bg-blue-600 text-white font-bold rounded-md p-2 cursor-pointer"
-            >
-              Salvar alterações
-            </button>
+          {isSelfEdit && (
+            <p className="text-xs text-gray-500">
+              Você não pode alterar sua própria função ou status.
+            </p>
+          )}
 
+          {/* BOTÕES */}
+          <div className="flex gap-4">
             <button
-              type="button"
-              onClick={() => navigate("/listarUsuarios")}
-              className="w-full md:w-[25%] border-4 rounded-md p-1 border-gray-300 bg-white text-gray-900 cursor-pointer"
+              disabled={!houveMudanca}
+              className={`w-full p-2 font-bold rounded-md cursor-pointer ${
+                houveMudanca
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-300 text-gray-500"
+              }`}
             >
-              Cancelar
+              Salvar
             </button>
           </div>
         </div>
