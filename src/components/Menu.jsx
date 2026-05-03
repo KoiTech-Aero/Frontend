@@ -60,11 +60,11 @@ export default function Menu() {
             </Link>
           )}
 
-          {temPermissao(usuario, PERMISSOES.VISUALIZAR_USUARIO) && (
-            <Link to="/visualizarUsuario">
+          {temPermissao(usuario, PERMISSOES.VISUALIZAR_USUARIOS) && (
+            <Link to="/visualizarUsuarios">
               <button className={btn}>
                 <User />
-                Visualizar Usuário
+                Visualizar Usuários
               </button>
             </Link>
           )}
@@ -77,15 +77,24 @@ export default function Menu() {
               </button>
             </Link>
           )}
+
+          {temPermissao(usuario, PERMISSOES.EDITAR_USUARIO) && (
+            <Link to={`/editarUsuario/${usuario.id}`}>
+              <button className={btn}>
+                <User />
+                Meu Perfil
+              </button>
+            </Link>
+          )}
         </div>
 
-        <div className="bg-slate-800 p-6 rounded-xl text-white">
+        <div className="bg-slate-800 p-3 rounded-xl text-white">
           <p className="font-bold">{usuario?.nome}</p>
           <p className="text-sm opacity-70">{usuario?.role}</p>
 
           <button
             onClick={handleLogout}
-            className="mt-4 w-full h-12 flex items-center justify-center gap-2 bg-red-500 rounded-xl text-white font-bold transition duration-300 hover:bg-red-600 active:scale-[0.98] cursor-pointer"
+            className="mt-4 w-full h-auto flex items-center justify-center gap-2 bg-red-500 rounded-md text-white font-bold transition duration-300 hover:bg-red-600 active:scale-[0.98] cursor-pointer"
           >
             <LogOut size={18} />
             Sair
@@ -148,9 +157,9 @@ export default function Menu() {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-end">
           <div className="bg-slate-900 w-full p-6 rounded-t-2xl flex flex-col gap-4">
             {temPermissao(usuario, PERMISSOES.EDITAR_USUARIO) && (
-              <Link to="/editarUsuario" onClick={() => setOpenMore(false)}>
+              <Link to="/editarUsuario/:id" onClick={() => setOpenMore(false)}>
                 <button className="w-full text-left text-white">
-                  Editar Usuário
+                  Perfil
                 </button>
               </Link>
             )}
@@ -159,6 +168,14 @@ export default function Menu() {
               <Link to="/solicitarNorma" onClick={() => setOpenMore(false)}>
                 <button className="w-full text-left text-white">
                   Solicitar Normas
+                </button>
+              </Link>
+            )}
+
+            {temPermissao(usuario, PERMISSOES.VISUALIZAR_USUARIOS) && (
+              <Link to="/visualizarUsuarios" onClick={() => setOpenMore(false)}>
+                <button className="w-full text-left text-white">
+                  Visualizar Usuários
                 </button>
               </Link>
             )}
