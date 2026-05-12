@@ -83,8 +83,10 @@ export default function VisualizarNorma() {
 
       const data = await response.json();
 
-      // remove a própria norma da lista
-      const filtradas = data.filter((n) => n.id !== norma.id);
+      const referenciasIds = referencias.map((ref) => ref.id);
+      const filtradas = data.filter(
+        (n) => n.id !== norma.id && !referenciasIds.includes(n.id),
+      );
 
       setTodasNormas(filtradas);
     } catch (err) {

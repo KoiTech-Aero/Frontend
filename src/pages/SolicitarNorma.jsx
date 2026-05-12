@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { FileText } from "lucide-react";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export default function SolicitarNorma() {
+  const { usuario: usuarioLogado } = useContext(AuthContext);
+
   const [formData, setFormData] = useState({
     titulo: "",
     motivo: "",
     codigo_norma: "",
     versao_norma: "",
     orgao_emissor: "",
+    id_usuario: usuarioLogado.id,
   });
 
   function handleChange(e) {
@@ -19,8 +24,18 @@ export default function SolicitarNorma() {
     }));
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+
+    const verificaResponse = await fetch("http://localhost:3000/normas");
+    const normas = await verificaResponse.json();
+
+    const codigoExiste = normas.some((norma) => norma.codigo === formData.codigo_norma);
+
+    if (codigoExiste) {
+      alert("Já existe uma norma cadastrada com esse código!");
+      return;
+    }
 
     fetch("http://localhost:3000/solicitacoes/norma", {
       method: "POST",
@@ -33,6 +48,7 @@ export default function SolicitarNorma() {
         codigo_norma: formData.codigo_norma || undefined,
         versao_norma: formData.versao_norma || undefined,
         orgao_emissor: formData.orgao_emissor || undefined,
+        id_usuario: formData.id_usuario || undefined,
       }),
     })
       .then((res) => res.json())
@@ -45,6 +61,7 @@ export default function SolicitarNorma() {
           codigo_norma: "",
           versao_norma: "",
           orgao_emissor: "",
+          id_usuario: "",
         });
 
         alert("Norma solicitada com sucesso!");
@@ -77,9 +94,9 @@ export default function SolicitarNorma() {
                 name="titulo"
                 value={formData.titulo}
                 onChange={handleChange}
+                required
                 className="w-full mt-1 border-4 border-gray-300 rounded-md p-2 bg-gray-100"
                 type="text"
-                required
               />
             </div>
 
@@ -90,8 +107,8 @@ export default function SolicitarNorma() {
                 name="motivo"
                 value={formData.motivo}
                 onChange={handleChange}
-                className="w-full mt-1 border-4 border-gray-300 rounded-md p-2 bg-gray-100 min-h-25 resize-none"
                 required
+                className="w-full mt-1 border-4 border-gray-300 rounded-md p-2 bg-gray-100 min-h-25 resize-none"
               />
             </div>
 
@@ -102,6 +119,7 @@ export default function SolicitarNorma() {
                 name="codigo_norma"
                 value={formData.codigo_norma}
                 onChange={handleChange}
+                required
                 className="w-full mt-1 border-4 border-gray-300 rounded-md p-2 bg-gray-100"
                 type="text"
                 placeholder="Ex: NBR 1234"
@@ -115,6 +133,7 @@ export default function SolicitarNorma() {
                 name="versao_norma"
                 value={formData.versao_norma}
                 onChange={handleChange}
+                required
                 className="w-full mt-1 border-4 border-gray-300 rounded-md p-2 bg-gray-100"
                 type="text"
                 placeholder="Ex: 2020"
@@ -122,15 +141,29 @@ export default function SolicitarNorma() {
             </div>
 
             {/* ÓRGÃO */}
-            <div className="md:col-span-2">
+            <div>
               <h1 className="font-medium">Órgão Emissor</h1>
               <input
                 name="orgao_emissor"
                 value={formData.orgao_emissor}
                 onChange={handleChange}
+                required
                 className="w-full mt-1 border-4 border-gray-300 rounded-md p-2 bg-gray-100"
                 type="text"
                 placeholder="Ex: ABNT"
+              />
+            </div>
+
+            {/* AUTOR */}
+            <div>
+              <h1 className="font-medium">Autor da solicitação</h1>
+              <input
+                name="autor"
+                value={usuarioLogado.nome}
+                disabled
+                required
+                className="w-full mt-1 border-4 border-gray-300 rounded-md p-2 bg-gray-100"
+                type="text"
               />
             </div>
           </div>
