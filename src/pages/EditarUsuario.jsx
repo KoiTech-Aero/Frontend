@@ -15,7 +15,7 @@ export default function EditarUsuario() {
   const [novoEmail, setNovoEmail] = useState("");
 
   const [novaSenha, setNovaSenha] = useState("");
-  const [confirmacaoSenha, setConfirmacaoSenha] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
 
   const [role, setRole] = useState("Engenheiro");
   const [status, setStatus] = useState(true);
@@ -67,8 +67,11 @@ export default function EditarUsuario() {
       const body = {};
 
       if (novaSenha.trim()) {
-        if (novaSenha !== confirmacaoSenha) {
+        if (novaSenha !== confirmarSenha) {
           alert("As senhas não coincidem");
+          return;
+        } else if (novaSenha.length < 6){
+          alert("A senha deve possuir no mínimo 6 caracteres!");
           return;
         }
 
@@ -77,7 +80,6 @@ export default function EditarUsuario() {
 
       if (novoNome.trim()) body.nome = novoNome;
       if (novoEmail.trim()) body.email = novoEmail;
-      if (novaSenha.trim()) body.senha = novaSenha;
 
       if (!isSelfEdit) {
         if (role !== original.role) body.role = role;
@@ -110,7 +112,7 @@ export default function EditarUsuario() {
       setNovoNome("");
       setNovoEmail("");
       setNovaSenha("");
-      setConfirmacaoSenha("");
+      setConfirmarSenha("");
 
       alert("Usuário atualizado com sucesso!");
     } catch (error) {
@@ -186,8 +188,8 @@ export default function EditarUsuario() {
             <input
               type="password"
               placeholder="Confirmar senha"
-              value={confirmacaoSenha}
-              onChange={(e) => setConfirmacaoSenha(e.target.value)}
+              value={confirmarSenha}
+              onChange={(e) => setConfirmarSenha(e.target.value)}
               className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 hover:bg-gray-200"
             />
           </div>
