@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { AuthContext } from "../context/AuthContext";
 
 export default function VisualizarSolicitacoesNormas() {
   const navigate = useNavigate();
@@ -8,6 +9,8 @@ export default function VisualizarSolicitacoesNormas() {
   const [solicitacaoSelecionada, setSolicitacaoSelecionada] = useState({});
   const [usuarios, setUsuarios] = useState({});
   const [modal, setModal] = useState(false);
+
+  const { usuario: usuarioLogado } = useContext(AuthContext);
 
   useEffect(() => {
     fetch("http://localhost:3000/solicitacoes/norma")
@@ -48,6 +51,14 @@ export default function VisualizarSolicitacoesNormas() {
       carregarUsuarios();
     }
   }, [solicitacoes]);
+
+  function solicitacaoPendente(status) {
+    return status === "Pendente";
+  }
+
+  function permissaoCadastro(status, usuario) {
+    return status === "Aprovado" && usuario?.role === "Gestor";
+  }
 
   return (
     <div className="w-full flex justify-center">
@@ -93,17 +104,17 @@ export default function VisualizarSolicitacoesNormas() {
                 <span
                   className={`px-3 py-1 rounded-full text-sm font-medium
                   ${
-                    solicitacaoSelecionada.status === "Pendente"
+                    solicitacao.status === "Pendente"
                       ? "bg-yellow-100 text-yellow-700"
-                      : solicitacaoSelecionada.status === "Aprovada"
+                      : solicitacao.status === "Aprovado"
                         ? "bg-green-100 text-green-700"
-                        : solicitacaoSelecionada.status === "Rejeitada"
+                        : solicitacao.status === "Recusado"
                           ? "bg-red-100 text-red-700"
                           : "bg-gray-100 text-gray-700"
                   }
                 `}
                 >
-                  {solicitacaoSelecionada.status}
+                  {solicitacao.status}
                 </span>
               </div>
 
@@ -157,9 +168,9 @@ export default function VisualizarSolicitacoesNormas() {
                           ${
                             solicitacaoSelecionada.status === "Pendente"
                               ? "bg-yellow-100 text-yellow-700"
-                              : solicitacaoSelecionada.status === "Aprovada"
+                              : solicitacaoSelecionada.status === "Aprovado"
                                 ? "bg-green-100 text-green-700"
-                                : solicitacaoSelecionada.status === "Rejeitada"
+                                : solicitacaoSelecionada.status === "Recusado"
                                   ? "bg-red-100 text-red-700"
                                   : "bg-gray-100 text-gray-700"
                           }
@@ -219,24 +230,35 @@ export default function VisualizarSolicitacoesNormas() {
                       </div>
 
                       {/* AÇÕES */}
-                      <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                        <button className="flex-1 bg-blue-600 hover:bg-blue-700 transition text-white py-3 rounded-xl font-semibold">
-                          Aprovar
-                        </button>
+                      {solicitacaoPendente(solicitacaoSelecionada.status) && (
+                        <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                          <button className="flex-1 bg-blue-600 hover:bg-blue-700 transition text-white py-3 rounded-xl font-semibold">
+                            Aprovar
+                          </button>
 
-                        <button className="flex-1 bg-red-600 hover:bg-red-700 transition text-white py-3 rounded-xl font-semibold">
-                          Rejeitar
-                        </button>
-                      </div>
+                          <button className="flex-1 bg-red-600 hover:bg-red-700 transition text-white py-3 rounded-xl font-semibold">
+                            Rejeitar
+                          </button>
+                        </div>
+                      )}
 
-                      <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                        <button
-                          onClick={() => navigate("/cadastrarNorma", {state: {solicitacaoSelecionada }})}
-                          className="flex-1 bg-green-600 hover:bg-green-700 transition text-white py-3 rounded-xl font-semibold"
-                        >
-                          Cadastrar Norma
-                        </button>
-                      </div>
+                      {permissaoCadastro(
+                        solicitacaoSelecionada.status,
+                        usuarioLogado,
+                      ) && (
+                        <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                          <button
+                            onClick={() =>
+                              navigate("/cadastrarNorma", {
+                                state: { solicitacaoSelecionada },
+                              })
+                            }
+                            className="flex-1 bg-green-600 hover:bg-green-700 transition text-white py-3 rounded-xl font-semibold"
+                          >
+                            Cadastrar Norma
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
