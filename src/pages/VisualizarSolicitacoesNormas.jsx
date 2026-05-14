@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 export default function VisualizarSolicitacoesNormas() {
@@ -8,6 +8,46 @@ export default function VisualizarSolicitacoesNormas() {
   const [solicitacaoSelecionada, setSolicitacaoSelecionada] = useState({});
   const [usuarios, setUsuarios] = useState({});
   const [modal, setModal] = useState(false);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/solicitacoes/norma")
+      .then((res) => res.json())
+      .then((data) => setSolicitacoes(data))
+      .catch((err) => console.error("Erro ao buscar normas:", err));
+  }, []);
+
+  useEffect(() => {
+    async function carregarUsuarios() {
+      const usuariosMap = {};
+
+      await Promise.all(
+        solicitacoes.map(async (solicitacao) => {
+          const id = solicitacao.usuario.id;
+
+          if (!usuariosMap[id]) {
+            try {
+              const response = await fetch(
+                `http://localhost:3000/usuarios/${id}`,
+              );
+
+              const data = await response.json();
+
+              usuariosMap[id] = data.nome;
+            } catch (error) {
+              console.error("Erro ao buscar usuário:", error);
+              usuariosMap[id] = "Usuário não encontrado";
+            }
+          }
+        }),
+      );
+
+      setUsuarios(usuariosMap);
+    }
+
+    if (solicitacoes.length > 0) {
+      carregarUsuarios();
+    }
+  }, [solicitacoes]);
 
   return (
     <div className="w-full flex justify-center">
