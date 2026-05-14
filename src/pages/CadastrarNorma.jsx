@@ -1,16 +1,27 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 
 export default function CadastrarNorma() {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [codigo, setCodigo] = useState("");
-  const [titulo, setTitulo] = useState("");
+  const solicitacaoSelecionada = location.state?.solicitacaoSelecionada;
+
+  const [codigo, setCodigo] = useState(
+    solicitacaoSelecionada?.codigo_norma || ""
+  );
+
+  const [titulo, setTitulo] = useState(
+    solicitacaoSelecionada?.titulo || ""
+  );
   const [escopo, setEscopo] = useState("");
   const [area_tecnica, setAreaTecnica] = useState("");
-  const [orgao_emissor, setOrgaoEmissor] = useState("");
-
-  const [versao_numero, setVersaoNumero] = useState("");
+  const [orgao_emissor, setOrgaoEmissor] = useState(
+    solicitacaoSelecionada?.orgao_emissor || ""
+  );
+  const [versao_numero, setVersaoNumero] = useState(
+    solicitacaoSelecionada?.versao_norma || ""
+  );
   const [descricao, setDescricao] = useState("");
   const [data_publicacao, setDataPublicacao] = useState(
     new Date().toISOString().split("T")[0],
