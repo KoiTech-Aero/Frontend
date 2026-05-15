@@ -60,6 +60,42 @@ export default function VisualizarSolicitacoesNormas() {
     return status === "Aprovado" && usuario?.role === "Gestor";
   }
 
+  async function atualizarStatus(status) {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/solicitacoes/norma/${solicitacaoSelecionada.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            status,
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Erro ao atualizar solicitação");
+      }
+
+      const data = await response.json();
+
+      console.log(data);
+
+      alert(
+        status === "Aprovado"
+          ? "Solicitação aprovada com sucesso!"
+          : "Solicitação recusada com sucesso!",
+      );
+
+      navigate(0);
+    } catch (error) {
+      console.error(error);
+      alert("Erro ao atualizar solicitação.");
+    }
+  }
+
   return (
     <div className="w-full flex justify-center">
       <div className="overflow-y-auto w-full max-w-3xl flex flex-col rounded-2xl bg-amber-50">
@@ -232,11 +268,17 @@ export default function VisualizarSolicitacoesNormas() {
                       {/* AÇÕES */}
                       {solicitacaoPendente(solicitacaoSelecionada.status) && (
                         <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                          <button className="flex-1 bg-blue-600 hover:bg-blue-700 transition text-white py-3 rounded-xl font-semibold">
+                          <button
+                            onClick={() => atualizarStatus("Aprovado")}
+                            className="flex-1 bg-blue-600 hover:bg-blue-700 transition text-white py-3 rounded-xl font-semibold"
+                          >
                             Aprovar
                           </button>
 
-                          <button className="flex-1 bg-red-600 hover:bg-red-700 transition text-white py-3 rounded-xl font-semibold">
+                          <button
+                            onClick={() => atualizarStatus("Recusado")}
+                            className="flex-1 bg-red-600 hover:bg-red-700 transition text-white py-3 rounded-xl font-semibold"
+                          >
                             Rejeitar
                           </button>
                         </div>
