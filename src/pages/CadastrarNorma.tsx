@@ -20,7 +20,8 @@ export default function CadastrarNorma() {
         <div className="w-full rounded-2xl p-6">
           <div className="grid grid-cols-1 lg:grid-cols-[72%_28%] gap-6 min-h-[75vh]">
             {/* ESQUERDA */}
-            <div className="pr-6 border-r border-gray-300 flex flex-col gap-4">
+            <div className="lg:border-r lg:border-gray-300 lg:pr-6 flex flex-col gap-4">
+              
               <FormSection>
                 <InputField
                   label="Código da Norma"
