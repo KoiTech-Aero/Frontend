@@ -4,7 +4,7 @@ import MenuLateral from "../components/menuLateral";
 
 export default function LayoutSistema() {
 	return (
-		<div className="flex h-screen bg-gray-200">
+		<div className="flex h-screen bg-gray">
 			<MenuLateral />
 
 			<div className="flex flex-col w-full">
