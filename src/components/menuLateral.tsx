@@ -1,75 +1,50 @@
-import { Home, MenuIcon, Newspaper, ScrollText, User } from "lucide-react";
-import { useState } from "react";
-import { PERMISSOES } from "../enums/permissoes";
-import type { menuItemData } from "../types/menuItemData";
-import MenuSecao from "./menuSecao";
-import Text from "./text";
-import UsuarioCard from "./usuarioCard";
+import { useState, useContext } from "react";
+import { useLocation, useNavigate } from "react-router";
+import { AuthContext } from "../context/AuthContext";
 
-export default function MenuLateral() {
-	const [open, setOpen] = useState(true);
-	const [select, setSelect] = useState(1);
+import DesktopSidebar from "./menu/desktopSidebar";
+import MobileBottomBar from "./menu/mobileBottombar";
+import MobileModal from "./menu/mobileModal";
 
-	function handleMenu() {
-		setOpen((prev) => !prev);
-	}
+import { itensMenu, itensAdmin } from "../utils/itensMenu";
 
-	const itensMenu: menuItemData[] = [
-		{
-			id: 1,
-			icon: Home,
-			children: "Home",
-			endpoint: "/pesquisarNorma",
-			permissao: PERMISSOES.PESQUISAR,
-		},
-		{
-			id: 2,
-			icon: ScrollText,
-			children: "Normas",
-			endpoint: "/cadastrarNorma",
-			permissao: PERMISSOES.CADASTRAR_NORMA,
-		},
-		{
-			id: 3,
-			icon: Newspaper,
-			children: "Solicitações",
-			endpoint: "/solicitarNorma",
-			permissao: PERMISSOES.SOLICITAR,
-		},
-	];
+export default function menuLateral() {
+  const [open, setOpen] = useState(true);
+  const [openMore, setOpenMore] = useState(false);
 
-	const itensAdmin: menuItemData[] = [
-		{
-			id: 11,
-			icon: User,
-			children: "Usuários",
-			endpoint: "cadastrarUsuario",
-			permissao: PERMISSOES.CADASTRAR_USUARIO,
-		},
-	];
+  const { usuario, logout } = useContext(AuthContext);
 
-	return (
-		<aside className="w-full h-full lg:w-fit bg-red relative">
-			<Text className="inline-block m-3 mb-0">
-				<MenuIcon color="white" onClick={handleMenu} />
-			</Text>
+  const navigate = useNavigate();
+  const location = useLocation();
 
-			<MenuSecao
-				titulo="menu"
-				itens={itensMenu}
-				open={open}
-				selectItem={select}
-				setSelectItem={setSelect}
-			/>
-			<MenuSecao
-				titulo="Administrador"
-				itens={itensAdmin}
-				open={open}
-				selectItem={select}
-				setSelectItem={setSelect}
-			/>
+  const isActive = (path: string) => location.pathname === path;
 
-			<UsuarioCard />
-		</aside>
-	);
+  function handleLogout() {
+    logout();
+    navigate("/");
+  }
+
+  return (
+    <>
+      <DesktopSidebar
+        open={open}
+        onToggle={() => setOpen((p) => !p)}
+        itensMenu={itensMenu}
+        itensAdmin={itensAdmin}
+      />
+
+      <MobileBottomBar
+        usuario={usuario}
+        isActive={isActive}
+        onOpenMore={() => setOpenMore(true)}
+      />
+
+      <MobileModal
+        open={openMore}
+        setOpen={setOpenMore}
+        usuario={usuario}
+        onLogout={handleLogout}
+      />
+    </>
+  );
 }

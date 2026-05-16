@@ -1,29 +1,60 @@
 import { LogOut } from "lucide-react";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { AuthContext } from "../context/AuthContext";
 
-export default function UsuarioCard() {
-	const { usuario, logout } = useContext(AuthContext);
-	const navigate = useNavigate();
+interface UsuarioCardProps {
+  open: boolean;
+}
 
-	function handleLogout() {
-		logout();
-		navigate("/zdf");
-	}
+export default function UsuarioCard({
+  open,
+}: UsuarioCardProps) {
+  const { usuario, logout } = useContext(AuthContext);
 
-	const btnLogout =
-		"w-fit h-10 mt-5 flex items-center gap-2 cursor-pointer bg-red-500 p-4 rounded-xl text-white font-bold transition duration-300 hover:bg-red-600";
+  const navigate = useNavigate();
 
-	return (
-		<div className="absolute bottom-0 p-6 rounded-xl text-white">
-			<p className="font-bold">{usuario?.nome}</p>
-			<p className="text-sm opacity-70">{usuario?.role}</p>
+  function handleLogout() {
+    logout();
+    navigate("/");
+  }
 
-			<button type="button" onClick={handleLogout} className={btnLogout}>
-				<LogOut />
-				Sair
-			</button>
-		</div>
-	);
+  return (
+    <div className="mt-auto border-t border-red-hover p-4">
+      {open ? (
+        <div className="flex flex-col gap-4">
+          <div>
+            <p className="font-bold text-white">
+              {usuario?.nome}
+            </p>
+
+            <p className="text-sm text-white/70">
+              {usuario?.role}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-red hover:bg-red-hover transition duration-300 text-white font-bold cursor-pointer"
+          >
+            <LogOut size={18} />
+
+            <span>Sair</span>
+          </button>
+        </div>
+      ) : (
+        <div className="flex justify-center">
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="w-12 h-12 flex items-center justify-center rounded-xl bg-red hover:bg-red-hover transition duration-300 text-white cursor-pointer"
+          >
+            <LogOut size={18} />
+          </button>
+        </div>
+      )}
+    </div>
+  );
 }

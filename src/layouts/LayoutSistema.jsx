@@ -10,7 +10,7 @@ export default function LayoutSistema() {
 			<div className="flex flex-col w-full">
 				<Header />
 
-				<div className="flex-1 overflow-hidden">
+				<div className="flex-1 pb-16 md:pb-0 overflow-hidden">
 					<div className="h-full overflow-y-auto flex flex-col items-center gap-5">
 						<Outlet />
 					</div>
