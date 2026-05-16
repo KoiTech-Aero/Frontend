@@ -9,7 +9,7 @@ export default function UsuarioCard() {
 
 	function handleLogout() {
 		logout();
-		navigate("/login");
+		navigate("/zdf");
 	}
 
 	const btnLogout =

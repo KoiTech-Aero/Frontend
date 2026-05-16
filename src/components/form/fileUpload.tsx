@@ -12,7 +12,7 @@ export default function FileUpload({ file, onChange }: fileUploadProps) {
 
   return (
     <div className="flex flex-col gap-3">
-      <h1 className="font-semibold text-lg">Arquivo</h1>
+      <h1 className="text-sm font-medium text-gray-700">Arquivo</h1>
 
       <label
         className="

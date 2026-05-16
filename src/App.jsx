@@ -22,7 +22,7 @@ export default function App() {
 				<Routes>
 					{/* Públicas */}
 					<Route element={<AuthLayout />}>
-						<Route path="/login" element={<Login />} />
+						<Route path="/" element={<Login />} />
 					</Route>
 
 					{/* Privadas (login obrigatório) */}
