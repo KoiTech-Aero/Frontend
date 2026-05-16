@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import type { PERMISSOES } from "../enums/permissoes";
 import type { menuItemData } from "../types/menuItemData";
 import { temPermissao } from "../utils/temPermissao";
 import LinhaHorizontal from "./linhaHorizontal";

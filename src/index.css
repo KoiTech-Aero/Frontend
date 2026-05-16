@@ -4,8 +4,14 @@
   box-sizing: border-box;
 }
 
+::-webkit-datetime-edit {
+  color: rgba(0, 0, 0, 0.5);
+  opacity: 1;
+}
+
 @theme {
   --color-white: #fff;
+  --color-gray: #f0f0f0;
   --color-red: #6c2139;
   --color-red-hover: #621e33;
   --color-red-dark: #51192b;
@@ -13,4 +19,19 @@
 
   --font-mono: "Anonymous Pro", monospace;
   --font-sans: "Albert Sans", sans-serif;
+}
+
+@layer components {
+  .header_table {
+    backdrop-filter: blur(6px);
+    background: rgba(0, 0, 0, 0);
+  }
+
+  .table_norma {
+    @apply grid grid-cols-[2fr_1fr_1fr_1fr_1fr] justify-items-center items-center [&>*:first-child]:justify-self-start p-5;
+  }
+
+  .scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }

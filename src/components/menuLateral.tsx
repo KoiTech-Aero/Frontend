@@ -1,7 +1,5 @@
 import { Home, MenuIcon, Newspaper, ScrollText, User } from "lucide-react";
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router";
-import { AuthContext } from "../context/AuthContext";
+import { useState } from "react";
 import { PERMISSOES } from "../enums/permissoes";
 import type { menuItemData } from "../types/menuItemData";
 import MenuSecao from "./menuSecao";
@@ -11,13 +9,6 @@ import UsuarioCard from "./usuarioCard";
 export default function MenuLateral() {
 	const [open, setOpen] = useState(true);
 	const [select, setSelect] = useState(1);
-	const { usuario, logout } = useContext(AuthContext);
-	const navigate = useNavigate();
-
-	function handleLogout() {
-		logout();
-		navigate("/login");
-	}
 
 	function handleMenu() {
 		setOpen((prev) => !prev);
