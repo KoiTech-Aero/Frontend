@@ -8,20 +8,15 @@ export default function AreaTecnicaSelect({
   areasTecnicas,
 }: areaTecnicaSelectProps) {
   const [buscaArea, setBuscaArea] = useState(value);
-  const [mostrarDropdown, setMostrarDropdown] =
-    useState(false);
+  const [mostrarDropdown, setMostrarDropdown] = useState(false);
 
   const areasFiltradas = areasTecnicas.filter((area) =>
-    area
-      .toLowerCase()
-      .includes(buscaArea.toLowerCase()),
+    area.toLowerCase().includes(buscaArea.toLowerCase()),
   );
 
   return (
     <div className="relative flex flex-col gap-1">
-      <label className="text-sm font-medium text-gray-700">
-        Área Técnica
-      </label>
+      <label className="text-sm font-medium text-gray-700">Área Técnica</label>
 
       <input
         type="text"
