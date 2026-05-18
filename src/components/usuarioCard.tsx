@@ -16,10 +16,12 @@ export default function UsuarioCard({ open }: UsuarioCardProps) {
 		navigate("/login");
 	}
 
-	const btnLogout = `w-fit h-10 mt-5 flex items-center gap-2 cursor-pointer  ${open && "bg-red-500 p-4"} rounded-xl text-white font-bold transition duration-300 hover:bg-red-600`;
+	const btnLogout = `"w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-red hover:bg-red-hover  text-white font-bold cursor-pointer  ${open && "bg-red p-6 mt-2"} transition duration-300`;
 
 	return (
-		<div className={`mt-auto ${open ? " p-6" : " p-3"} rounded-xl text-white`}>
+		<div
+			className={`flex flex-col mt-auto ${open ? " p-6" : " p-3"} rounded-xl text-white`}
+		>
 			{open && (
 				<>
 					<p className="font-bold">{usuario?.nome}</p>
