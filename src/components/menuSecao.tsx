@@ -40,15 +40,15 @@ export default function MenuSecao({
 				{titulo}
 			</Text>
 
-			{itensData.map((item, index) => {
+			{itensData.map((item) => {
 				if (temPermissao(usuario, item.permissao)) {
 					return (
 						<MenuItem
 							icon={item.icon}
 							endpoint={item.endpoint}
-							select={selectItem === item.id ? true : false}
+							select={selectItem === item.id && true}
 							open={open}
-							key={`${index} - ${item.children}`}
+							key={item.id}
 							onClick={() => handleSelect(item.id)}
 						>
 							{item.children}

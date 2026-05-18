@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import { AuthProvider } from "./context/AuthProvider";
 import { PERMISSOES } from "./enums/permissoes";
 import AuthLayout from "./layouts/LayoutAuth";
 import LayoutSistema from "./layouts/LayoutSistema";
@@ -14,6 +13,7 @@ import VisualizarNorma from "./pages/VisualizarNorma";
 import VisualizarSolicitacoesNormas from "./pages/VisualizarSolicitacoesNormas";
 import VisualizarUsuarios from "./pages/VisualizarUsuarios";
 import VisualizarVersao from "./pages/VisualizarVersao";
+import { AuthProvider } from "./providers/AuthProvider";
 import RotaPrivada from "./routes/RotaPrivada";
 
 export default function App() {
@@ -23,7 +23,7 @@ export default function App() {
 				<Routes>
 					{/* Públicas */}
 					<Route element={<AuthLayout />}>
-						<Route path="/login" element={<Login />} />
+						<Route path="/" element={<Login />} />
 					</Route>
 
 					{/* Privadas (login obrigatório) */}
