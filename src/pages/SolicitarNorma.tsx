@@ -53,7 +53,7 @@ export default function SolicitarNorma() {
 
           <InputField
             label="*Autor da solicitação"
-            value={usuarioLogado.nome}
+            value={usuarioLogado?.nome || ""}
             disabled
             required
           />
