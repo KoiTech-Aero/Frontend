@@ -1,3 +1,6 @@
+import { cadastrarNormaForm } from "../types/cadastrarNormaForm";
+import { cadastrarSolicitacaoForm } from "../types/cadastrarSolicitacaoForm";
+
 export async function listarNormas() {
   const response = await fetch("http://localhost:3000/normas");
 
@@ -19,16 +22,27 @@ export async function cadastrarNorma(formData: FormData) {
   }
 
   return response.json();
+  
 }
 
-export async function cadastrarSolicitacao(formData: FormData) {
-  const response = await fetch("http://localhost:3000/solicitacoes/norma", {
-    method: "POST",
-    body: formData,
-  });
+export async function cadastrarSolicitacao(
+  data: cadastrarSolicitacaoForm,
+) {
+  const response = await fetch(
+    "http://localhost:3000/solicitacoes/norma",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    },
+  );
 
   if (!response.ok) {
-    throw new Error("Erro ao cadastrar solicitação");
+    throw new Error(
+      "Erro ao cadastrar solicitação",
+    );
   }
 
   return response.json();

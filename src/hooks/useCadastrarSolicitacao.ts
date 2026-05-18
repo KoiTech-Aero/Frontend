@@ -16,7 +16,7 @@ export function useCadastrarSolicitacao() {
     codigo_norma: "",
     versao_norma: "",
     orgao_emissor: "",
-    id_usuario: usuarioLogado?.id,
+    id_usuario: usuarioLogado?.id ?? "",
   });
 
   function updateField<K extends keyof cadastrarSolicitacaoForm>(
@@ -44,16 +44,7 @@ export function useCadastrarSolicitacao() {
         return;
       }
 
-      const body = new FormData();
-
-      body.append("titulo", formData.titulo);
-      body.append("motivo", formData.motivo);
-      body.append("codigo_norma", formData.codigo_norma);
-      body.append("versao_norma", formData.versao_norma);
-      body.append("orgao_emissor", formData.orgao_emissor);
-      body.append("id_usuario", formData.id_usuario);
-
-      await cadastrarSolicitacao(body);
+      await cadastrarSolicitacao(formData);
 
       alert("Solicitação cadastrada com sucesso!");
 
