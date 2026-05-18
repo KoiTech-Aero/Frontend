@@ -1,8 +1,8 @@
 import { Menu as MenuIcon, X } from "lucide-react";
 import type { menuItemData } from "../../types/menuItemData";
 import Text from "../text";
-import UsuarioCard from "../usuarioCard";
 import MenuSecao from "./menuSecao";
+import UsuarioCard from "./usuarioCard";
 
 interface Props {
 	open: boolean;
