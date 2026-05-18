@@ -2,7 +2,7 @@ import type { formButtonsProps } from "../../types/formButtons";
 
 export default function FormButtons({ onCancel }: formButtonsProps) {
   return (
-    <div className="w-full flex flex-col sm:flex-row justify-start gap-3 pt-2">
+    <div className="w-full flex flex-col sm:flex-row justify-end gap-3 pt-2">
       <button
         type="submit"
         className="w-full sm:w-auto px-8 py-1 rounded-lg bg-red text-white font-semibold hover:bg-red-hover transition cursor-pointer"

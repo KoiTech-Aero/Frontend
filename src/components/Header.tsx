@@ -5,11 +5,14 @@ export default function Header() {
 
   const titulos: Record<string, string> = {
     "/cadastrarNorma": "Cadastro de Norma",
+    "/solicitarNorma": "Solicitação de Norma"
   };
 
   const subtitulos: Record<string, string> = {
     "/cadastrarNorma":
       "Informe os campos para cadastrar uma nova norma",
+    "/solicitarNorma":
+      "Informe os campos para solicitar uma nova norma",
   };
 
   const tituloAtual =

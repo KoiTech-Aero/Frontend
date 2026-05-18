@@ -18,7 +18,7 @@ export default function CadastrarNorma() {
     <form onSubmit={handleSubmit} className="w-full h-full">
       <div className="w-full px-4 lg:px-8">
         <div className="w-full rounded-2xl p-6">
-          <div className="grid grid-cols-1 lg:grid-cols-[72%_28%] gap-6 min-h-[75vh]">
+          <div className="grid grid-cols-1 lg:grid-cols-[72%_28%] gap-6 min-h-[60vh]">
             {/* ESQUERDA */}
             <div className="lg:border-r lg:border-gray-300 lg:pr-6 flex flex-col gap-4">
               

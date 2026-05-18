@@ -20,3 +20,16 @@ export async function cadastrarNorma(formData: FormData) {
 
   return response.json();
 }
+
+export async function cadastrarSolicitacao(formData: FormData) {
+  const response = await fetch("http://localhost:3000/solicitacoes/norma", {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error("Erro ao cadastrar solicitação");
+  }
+
+  return response.json();
+}
