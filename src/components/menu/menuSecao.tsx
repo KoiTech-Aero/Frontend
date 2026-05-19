@@ -8,45 +8,53 @@ import Text from "../text";
 import MenuItem from "./menuItem";
 
 interface MenuSecaoProps {
-	titulo: string;
-	itens: menuItemData[];
-	open: boolean;
+  titulo: string;
+  itens: menuItemData[];
+  open: boolean;
 }
 
 export default function MenuSecao({ titulo, itens, open }: MenuSecaoProps) {
-	const { usuario } = useContext(AuthContext);
+  const { usuario } = useContext(AuthContext);
 
-	const location = useLocation();
+  const location = useLocation();
 
-	return (
-		<section>
-			<LinhaHorizontal />
+  const itensPermitidos = itens.filter((item) =>
+    temPermissao(usuario, item.permissao),
+  );
 
-			<Text
-				as="h1"
-				className={`${!open ? "lg:hidden" : "lg:block"} my-3 mx-auto`}
-				isTitle
-			>
-				{titulo}
-			</Text>
+  if (itensPermitidos.length === 0) {
+    return null;
+  }
 
-			{itens.map((item) => {
-				if (!temPermissao(usuario, item.permissao)) {
-					return null;
-				}
+  return (
+    <section>
+      <LinhaHorizontal />
 
-				return (
-					<MenuItem
-						key={item.id}
-						icon={item.icon}
-						endpoint={item.endpoint}
-						open={open}
-						select={location.pathname === item.endpoint}
-					>
-						{item.children}
-					</MenuItem>
-				);
-			})}
-		</section>
-	);
+      <Text
+        as="h1"
+        className={`${!open ? "lg:hidden" : "lg:block"} my-3 mx-auto`}
+        isTitle
+      >
+        {titulo}
+      </Text>
+
+      {itens.map((item) => {
+        if (!temPermissao(usuario, item.permissao)) {
+          return null;
+        }
+
+        return (
+          <MenuItem
+            key={item.id}
+            icon={item.icon}
+            endpoint={item.endpoint}
+            open={open}
+            select={location.pathname === item.endpoint}
+          >
+            {item.children}
+          </MenuItem>
+        );
+      })}
+    </section>
+  );
 }

@@ -1,37 +1,70 @@
-import { Home, FilePlus2, ClipboardPlus, UserPlus } from "lucide-react";
+import {
+  Home,
+  FilePlus2,
+  ClipboardPlus,
+  UserPlus,
+  Users,
+  User,
+  ClipboardList,
+} from "lucide-react";
 import { PERMISSOES } from "../enums/permissoes";
 import type { menuItemData } from "../types/menuItemData";
 
-export const itensMenu: menuItemData[] = [
-  {
-    id: 1,
-    icon: Home,
-    children: "Página Inicial",
-    endpoint: "/pesquisarNorma",
-    permissao: PERMISSOES.PESQUISAR,
+export function getItensMenu(usuarioLogado: any): menuItemData[] {
+  return [
+    {
+      id: 1,
+      icon: Home,
+      children: "Página Inicial",
+      endpoint: "/pesquisarNorma",
+      permissao: PERMISSOES.PESQUISAR,
+    },
+    {
+      id: 2,
+      icon: ClipboardPlus,
+      children: "Solicitar Norma",
+      endpoint: "/solicitarNorma",
+      permissao: PERMISSOES.SOLICITAR,
+    },
+    {
+      id: 3,
+      icon: User,
+      children: "Meu Perfil",
+      endpoint: `/editarUsuario/${usuarioLogado.id}`,
+      permissao: PERMISSOES.EDITAR_USUARIO,
+    },
+  ];
+}
+
+export function getItensAdmin(usuarioLogado: any): menuItemData[] {
+  return [
+    {
+    id: 10,
+    icon: ClipboardList,
+    children: "Visualizar Solicitações",
+    endpoint: "/visualizarSolicitacoesNormas",
+    permissao: PERMISSOES.VISUALIZAR_SOLICITACOES_NORMAS,
   },
   {
-    id: 2,
+    id: 11,
     icon: FilePlus2,
     children: "Cadastrar Norma",
     endpoint: "/cadastrarNorma",
     permissao: PERMISSOES.CADASTRAR_NORMA,
   },
   {
-    id: 3,
-    icon: ClipboardPlus,
-    children: "Solicitar Norma",
-    endpoint: "/solicitarNorma",
-    permissao: PERMISSOES.SOLICITAR,
+    id: 12,
+    icon: Users,
+    children: "Visualizar Usuários",
+    endpoint: "/visualizarUsuarios",
+    permissao: PERMISSOES.VISUALIZAR_USUARIOS,
   },
-];
-
-export const itensAdmin: menuItemData[] = [
   {
-    id: 11,
+    id: 13,
     icon: UserPlus,
     children: "Cadastrar Usuário",
     endpoint: "/cadastrarUsuario",
     permissao: PERMISSOES.CADASTRAR_USUARIO,
   },
-];
+  ];
+}

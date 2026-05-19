@@ -5,19 +5,15 @@ export default function Header() {
 
   const titulos: Record<string, string> = {
     "/cadastrarNorma": "Cadastro de Norma",
-    "/solicitarNorma": "Solicitação de Norma"
+    "/solicitarNorma": "Solicitação de Norma",
   };
 
   const subtitulos: Record<string, string> = {
-    "/cadastrarNorma":
-      "Informe os campos para cadastrar uma nova norma",
-    "/solicitarNorma":
-      "Informe os campos para solicitar uma nova norma",
+    "/cadastrarNorma": "Informe os campos para cadastrar uma nova norma",
+    "/solicitarNorma": "Informe os campos para solicitar uma nova norma",
   };
 
-  const tituloAtual =
-    titulos[location.pathname] ||
-    "Central de Normas";
+  const tituloAtual = titulos[location.pathname] || "Central de Normas";
 
   const subtituloAtual =
     subtitulos[location.pathname] ||
@@ -25,20 +21,12 @@ export default function Header() {
 
   return (
     <header
-      className="
-        w-full
-        px-6 py-5
-        shadow-[0_2px_8px_rgba(0,0,0,0.04)]
-      "
+      className="w-full px-6 py-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
     >
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-semibold text-gray-800">
-          {tituloAtual}
-        </h1>
+        <h1 className="text-2xl font-semibold text-gray-800">{tituloAtual}</h1>
 
-        <p className="text-sm text-gray-500">
-          {subtituloAtual}
-        </p>
+        <p className="text-sm text-gray-500">{subtituloAtual}</p>
       </div>
     </header>
   );

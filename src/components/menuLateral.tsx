@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext";
-import { itensAdmin, itensMenu } from "../utils/itensMenu";
+import { getItensMenu, getItensAdmin } from "../utils/itensMenu";
 import DesktopSidebar from "./menu/desktopSidebar";
 import MobileBottomBar from "./menu/mobileBottombar";
 import MobileModal from "./menu/mobileModal";
@@ -11,6 +11,9 @@ export default function MenuLateral() {
 	const [openMore, setOpenMore] = useState(false);
 
 	const { usuario, logout } = useContext(AuthContext);
+
+	const itensMenu = getItensMenu(usuario);
+	const itensAdmin = getItensAdmin(usuario);
 
 	const navigate = useNavigate();
 	const location = useLocation();
