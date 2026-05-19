@@ -4,13 +4,19 @@ import type { formButtonsProps } from "../../types/formButtons";
 export default function FormButtons({ onCancel }: formButtonsProps) {
   const location = useLocation();
 
-  const titulos: Record<string, string> = {
-    "/cadastrarNorma": "Salvar Norma",
-    "/solicitarNorma": "Salvar Solicitação",
-    "/cadastrarUsuario": "Cadastrar Usuário",
-  };
+  let tituloAtual = "";
 
-  const tituloAtual = titulos[location.pathname];
+  if (location.pathname === "/solicitarNorma")
+    tituloAtual = "Salvar Solicitação";
+
+  if (location.pathname === "/cadastrarNorma")
+    tituloAtual = "Salvar Norma";
+
+  if (location.pathname === "/cadastrarUsuario")
+    tituloAtual = "Cadastrar Usuário";
+
+  if (location.pathname.startsWith("/editarUsuario"))
+    tituloAtual = "Atualizar Usuário";
 
   return (
     <div className="w-full flex flex-col sm:flex-row justify-end gap-3 pt-2">

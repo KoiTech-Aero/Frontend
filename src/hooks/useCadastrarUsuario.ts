@@ -12,8 +12,8 @@ export function useCadastrarUsuario() {
     email: "",
     senha: "",
     confirmarSenha: "",
-    role: "Visualizador",
-    status: "Ativo",
+    role: "",
+    status: "",
   });
 
   function updateField<K extends keyof cadastrarUsuarioForm>(

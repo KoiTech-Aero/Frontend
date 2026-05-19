@@ -1,9 +1,10 @@
 import { useContext } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Header() {
   const { usuario: usuarioLogado } = useContext(AuthContext);
+  const { id } = useParams();
   const location = useLocation();
 
   let tituloAtual = "Central de Normas";
@@ -15,8 +16,13 @@ export default function Header() {
   }
 
   if (location.pathname.startsWith("/editarUsuario")) {
-    tituloAtual = "Meu Perfil";
-    subtituloAtual = "Atualize suas informações de usuário";
+    if (usuarioLogado?.id === id) {
+      tituloAtual = "Meu Perfil";
+      subtituloAtual = "Atualize suas informações de usuário";
+    } else {
+      tituloAtual = "Editar Usuário";
+      subtituloAtual = "Atualize suas informações de usuário";
+    }
   }
 
   if (location.pathname.startsWith("/visualizarSolicitacoesNormas")) {

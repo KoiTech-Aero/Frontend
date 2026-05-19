@@ -4,5 +4,5 @@ export interface cadastrarUsuarioForm {
   senha: string;
   confirmarSenha: string;
   role: string;
-  status: string;
+  status: boolean | string;
 }

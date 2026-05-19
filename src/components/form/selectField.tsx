@@ -14,7 +14,7 @@ export default function SelectField({
 }: SelectFieldProps) {
   const [mostrarDropdown, setMostrarDropdown] = useState(false);
 
-  const selectedOption = options.find((option) => option.label === value);
+  const selectedOption = options.find((option) => option.value === value);
 
   return (
     <div className="relative flex flex-col gap-1">
