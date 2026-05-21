@@ -1,11 +1,5 @@
 import { Search } from "lucide-react";
-import {
-	type ChangeEvent,
-	type Dispatch,
-	type SetStateAction,
-	useEffect,
-	useState,
-} from "react";
+import type { ChangeEvent, Dispatch, SetStateAction } from "react";
 import type { Norma } from "../types/norma";
 import TagsSearch from "./tagsSearch";
 
@@ -18,13 +12,13 @@ export default function BarraPesquisa({
 	normas,
 	setNormasFiltradas,
 }: BarraPesquisaProps) {
-	const [busca, setBusca] = useState("");
-
 	function handleSearch(e: ChangeEvent<HTMLInputElement>) {
-		const valorBusca = e.target.value;
-		setBusca(valorBusca);
+		const { name, value } = e.target;
 
-		if (busca.length === 0 || busca.trim() === "") {
+		const valorBusca =
+			name === "data" && value !== "" ? new Date(value).toISOString() : value;
+
+		if (valorBusca.trim() === "" || valorBusca === "") {
 			setNormasFiltradas(normas);
 			return;
 		}
@@ -32,17 +26,21 @@ export default function BarraPesquisa({
 		setNormasFiltradas(
 			normas.filter(
 				(norma) =>
-					norma.titulo.toLowerCase().includes(busca.toLowerCase()) ||
-					norma.codigo.toLowerCase().includes(busca.toLowerCase()) ||
-					norma.area_tecnica.toLowerCase().includes(busca.toLowerCase()) ||
-					norma.orgao_emissor.toLowerCase().includes(busca.toLowerCase()),
+					norma.titulo.toLowerCase().includes(valorBusca.toLowerCase()) ||
+					norma.codigo.toLowerCase().includes(valorBusca.toLowerCase()) ||
+					norma.area_tecnica.toLowerCase().includes(valorBusca.toLowerCase()) ||
+					norma.orgao_emissor
+						.toLowerCase()
+						.includes(valorBusca.toLowerCase()) ||
+					norma.versoes.some(
+						(v) =>
+							name === "data" &&
+							new Date(v.data_publicacao).toISOString() ===
+								new Date(valorBusca).toISOString(),
+					),
 			),
 		);
 	}
-
-	useEffect(() => {
-		console.log(busca);
-	}, [busca]);
 
 	return (
 		<div className="w-full flex items-center gap-5">
@@ -52,15 +50,19 @@ export default function BarraPesquisa({
 				</label>
 				<input
 					id="Search"
+					name="nome"
 					type="text"
 					onChange={(e) => handleSearch(e)}
 					placeholder="Pesquisar..."
-					className="focus:outline-none opacity-100"
+					className="focus:outline-none opacity-100 w-full"
 				/>
 			</div>
 
 			<input
+				id="data"
+				name="data"
 				type="date"
+				onChange={handleSearch}
 				className="bg-white rounded-md py-2 px-4 border border-gray-300 flex gap-2 items-center focus:outline-none"
 			/>
 

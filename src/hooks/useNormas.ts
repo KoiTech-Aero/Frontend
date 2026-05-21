@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import type { Norma } from "../types/norma";
+import z from "zod";
+import { type Norma, NormaSchema } from "../types/norma";
 
 export const useNormas = () => {
 	const [normas, setNormas] = useState<Norma[]>([]);
@@ -16,6 +17,10 @@ export const useNormas = () => {
 				}
 
 				const normasJSON: Norma[] = await response.json();
+
+				const parsed = z.array(NormaSchema).safeParse(normasJSON);
+
+				if (!parsed.success) throw new Error(parsed.error.message);
 
 				setNormas(normasJSON);
 			} catch (err) {
