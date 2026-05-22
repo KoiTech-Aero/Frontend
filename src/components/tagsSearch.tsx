@@ -1,9 +1,18 @@
 import { Plus } from "lucide-react";
-import { useRef } from "react";
+import { type Dispatch, type SetStateAction, useRef } from "react";
 import { useTags } from "../hooks/useTags";
+import type { Tag as TagType } from "../types/tags";
 import Tag from "./tag";
 
-export default function TagsSearch() {
+interface TagsSearchProps {
+	tagsSelecionadas: TagType[];
+	setTagsSelecionadas: Dispatch<SetStateAction<TagType[]>>;
+}
+
+export default function TagsSearch({
+	tagsSelecionadas,
+	setTagsSelecionadas,
+}: TagsSearchProps) {
 	const { tags } = useTags();
 	const containerRef = useRef<HTMLDivElement>(null);
 
@@ -19,6 +28,15 @@ export default function TagsSearch() {
 			left: -200,
 			behavior: "smooth",
 		});
+	}
+
+	function handleTags(tag: TagType) {
+		if (tagsSelecionadas.includes(tag)) {
+			setTagsSelecionadas((prev) => prev.filter((t) => t !== tag));
+			return;
+		}
+
+		setTagsSelecionadas((prev) => [...prev, tag]);
 	}
 
 	return (
@@ -37,7 +55,13 @@ export default function TagsSearch() {
 					className="flex space-x-2 max-w-100 scrollbar overflow-x-scroll"
 				>
 					{tags.map((tag) => (
-						<Tag key={tag.id} id={tag.id} nome={tag.nome} />
+						<Tag
+							key={tag.id}
+							id={tag.id}
+							nome={tag.nome}
+							name="tag"
+							onChange={() => handleTags(tag)}
+						/>
 					))}
 				</div>
 

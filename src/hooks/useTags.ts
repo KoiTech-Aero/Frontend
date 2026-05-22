@@ -1,19 +1,36 @@
-import { useState } from "react";
-import type { Tag } from "../types/tags";
+import { useEffect, useState } from "react";
+import z from "zod";
+import { type Tag, TagSchema } from "../types/tags";
 
 export const useTags = () => {
-	const [tags, setTags] = useState([
-		{ id: "1", nome: "Tecnologia" },
-		{ id: "2", nome: "Frontend" },
-		{ id: "3", nome: "Backend" },
-		{ id: "4", nome: "Mobile" },
-		{ id: "5", nome: "Design" },
-		{ id: "6", nome: "UI/UX" },
-		{ id: "7", nome: "JavaScript" },
-		{ id: "8", nome: "TypeScript" },
-		{ id: "9", nome: "React" },
-		{ id: "10", nome: "Node.js" },
-	]);
+	const [tags, setTags] = useState<Tag[]>([]);
+	const [error, setError] = useState<Error>();
+	const [loading, setLoading] = useState<boolean>(true);
 
-	return { tags, setTags };
+	useEffect(() => {
+		async function fetchTags() {
+			try {
+				const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/tags`);
+
+				if (!response.ok) throw new Error("Erro no Fetch");
+
+				const tagsJSON: Tag[] = await response.json();
+				const parsed = z.array(TagSchema).safeParse(tagsJSON);
+
+				if (!parsed.success) throw new Error("Formato inválido");
+
+				setTags(tagsJSON);
+			} catch (err) {
+				if (err instanceof Error) {
+					setError(err);
+				}
+			} finally {
+				setLoading(false);
+			}
+		}
+
+		fetchTags();
+	}, []);
+
+	return { tags, setTags, error, loading };
 };

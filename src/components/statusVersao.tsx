@@ -5,9 +5,13 @@ interface StatusVersaoProps {
 export default function StatusVersao({ isRevisada }: StatusVersaoProps) {
 	if (isRevisada)
 		return (
-			<span className="border border-green-500 p-2 rounded-full">Revisada</span>
+			<span className="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-700">
+				Revisada
+			</span>
 		);
 	return (
-		<span className="border border-red-500 p-2 rounded-full">Revisada</span>
+		<span className="px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-700">
+			Revisada
+		</span>
 	);
 }

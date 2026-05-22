@@ -1,7 +1,6 @@
-export interface tagsInputProps {
-  tags: string[];
+import type { Tag } from "./tags";
 
-  setTags: React.Dispatch<
-    React.SetStateAction<string[]>
-  >;
+export interface tagsInputProps {
+	tags: Tag[];
+	setTags: React.Dispatch<React.SetStateAction<Tag[]>>;
 }

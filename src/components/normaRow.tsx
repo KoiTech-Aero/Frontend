@@ -17,7 +17,9 @@ export default function NormaRow({ norma }: NormaRowProps) {
 				<span className="text-black/60 text-sm">{norma.codigo}</span>
 			</div>
 			<span>{norma.orgao_emissor}</span>
-			<span>{new Date(norma.versoes[0].data_publicacao).toDateString()}</span>
+			<span>
+				{new Date(norma.versoes[0].data_publicacao).toLocaleDateString("pt-BR")}
+			</span>
 			<StatusVersao isRevisada={isRevisada} />
 			<Link to="/visualizarNorma" state={{ norma: norma }}>
 				<SearchCheckIcon />

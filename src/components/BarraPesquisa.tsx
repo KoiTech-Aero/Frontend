@@ -1,6 +1,13 @@
 import { Search } from "lucide-react";
-import type { ChangeEvent, Dispatch, SetStateAction } from "react";
+import {
+	type ChangeEvent,
+	type Dispatch,
+	type SetStateAction,
+	useEffect,
+	useState,
+} from "react";
 import type { Norma } from "../types/norma";
+import type { Tag } from "../types/tags";
 import TagsSearch from "./tagsSearch";
 
 interface BarraPesquisaProps {
@@ -12,6 +19,8 @@ export default function BarraPesquisa({
 	normas,
 	setNormasFiltradas,
 }: BarraPesquisaProps) {
+	const [tagsSelecionadas, setTagsSelecionadas] = useState<Tag[]>([]);
+
 	function handleSearch(e: ChangeEvent<HTMLInputElement>) {
 		const { name, value } = e.target;
 
@@ -42,6 +51,18 @@ export default function BarraPesquisa({
 		);
 	}
 
+	useEffect(() => {
+		if (tagsSelecionadas.length === 0) {
+			setNormasFiltradas(normas);
+			return;
+		}
+		setNormasFiltradas(
+			normas.filter((n) =>
+				tagsSelecionadas.every((tag) => n.tags?.some((t) => t.id === tag.id)),
+			),
+		);
+	}, [tagsSelecionadas, normas, normas.filter, setNormasFiltradas]);
+
 	return (
 		<div className="w-full flex items-center gap-5">
 			<div className="w-full bg-white rounded-md py-2 px-4 border border-gray-300 text-[rgba(0, 0, 0, 0.5)] flex gap-2 items-center">
@@ -66,7 +87,10 @@ export default function BarraPesquisa({
 				className="bg-white rounded-md py-2 px-4 border border-gray-300 flex gap-2 items-center focus:outline-none"
 			/>
 
-			<TagsSearch />
+			<TagsSearch
+				tagsSelecionadas={tagsSelecionadas}
+				setTagsSelecionadas={setTagsSelecionadas}
+			/>
 		</div>
 	);
 }
