@@ -10,124 +10,122 @@ import Login from "./pages/Login";
 import PesquisarNorma from "./pages/PesquisarNorma";
 import SolicitarNorma from "./pages/SolicitarNorma";
 import VisualizarNorma from "./pages/VisualizarNorma";
-import VisualizarSolicitacoesNormas from "./pages/VisualizarSolicitacoesNormas";
+import VisualizarSolicitacoes from "./pages/VisualizarSolicitacoes";
 import VisualizarUsuarios from "./pages/VisualizarUsuarios";
 import VisualizarVersao from "./pages/VisualizarVersao";
 import { AuthProvider } from "./providers/AuthProvider";
 import RotaPrivada from "./routes/RotaPrivada";
 
 export default function App() {
-	return (
-		<AuthProvider>
-			<BrowserRouter>
-				<Routes>
-					{/* Públicas */}
-					<Route element={<AuthLayout />}>
-						<Route path="/" element={<Login />} />
-					</Route>
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Públicas */}
+          <Route element={<AuthLayout />}>
+            <Route path="/" element={<Login />} />
+          </Route>
 
-					{/* Privadas (login obrigatório) */}
-					<Route
-						element={
-							<RotaPrivada>
-								<LayoutSistema />
-							</RotaPrivada>
-						}
-					>
-						<Route
-							path="/pesquisarNorma"
-							element={
-								<RotaPrivada permissao={PERMISSOES.PESQUISAR}>
-									<PesquisarNorma />
-								</RotaPrivada>
-							}
-						/>
+          {/* Privadas (login obrigatório) */}
+          <Route
+            element={
+              <RotaPrivada>
+                <LayoutSistema />
+              </RotaPrivada>
+            }
+          >
+            <Route
+              path="/pesquisarNorma"
+              element={
+                <RotaPrivada permissao={PERMISSOES.PESQUISAR}>
+                  <PesquisarNorma />
+                </RotaPrivada>
+              }
+            />
 
-						<Route
-							path="/visualizarNorma"
-							element={
-								<RotaPrivada permissao={PERMISSOES.VISUALIZAR}>
-									<VisualizarNorma />
-								</RotaPrivada>
-							}
-						/>
+            <Route
+              path="/visualizarNorma"
+              element={
+                <RotaPrivada permissao={PERMISSOES.VISUALIZAR}>
+                  <VisualizarNorma />
+                </RotaPrivada>
+              }
+            />
 
-						<Route
-							path="/visualizarVersao"
-							element={
-								<RotaPrivada permissao={PERMISSOES.VISUALIZAR}>
-									<VisualizarVersao />
-								</RotaPrivada>
-							}
-						/>
+            <Route
+              path="/visualizarVersao"
+              element={
+                <RotaPrivada permissao={PERMISSOES.VISUALIZAR}>
+                  <VisualizarVersao />
+                </RotaPrivada>
+              }
+            />
 
-						<Route
-							path="/cadastrarNorma"
-							element={
-								<RotaPrivada permissao={PERMISSOES.CADASTRAR_NORMA}>
-									<CadastrarNorma />
-								</RotaPrivada>
-							}
-						/>
+            <Route
+              path="/cadastrarNorma"
+              element={
+                <RotaPrivada permissao={PERMISSOES.CADASTRAR_NORMA}>
+                  <CadastrarNorma />
+                </RotaPrivada>
+              }
+            />
 
-						<Route
-							path="/cadastrarVersao"
-							element={
-								<RotaPrivada permissao={PERMISSOES.CADASTRAR_VERSAO}>
-									<CadastrarVersao />
-								</RotaPrivada>
-							}
-						/>
+            <Route
+              path="/cadastrarVersao"
+              element={
+                <RotaPrivada permissao={PERMISSOES.CADASTRAR_VERSAO}>
+                  <CadastrarVersao />
+                </RotaPrivada>
+              }
+            />
 
-						<Route
-							path="/solicitarNorma"
-							element={
-								<RotaPrivada permissao={PERMISSOES.SOLICITAR}>
-									<SolicitarNorma />
-								</RotaPrivada>
-							}
-						/>
+            <Route
+              path="/solicitarNorma"
+              element={
+                <RotaPrivada permissao={PERMISSOES.SOLICITAR}>
+                  <SolicitarNorma />
+                </RotaPrivada>
+              }
+            />
 
-						<Route
-							path="/cadastrarUsuario"
-							element={
-								<RotaPrivada permissao={PERMISSOES.CADASTRAR_USUARIO}>
-									<CadastrarUsuario />
-								</RotaPrivada>
-							}
-						/>
+            <Route
+              path="/cadastrarUsuario"
+              element={
+                <RotaPrivada permissao={PERMISSOES.CADASTRAR_USUARIO}>
+                  <CadastrarUsuario />
+                </RotaPrivada>
+              }
+            />
 
-						<Route
-							path="/editarUsuario/:id"
-							element={
-								<RotaPrivada permissao={PERMISSOES.EDITAR_USUARIO}>
-									<EditarUsuario />
-								</RotaPrivada>
-							}
-						/>
+            <Route
+              path="/editarUsuario/:id"
+              element={
+                <RotaPrivada permissao={PERMISSOES.EDITAR_USUARIO}>
+                  <EditarUsuario />
+                </RotaPrivada>
+              }
+            />
 
-						<Route
-							path="/visualizarUsuarios"
-							element={
-								<RotaPrivada permissao={PERMISSOES.VISUALIZAR_USUARIOS}>
-									<VisualizarUsuarios />
-								</RotaPrivada>
-							}
-						/>
+            <Route
+              path="/visualizarUsuarios"
+              element={
+                <RotaPrivada permissao={PERMISSOES.VISUALIZAR_USUARIOS}>
+                  <VisualizarUsuarios />
+                </RotaPrivada>
+              }
+            />
 
-						<Route
-							path="/visualizarSolicitacoesNormas"
-							element={
-								<RotaPrivada
-									permissao={PERMISSOES.VISUALIZAR_SOLICITACOES_NORMAS}
-								>
-									<VisualizarSolicitacoesNormas />
-								</RotaPrivada>
-							}
-						/>
-					</Route>
-				</Routes>
-			</BrowserRouter>
-		</AuthProvider>
-	);
+            <Route
+              path="/visualizarSolicitacoes"
+              element={
+                <RotaPrivada permissao={PERMISSOES.VISUALIZAR_SOLICITACOES}>
+                  <VisualizarSolicitacoes />
+                </RotaPrivada>
+              }
+            />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
 }

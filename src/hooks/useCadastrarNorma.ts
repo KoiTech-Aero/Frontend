@@ -1,96 +1,99 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { cadastrarNorma, listarNormas } from "../services/normaService";
 import type { cadastrarNormaForm } from "../types/cadastrarNormaForm";
 import { areasTecnicas } from "../utils/areasTecnicasData";
 
 export function useCadastrarNorma() {
-	const navigate = useNavigate();
+  const location = useLocation();
+  const solicitacaoSelecionada = location.state?.solicitacaoSelecionada;
 
-	const [formData, setFormData] = useState<cadastrarNormaForm>({
-		codigo: "",
-		titulo: "",
-		escopo: "",
-		area_tecnica: "",
-		orgao_emissor: "",
-		versao_numero: "",
-		descricao: "",
-		tags: [],
-		path_file: null,
-	});
+  const navigate = useNavigate();
 
-	const data_publicacao = new Date().toISOString().split("T")[0];
+  const [formData, setFormData] = useState<cadastrarNormaForm>({
+    codigo: solicitacaoSelecionada?.codigo_norma || "",
+    titulo: solicitacaoSelecionada?.titulo || "",
+    escopo: "",
+    area_tecnica: "",
+    orgao_emissor: solicitacaoSelecionada?.orgao_emissor || "",
+    versao_numero: solicitacaoSelecionada?.versao_norma || "",
+    descricao: "",
+    tags: [],
+    path_file: null,
+  });
 
-	function updateField<K extends keyof cadastrarNormaForm>(
-		field: K,
-		value: cadastrarNormaForm[K],
-	) {
-		setFormData((prev) => ({
-			...prev,
-			[field]: value,
-		}));
-	}
+  const data_publicacao = new Date().toISOString().split("T")[0];
 
-	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-		e.preventDefault();
+  function updateField<K extends keyof cadastrarNormaForm>(
+    field: K,
+    value: cadastrarNormaForm[K],
+  ) {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  }
 
-		if (!formData.path_file) {
-			alert("Selecione um arquivo.");
-			return;
-		}
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
 
-		if (!areasTecnicas.includes(formData.area_tecnica)) {
-			alert("Selecione uma área válida.");
-			return;
-		}
+    if (!formData.path_file) {
+      alert("Selecione um arquivo.");
+      return;
+    }
 
-		try {
-			const normas = await listarNormas();
+    if (!areasTecnicas.includes(formData.area_tecnica)) {
+      alert("Selecione uma área válida.");
+      return;
+    }
 
-			const codigoExiste = normas.some(
-				(norma: { codigo: string }) => norma.codigo === formData.codigo,
-			);
+    try {
+      const normas = await listarNormas();
 
-			if (codigoExiste) {
-				alert("Já existe uma norma com esse código!");
-				return;
-			}
+      const codigoExiste = normas.some(
+        (norma: { codigo: string }) => norma.codigo === formData.codigo,
+      );
 
-			const body = new FormData();
+      if (codigoExiste) {
+        alert("Já existe uma norma com esse código!");
+        return;
+      }
 
-			body.append("codigo", formData.codigo);
-			body.append("titulo", formData.titulo);
-			body.append("escopo", formData.escopo);
-			body.append("area_tecnica", formData.area_tecnica);
-			body.append("orgao_emissor", formData.orgao_emissor);
+      const body = new FormData();
 
-			body.append("versao_numero", formData.versao_numero);
+      body.append("codigo", formData.codigo);
+      body.append("titulo", formData.titulo);
+      body.append("escopo", formData.escopo);
+      body.append("area_tecnica", formData.area_tecnica);
+      body.append("orgao_emissor", formData.orgao_emissor);
 
-			body.append("descricao", formData.descricao);
+      body.append("versao_numero", formData.versao_numero);
 
-			body.append("data_publicacao", data_publicacao);
+      body.append("descricao", formData.descricao);
 
-			body.append("status", "true");
+      body.append("data_publicacao", data_publicacao);
 
-			body.append("file", formData.path_file);
+      body.append("status", "true");
 
-			await cadastrarNorma(body);
+      body.append("file", formData.path_file);
 
-			alert("Norma cadastrada com sucesso!");
+      await cadastrarNorma(body);
 
-			navigate("/pesquisarNorma");
-		} catch (error) {
-			console.error(error);
+      alert("Norma cadastrada com sucesso!");
 
-			alert("Erro ao cadastrar norma.");
-		}
-	}
+      navigate("/pesquisarNorma");
+    } catch (error) {
+      console.error(error);
 
-	return {
-		formData,
-		updateField,
-		data_publicacao,
-		handleSubmit,
-		navigate,
-	};
+      alert("Erro ao cadastrar norma.");
+    }
+  }
+
+  return {
+    formData,
+    updateField,
+    data_publicacao,
+    handleSubmit,
+    navigate,
+  };
 }

@@ -25,7 +25,7 @@ export default function Header() {
     }
   }
 
-  if (location.pathname.startsWith("/visualizarSolicitacoesNormas")) {
+  if (location.pathname.startsWith("/visualizarSolicitacoes")) {
     tituloAtual = "Visualizar Solicitações";
     subtituloAtual = "Visualize e gerencie as solicitações de normas";
   }

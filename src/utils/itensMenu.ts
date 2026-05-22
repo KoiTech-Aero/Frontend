@@ -42,8 +42,8 @@ export function getItensAdmin(usuarioLogado: any): menuItemData[] {
     id: 10,
     icon: ClipboardList,
     children: "Visualizar Solicitações",
-    endpoint: "/visualizarSolicitacoesNormas",
-    permissao: PERMISSOES.VISUALIZAR_SOLICITACOES_NORMAS,
+    endpoint: "/visualizarSolicitacoes",
+    permissao: PERMISSOES.VISUALIZAR_SOLICITACOES,
   },
   {
     id: 11,

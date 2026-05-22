@@ -38,3 +38,36 @@ export async function cadastrarSolicitacao(data: cadastrarSolicitacaoForm) {
 
   return response.json();
 }
+
+export async function listarSolicitacoes() {
+  const response = await fetch("http://localhost:3000/solicitacoes/norma");
+
+  if (!response.ok) {
+    throw new Error("Erro ao buscar solicitações");
+  }
+
+  return response.json();
+}
+
+export async function atualizarSolicitacao(id: string, status: string) {
+  const response = await fetch(
+    `http://localhost:3000/solicitacoes/norma/${id}`,
+    {
+      method: "PATCH",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify({
+        status,
+      }),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Erro ao atualizar solicitação");
+  }
+
+  return response.json();
+}
