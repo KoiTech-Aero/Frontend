@@ -22,19 +22,38 @@ export default function VisualizarSolicitacoes() {
   return (
     <div className="w-full h-[calc(95vh-80px)] flex justify-center px-6 py-5">
       <section className="w-full max-w-7xl flex flex-col rounded-xl overflow-hidden border border-black/10 bg-white shadow-[0px_0px_5px_0px_rgba(0,0,0,0.15)]">
-        <div className="hidden md:grid md:grid-cols-[2fr_1.2fr_140px_140px_120px] gap-4 bg-zinc-100 border-b border-black/10 px-5 py-4 font-bold text-black/60 font-mono tracking-wide uppercase text-sm shrink-0">
-          <h1>Título</h1>
+        {/* DESKTOP */}
+        <div className="hidden md:block flex-1 overflow-y-auto">
+          <table className="w-full table-fixed border-collapse">
+            <thead className="bg-zinc-100 border-b border-black/10 sticky top-0 z-10">
+              <tr className="text-left text-sm font-bold text-black/60 font-mono tracking-wide uppercase">
+                <th className="px-6 py-4 w-[20%]">Título</th>
 
-          <h1>Autor</h1>
+                <th className="px-6 py-4 w-[20%]">Autor</th>
 
-          <h1>Data</h1>
+                <th className="px-10 py-4 w-[20%]">Data</th>
 
-          <h1>Status</h1>
+                <th className="px-10 py-4 w-[20%]">Status</th>
 
-          <h1 className="text-center">Detalhes</h1>
+                <th className="px-6 py-4 w-[20%] text-center">Detalhes</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {solicitacoes.map((solicitacao) => (
+                <SolicitacaoRow
+                  key={solicitacao.id}
+                  solicitacao={solicitacao}
+                  autor={usuarios[solicitacao.usuario.id] || "Carregando..."}
+                  onDetails={() => abrirModal(solicitacao)}
+                />
+              ))}
+            </tbody>
+          </table>
         </div>
 
-        <div className="flex-1 overflow-y-auto">
+        {/* MOBILE */}
+        <div className="flex flex-col md:hidden overflow-y-auto">
           {solicitacoes.map((solicitacao) => (
             <SolicitacaoRow
               key={solicitacao.id}

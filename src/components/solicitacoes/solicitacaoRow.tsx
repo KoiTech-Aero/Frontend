@@ -16,37 +16,45 @@ export default function SolicitacaoRow({
   onDetails,
 }: SolicitacaoRowProps) {
   return (
-    <div className="border-b border-black/10 bg-white transition hover:bg-zinc-50">
-      <div className="hidden md:grid md:grid-cols-[2fr_1.2fr_140px_140px_120px] gap-4 items-center px-5 py-4">
-        <div className="min-w-0">
-          <h1 className="font-semibold truncate">{solicitacao.titulo}</h1>
+    <>
+      {/* DESKTOP */}
+      <tr className="hidden md:table-row border-b border-black/10 bg-white transition hover:bg-zinc-50">
+        <td className="px-6 py-4 align-middle">
+          <div className="min-w-0">
+            <h1 className="font-semibold truncate">{solicitacao.titulo}</h1>
 
-          <p className="text-xs text-black/50 truncate">
-            {solicitacao.codigo_norma}
+            <p className="text-xs text-black/50 truncate">
+              {solicitacao.codigo_norma}
+            </p>
+          </div>
+        </td>
+
+        <td className="px-6 py-4 align-middle">
+          <p className="truncate text-sm text-black/70">{autor}</p>
+        </td>
+
+        <td className="px-6 py-4 align-middle">
+          <p className="text-sm text-black/60">
+            {new Date(solicitacao.data_solicitacao).toLocaleDateString("pt-BR")}
           </p>
-        </div>
+        </td>
 
-        <p className="truncate text-sm text-black/70">{autor}</p>
-
-        <p className="text-sm text-black/60">
-          {new Date(solicitacao.data_solicitacao).toLocaleDateString("pt-BR")}
-        </p>
-
-        <div>
+        <td className="px-6 py-4 align-middle">
           <StatusBadge status={solicitacao.status} />
-        </div>
+        </td>
 
-        <div className="flex justify-center">
+        <td className="px-6 py-4 align-middle text-center">
           <button
             onClick={onDetails}
             className="rounded-lg bg-red px-4 py-2 text-sm font-medium text-white transition hover:bg-red-hover cursor-pointer"
           >
             Abrir
           </button>
-        </div>
-      </div>
+        </td>
+      </tr>
 
-      <div className="flex flex-col gap-4 p-4 md:hidden">
+      {/* MOBILE */}
+      <div className="flex flex-col gap-4 border-b border-black/10 bg-white p-4 transition hover:bg-zinc-50 md:hidden">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
             <h1 className="font-semibold text-sm wrap-break-words">
@@ -79,6 +87,6 @@ export default function SolicitacaoRow({
           Visualizar Solicitação
         </button>
       </div>
-    </div>
+    </>
   );
 }
