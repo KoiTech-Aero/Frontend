@@ -10,7 +10,9 @@ export const useNormas = () => {
 	useEffect(() => {
 		const fetchNormas = async () => {
 			try {
-				const response = await fetch("http://localhost:3000/normas/");
+				const response = await fetch(
+					`${import.meta.env.VITE_SERVER_URL}/normas/`,
+				);
 
 				if (!response.ok) {
 					throw new Error("Erro ao pesquisar as normas");
