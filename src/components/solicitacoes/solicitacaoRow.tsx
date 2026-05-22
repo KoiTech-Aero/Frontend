@@ -1,19 +1,19 @@
 import type { SolicitacaoNorma } from "../../types/solicitacaoNorma";
 
-import StatusBadge from "./statusBadge";
+import StatusBadge from "../statusBadge";
 
 interface SolicitacaoRowProps {
-  solicitacao: SolicitacaoNorma;
+	solicitacao: SolicitacaoNorma;
 
-  autor: string;
+	autor: string;
 
-  onDetails: () => void;
+	onDetails: () => void;
 }
 
 export default function SolicitacaoRow({
-  solicitacao,
-  autor,
-  onDetails,
+	solicitacao,
+	autor,
+	onDetails,
 }: SolicitacaoRowProps) {
   return (
     <>
@@ -61,24 +61,24 @@ export default function SolicitacaoRow({
               {solicitacao.titulo}
             </h1>
 
-            <p className="mt-1 text-xs text-black/50 break-all">
-              {solicitacao.codigo_norma}
-            </p>
-          </div>
+						<p className="mt-1 text-xs text-black/50 break-all">
+							{solicitacao.codigo_norma}
+						</p>
+					</div>
 
-          <StatusBadge status={solicitacao.status} />
-        </div>
+					<StatusBadge status={solicitacao.status} />
+				</div>
 
-        <div className="flex flex-col gap-1 text-sm text-black/60">
-          <p>
-            <span className="font-medium">Autor:</span> {autor}
-          </p>
+				<div className="flex flex-col gap-1 text-sm text-black/60">
+					<p>
+						<span className="font-medium">Autor:</span> {autor}
+					</p>
 
-          <p>
-            <span className="font-medium">Data:</span>{" "}
-            {new Date(solicitacao.data_solicitacao).toLocaleDateString("pt-BR")}
-          </p>
-        </div>
+					<p>
+						<span className="font-medium">Data:</span>{" "}
+						{new Date(solicitacao.data_solicitacao).toLocaleDateString("pt-BR")}
+					</p>
+				</div>
 
         <button
           onClick={onDetails}

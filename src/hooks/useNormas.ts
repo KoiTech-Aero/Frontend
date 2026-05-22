@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import z from "zod";
-import { type Norma, NormaSchema } from "../types/norma";
+import { type Norma, type NormaResponse, NormaSchema } from "../types/norma";
 
 export const useNormas = () => {
 	const [normas, setNormas] = useState<Norma[]>([]);
@@ -18,7 +18,12 @@ export const useNormas = () => {
 					throw new Error("Erro ao pesquisar as normas");
 				}
 
-				const normasJSON: Norma[] = await response.json();
+				const responseJSON: NormaResponse[] = await response.json();
+
+				const normasJSON: Norma[] = responseJSON.map((n) => ({
+					...n,
+					tags: n.tags?.flatMap((t) => t.tag) || null,
+				}));
 
 				const parsed = z.array(NormaSchema).safeParse(normasJSON);
 
