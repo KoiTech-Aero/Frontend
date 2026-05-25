@@ -11,7 +11,7 @@ export const useNormas = () => {
 		const fetchNormas = async () => {
 			try {
 				const response = await fetch(
-					`${import.meta.env.VITE_SERVER_URL}/normas/`,
+					`${import.meta.env.VITE_SERVER_URL}/normas`,
 				);
 
 				if (!response.ok) {
