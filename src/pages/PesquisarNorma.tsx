@@ -14,7 +14,7 @@ export default function PesquisarNorma() {
 	}, [normas, error]);
 
 	return (
-		<div className="w-[90%] flex flex-col items-center gap-5 px-2">
+		<div className="w-[90%] flex flex-col items-center gap-5 px-2 py-5">
 			<BarraPesquisa normas={normas} setNormasFiltradas={setNormasFiltradas} />
 
 			<section className="flex flex-col w-full rounded-md **:rounded-md nth-last-ch shadow-[0px_0px_5px_0px_rgba(0,0,0,0.50)]">
@@ -29,6 +29,14 @@ export default function PesquisarNorma() {
 				{normasFiltradas.map((norma) => (
 					<NormaRow key={norma.id} norma={norma} />
 				))}
+
+				{normasFiltradas.length === 0 && (
+					<div className="table_norma bg-white">
+						<h1 className="block w-full col-span-7 text-center">
+							Não há nenhuma norma registrada
+						</h1>
+					</div>
+				)}
 			</section>
 		</div>
 	);

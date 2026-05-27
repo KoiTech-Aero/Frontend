@@ -11,7 +11,7 @@ export default function StatusVersao({ isRevisada }: StatusVersaoProps) {
 		);
 	return (
 		<span className="px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-700">
-			Revisada
+			Datada
 		</span>
 	);
 }

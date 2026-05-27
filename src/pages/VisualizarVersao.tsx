@@ -69,6 +69,7 @@ export default function VisualizarVersao() {
 					</div>
 
 					<button
+						type="button"
 						onClick={() => setOpenPdf(true)}
 						className="mt-4 w-full md:w-fit bg-blue-600 text-white font-bold px-4 py-2 rounded-md hover:bg-blue-700 cursor-pointer"
 					>
@@ -79,6 +80,7 @@ export default function VisualizarVersao() {
 				{/* VOLTAR */}
 				<div className="m-5 flex justify-end">
 					<button
+						type="button"
 						className="w-full md:w-auto bg-blue-600 text-white font-bold rounded-md px-4 py-2 hover:bg-blue-700 cursor-pointer"
 						onClick={() => navigate("/visualizarNorma", { state: { norma } })}
 					>
@@ -95,6 +97,7 @@ export default function VisualizarVersao() {
 						<div className="flex justify-between items-center p-3 border-b">
 							<h2 className="font-bold">Documento da Norma</h2>
 							<button
+								type="button"
 								onClick={() => setOpenPdf(false)}
 								className="text-gray-500 hover:text-black cursor-pointer"
 							>
@@ -104,6 +107,7 @@ export default function VisualizarVersao() {
 
 						{/* PDF */}
 						<iframe
+							title="pdf-versao"
 							src={`${import.meta.env.VITE_SERVER_URL}/${versao.path_file}`}
 							className="w-full flex-1"
 						/>
