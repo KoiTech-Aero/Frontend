@@ -82,6 +82,15 @@ export default function MobileModal({
               </div>
             </Link>
           )}
+
+          {temPermissao(usuario, PERMISSOES.CADASTRAR_TAGS) && (
+            <Link to="/cadastrarTags" onClick={() => setOpen(false)}>
+              <div className="bg-red rounded-2xl p-4 flex flex-col items-center text-white gap-2">
+                <FilePlus2 size={22} />
+                Cadastrar Tags
+              </div>
+            </Link>
+          )}
         </div>
 
         <button

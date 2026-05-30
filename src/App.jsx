@@ -5,6 +5,7 @@ import LayoutSistema from "./layouts/LayoutSistema";
 import CadastrarNorma from "./pages/CadastrarNorma";
 import CadastrarUsuario from "./pages/CadastrarUsuario";
 import CadastrarVersao from "./pages/CadastrarVersao";
+import CadastrarTag from "./pages/CadastrarTag";
 import EditarUsuario from "./pages/EditarUsuario";
 import Login from "./pages/Login";
 import PesquisarNorma from "./pages/PesquisarNorma";
@@ -77,6 +78,15 @@ export default function App() {
               element={
                 <RotaPrivada permissao={PERMISSOES.CADASTRAR_VERSAO}>
                   <CadastrarVersao />
+                </RotaPrivada>
+              }
+            />
+
+            <Route
+              path="/cadastrarTag"
+              element={
+                <RotaPrivada permissao={PERMISSOES.CADASTRAR_TAG}>
+                  <CadastrarTag />
                 </RotaPrivada>
               }
             />

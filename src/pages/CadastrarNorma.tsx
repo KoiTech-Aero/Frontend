@@ -7,6 +7,7 @@ import TagsInput from "../components/form/tagsInput";
 import TextAreaField from "../components/form/textAreaField";
 import { useCadastrarNorma } from "../hooks/useCadastrarNorma";
 import { areasTecnicas } from "../utils/areasTecnicasData";
+import { tagsMock } from "../utils/tagsMockData";
 
 export default function CadastrarNorma() {
 	const { formData, updateField, data_publicacao, handleSubmit, navigate } =

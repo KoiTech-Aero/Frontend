@@ -73,5 +73,12 @@ export function getItensAdmin(usuarioLogado: any): menuItemData[] {
     endpoint: "/cadastrarUsuario",
     permissao: PERMISSOES.CADASTRAR_USUARIO,
   },
+  {
+    id: 14,
+    icon: FilePlus2,
+    children: "Cadastrar Tag",
+    endpoint: "/cadastrarTag",
+    permissao: PERMISSOES.CADASTRAR_TAG,
+  },
   ];
 }
