@@ -9,12 +9,14 @@ import EditarUsuario from "./pages/EditarUsuario";
 import Login from "./pages/Login";
 import PesquisarNorma from "./pages/PesquisarNorma";
 import SolicitarNorma from "./pages/SolicitarNorma";
+import SolicitarNota from "./pages/SolicitarNota";
 import VisualizarNorma from "./pages/VisualizarNorma";
 import VisualizarSolicitacoes from "./pages/VisualizarSolicitacoes";
 import VisualizarUsuarios from "./pages/VisualizarUsuarios";
 import VisualizarVersao from "./pages/VisualizarVersao";
 import { AuthProvider } from "./providers/AuthProvider";
 import RotaPrivada from "./routes/RotaPrivada";
+
 
 export default function App() {
   return (
@@ -84,6 +86,15 @@ export default function App() {
               element={
                 <RotaPrivada permissao={PERMISSOES.SOLICITAR}>
                   <SolicitarNorma />
+                </RotaPrivada>
+              }
+            />
+
+            <Route
+              path="/solicitarNota"
+              element={
+                <RotaPrivada permissao={PERMISSOES.SOLICITAR}>
+                  <SolicitarNota />
                 </RotaPrivada>
               }
             />

@@ -33,6 +33,13 @@ export function getItensMenu(usuarioLogado: any): menuItemData[] {
       endpoint: `/editarUsuario/${usuarioLogado.id}`,
       permissao: PERMISSOES.EDITAR_USUARIO,
     },
+    {
+      id: 4,
+      icon: ClipboardPlus,
+      children: "Solicitar Nota",
+      endpoint: "/solicitarNota",
+      permissao: PERMISSOES.SOLICITAR,
+    },
   ];
 }
 

@@ -6,6 +6,9 @@ export default function FormButtons({ onCancel }: formButtonsProps) {
 
   let tituloAtual = "";
 
+  if (location.pathname === "/solicitarNota")
+  tituloAtual = "Salvar Solicitação";
+
   if (location.pathname === "/solicitarNorma")
     tituloAtual = "Salvar Solicitação";
 
