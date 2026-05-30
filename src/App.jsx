@@ -93,7 +93,7 @@ export default function App() {
             <Route
               path="/solicitarNota"
               element={
-                <RotaPrivada permissao={PERMISSOES.SOLICITAR}>
+                <RotaPrivada permissao={PERMISSOES.SOLICITAR_NOTA}>
                   <SolicitarNota />
                 </RotaPrivada>
               }

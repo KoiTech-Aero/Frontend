@@ -38,7 +38,7 @@ export function getItensMenu(usuarioLogado: any): menuItemData[] {
       icon: ClipboardPlus,
       children: "Solicitar Nota",
       endpoint: "/solicitarNota",
-      permissao: PERMISSOES.SOLICITAR,
+      permissao: PERMISSOES.SOLICITAR_NOTA,
     },
   ];
 }
