@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import z from "zod";
 import { useNormaContext } from "../hooks/useNormaContext";
 import type { Versao } from "../types/norma";
+import InputField from "../components/form/inputField";
 
 interface VersaoRequest {
 	id_norma: string;
@@ -108,68 +109,21 @@ export default function CadastrarVersao() {
 	}
 
 	return (
-		<form onSubmit={handleSubmit} className="w-full flex justify-center">
+		<form onSubmit={handleSubmit} className="w-full flex justify-center mt-5">
 			<div className="overflow-y-auto w-full max-w-3xl flex flex-col rounded-2xl bg-white">
-				{/* HEADER */}
-				<div className="m-5 flex flex-col">
-					<h1 className="text-2xl md:text-3xl font-bold">Adicionar Versão</h1>
-					<h2 className="text-md text-gray-500">
-						Informe os detalhes técnicos para registro.
-					</h2>
-				</div>
-
-				<hr className="border-2 border-gray-300" />
 
 				{/* FORM */}
 				<div className="m-5 md:m-10 flex flex-col gap-5">
 					{/* LINHA 1 */}
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-						<div>
-							<h1>Código da Norma</h1>
-							<input
-								className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100"
-								disabled
-								value={versaoData.id_norma}
-							/>
-						</div>
-
-						<div>
-							<h1>Número da versão</h1>
-							<input
-								name="versao_numero"
-								type="text"
-								className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 hover:bg-gray-200"
-								value={versaoData.versao_numero}
-								onChange={handleChange}
-								required
-							/>
-						</div>
+						<InputField type="text" label="Código da Norma" value={versaoData.id_norma} disabled/>
+						<InputField name="versao_numero" type="text" label="Número da Versao" value={versaoData.versao_numero} onChange={handleChange} required/>
 					</div>
 
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-						<div>
-							<h1>Descrição</h1>
-							<input
-								name="descricao"
-								type="text"
-								className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100 hover:bg-gray-200"
-								value={versaoData.descricao}
-								onChange={handleChange}
-								required
-							/>
-						</div>
-
-						<div>
-							<h1>Data de publicação</h1>
-							<input
-								type="text"
-								className="w-full border-4 rounded-md p-2 border-gray-300 bg-gray-100"
-								value={versaoData.data_publicacao}
-								disabled
-							/>
-						</div>
-					</div>
-
+						<InputField name="descricao" type="text" label="Descrição" value={versaoData.descricao} onChange={handleChange} required/>
+						<InputField type="text" label="Data de publicação" value={versaoData.data_publicacao} disabled/>
+			</div>
 					{/* ARQUIVO */}
 					<div>
 						<h1>Arquivo .pdf</h1>
@@ -177,7 +131,7 @@ export default function CadastrarVersao() {
 						<div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-5">
 							<label
 								htmlFor="path"
-								className="cursor-pointer bg-blue-500 text-white px-3 py-2 rounded-lg font-bold text-center"
+								className="cursor-pointer bg-red hover:bg-red-hover text-white px-3 py-2 rounded-lg font-bold text-center"
 							>
 								Escolher Arquivo
 							</label>
@@ -203,7 +157,7 @@ export default function CadastrarVersao() {
 					<div className="flex flex-col md:flex-row gap-3 md:gap-5 w-full">
 						<button
 							type="submit"
-							className="w-full md:w-[75%] bg-blue-600 text-white font-bold rounded-md py-2 hover:bg-blue-700 cursor-pointer"
+							className="w-full md:w-[75%] bg-red text-white font-bold rounded-md py-2 hover:bg-red-hover cursor-pointer"
 						>
 							Salvar Norma no Sistema
 						</button>

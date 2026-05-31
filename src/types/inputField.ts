@@ -2,6 +2,7 @@ import type { ChangeEvent } from "react";
 
 export interface inputFieldProps {
   label: string;
+  name?: string;
   icon?: React.ReactNode;
   type?: string;
   value: string;

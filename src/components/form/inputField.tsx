@@ -2,6 +2,7 @@ import type { inputFieldProps } from "../../types/inputField";
 
 export default function InputField({
   label,
+  name,
   icon,
   type = "text",
   value,
@@ -21,6 +22,7 @@ export default function InputField({
         )}
 
         <input
+          name={name}
           type={type}
           value={value}
           required={required}
