@@ -48,11 +48,14 @@ export function useCadastrarTag() {
       const novaTag: Tag = await response.json();
       setTags((prev) => [...prev, novaTag]);
       setNome("");
+      alert("Tag cadastrada com sucesso!");
     } catch (err) {
       console.error(err);
       setErro("Erro ao cadastrar a tag. Tente novamente.");
     }
+    
   }
+  
 
   async function removerTag(id: string) {
     try {
