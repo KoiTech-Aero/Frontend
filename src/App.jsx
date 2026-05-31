@@ -1,84 +1,92 @@
-import { BrowserRouter, Routes, Route } from "react-router";
-
-import { AuthProvider } from "./context/AuthProvider";
-import RotaPrivada from "./routes/RotaPrivada";
-
-import { PERMISSOES } from "./enums/permissoes"
-
+import { BrowserRouter, Route, Routes } from "react-router";
+import { PERMISSOES } from "./enums/permissoes";
 import AuthLayout from "./layouts/LayoutAuth";
 import LayoutSistema from "./layouts/LayoutSistema";
-
+import CadastrarNorma from "./pages/CadastrarNorma";
+import CadastrarUsuario from "./pages/CadastrarUsuario";
+import CadastrarVersao from "./pages/CadastrarVersao";
+import CadastrarTag from "./pages/CadastrarTag";
+import EditarUsuario from "./pages/EditarUsuario";
 import Login from "./pages/Login";
 import PesquisarNorma from "./pages/PesquisarNorma";
-import VisualizarNorma from "./pages/VisualizarNorma";
-import CadastrarNorma from "./pages/CadastrarNorma";
-import CadastrarVersao from "./pages/CadastrarVersao";
-import VisualizarVersao from "./pages/VisualizarVersao";
 import SolicitarNorma from "./pages/SolicitarNorma";
-import EditarUsuario from "./pages/EditarUsuario";
-import CadastrarUsuario from "./pages/CadastrarUsuario";
+import SolicitarNota from "./pages/SolicitarNota";
+import VisualizarNorma from "./pages/VisualizarNorma";
+import VisualizarSolicitacoes from "./pages/VisualizarSolicitacoes";
 import VisualizarUsuarios from "./pages/VisualizarUsuarios";
-import VisualizarSolicitacoesNormas from "./pages/VisualizarSolicitacoesNormas";
+import VisualizarVersao from "./pages/VisualizarVersao";
+import VisualizarNotas from "./pages/VisualizarNotas";
+import { AuthProvider } from "./providers/AuthProvider";
+import RotaPrivada from "./routes/RotaPrivada";
+
 
 export default function App() {
-  return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          {/* Públicas */}
-          <Route element={<AuthLayout />}>
-            <Route path="/login" element={<Login />} />
-          </Route>
+	return (
+		<BrowserRouter>
+			<Routes>
+				{/* Públicas */}
+				<Route element={<AuthLayout />}>
+					<Route path="/" element={<Login />} />
+				</Route>
 
-          {/* Privadas (login obrigatório) */}
-          <Route
-            element={
-              <RotaPrivada>
-                <LayoutSistema />
-              </RotaPrivada>
-            }
-          >
-            <Route
-              path="/pesquisarNorma"
-              element={
-                <RotaPrivada permissao={PERMISSOES.PESQUISAR}>
-                  <PesquisarNorma />
-                </RotaPrivada>
-              }
-            />
+				{/* Privadas (login obrigatório) */}
+				<Route
+					element={
+						<RotaPrivada>
+							<LayoutSistema />
+						</RotaPrivada>
+					}
+				>
+					<Route
+						path="/pesquisarNorma"
+						element={
+							<RotaPrivada permissao={PERMISSOES.PESQUISAR}>
+								<PesquisarNorma />
+							</RotaPrivada>
+						}
+					/>
+
+					<Route
+						path="/visualizarNorma"
+						element={
+							<RotaPrivada permissao={PERMISSOES.VISUALIZAR}>
+								<VisualizarNorma />
+							</RotaPrivada>
+						}
+					/>
+
+					<Route
+						path="/visualizarVersao"
+						element={
+							<RotaPrivada permissao={PERMISSOES.VISUALIZAR}>
+								<VisualizarVersao />
+							</RotaPrivada>
+						}
+					/>
+
+					<Route
+						path="/cadastrarNorma"
+						element={
+							<RotaPrivada permissao={PERMISSOES.CADASTRAR_NORMA}>
+								<CadastrarNorma />
+							</RotaPrivada>
+						}
+					/>
+
+					<Route
+						path="/cadastrarVersao"
+						element={
+							<RotaPrivada permissao={PERMISSOES.CADASTRAR_VERSAO}>
+								<CadastrarVersao />
+							</RotaPrivada>
+						}
+					/>
 
             <Route
-              path="/visualizarNorma"
+              path="/cadastrarTag"
               element={
-                <RotaPrivada permissao={PERMISSOES.VISUALIZAR}>
-                  <VisualizarNorma />
-                </RotaPrivada>
-              }
-            />
-
-            <Route
-              path="/visualizarVersao"
-              element={
-                <RotaPrivada permissao={PERMISSOES.VISUALIZAR}>
-                  <VisualizarVersao />
-                </RotaPrivada>
-              }
-            />
-
-            <Route
-              path="/cadastrarNorma"
-              element={
-                <RotaPrivada permissao={PERMISSOES.CADASTRAR_NORMA}>
-                  <CadastrarNorma />
-                </RotaPrivada>
-              }
-            />
-
-            <Route
-              path="/cadastrarVersao"
-              element={
-                <RotaPrivada permissao={PERMISSOES.CADASTRAR_VERSAO}>
-                  <CadastrarVersao />
+                <RotaPrivada permissao={PERMISSOES.CADASTRAR_TAG}>
+                  <CadastrarTag />
                 </RotaPrivada>
               }
             />
@@ -93,6 +101,15 @@ export default function App() {
             />
 
             <Route
+              path="/solicitarNota"
+              element={
+                <RotaPrivada permissao={PERMISSOES.SOLICITAR_NOTA}>
+                  <SolicitarNota />
+                </RotaPrivada>
+              }
+            />
+
+            <Route
               path="/cadastrarUsuario"
               element={
                 <RotaPrivada permissao={PERMISSOES.CADASTRAR_USUARIO}>
@@ -101,35 +118,45 @@ export default function App() {
               }
             />
 
+					<Route
+						path="/editarUsuario/:id"
+						element={
+							<RotaPrivada permissao={PERMISSOES.EDITAR_USUARIO}>
+								<EditarUsuario />
+							</RotaPrivada>
+						}
+					/>
+
+					<Route
+						path="/visualizarUsuarios"
+						element={
+							<RotaPrivada permissao={PERMISSOES.VISUALIZAR_USUARIOS}>
+								<VisualizarUsuarios />
+							</RotaPrivada>
+						}
+					/>
+
             <Route
-              path="/editarUsuario/:id"
+              path="/visualizarSolicitacoes"
               element={
-                <RotaPrivada permissao={PERMISSOES.EDITAR_USUARIO}>
-                  <EditarUsuario />
+                <RotaPrivada permissao={PERMISSOES.VISUALIZAR_SOLICITACOES}>
+                  <VisualizarSolicitacoes />
                 </RotaPrivada>
               }
             />
 
             <Route
-              path="/visualizarUsuarios"
+              path="/visualizarNotas"
               element={
-                <RotaPrivada permissao={PERMISSOES.VISUALIZAR_USUARIOS}>
-                  <VisualizarUsuarios />
+                <RotaPrivada permissao={PERMISSOES.VISUALIZAR_NOTAS}>
+                  <VisualizarNotas />
                 </RotaPrivada>
               }
             />
+            
 
-            <Route
-              path="/visualizarSolicitacoesNormas"
-              element={
-                <RotaPrivada permissao={PERMISSOES.VISUALIZAR_SOLICITACOES_NORMAS}>
-                  <VisualizarSolicitacoesNormas />
-                </RotaPrivada>
-              }
-            />
           </Route>
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
   );
 }
