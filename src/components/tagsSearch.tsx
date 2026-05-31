@@ -63,6 +63,8 @@ export default function TagsSearch({
 							onChange={() => handleTags(tag)}
 						/>
 					))}
+
+					{tags.length === 0 && <p>Nenhuma tag cadastrada</p>}
 				</div>
 
 				<button

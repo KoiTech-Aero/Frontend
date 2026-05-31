@@ -21,67 +21,66 @@ import RotaPrivada from "./routes/RotaPrivada";
 
 
 export default function App() {
-  return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          {/* Públicas */}
-          <Route element={<AuthLayout />}>
-            <Route path="/" element={<Login />} />
-          </Route>
+	return (
+		<BrowserRouter>
+			<Routes>
+				{/* Públicas */}
+				<Route element={<AuthLayout />}>
+					<Route path="/" element={<Login />} />
+				</Route>
 
-          {/* Privadas (login obrigatório) */}
-          <Route
-            element={
-              <RotaPrivada>
-                <LayoutSistema />
-              </RotaPrivada>
-            }
-          >
-            <Route
-              path="/pesquisarNorma"
-              element={
-                <RotaPrivada permissao={PERMISSOES.PESQUISAR}>
-                  <PesquisarNorma />
-                </RotaPrivada>
-              }
-            />
+				{/* Privadas (login obrigatório) */}
+				<Route
+					element={
+						<RotaPrivada>
+							<LayoutSistema />
+						</RotaPrivada>
+					}
+				>
+					<Route
+						path="/pesquisarNorma"
+						element={
+							<RotaPrivada permissao={PERMISSOES.PESQUISAR}>
+								<PesquisarNorma />
+							</RotaPrivada>
+						}
+					/>
 
-            <Route
-              path="/visualizarNorma"
-              element={
-                <RotaPrivada permissao={PERMISSOES.VISUALIZAR}>
-                  <VisualizarNorma />
-                </RotaPrivada>
-              }
-            />
+					<Route
+						path="/visualizarNorma"
+						element={
+							<RotaPrivada permissao={PERMISSOES.VISUALIZAR}>
+								<VisualizarNorma />
+							</RotaPrivada>
+						}
+					/>
 
-            <Route
-              path="/visualizarVersao"
-              element={
-                <RotaPrivada permissao={PERMISSOES.VISUALIZAR}>
-                  <VisualizarVersao />
-                </RotaPrivada>
-              }
-            />
+					<Route
+						path="/visualizarVersao"
+						element={
+							<RotaPrivada permissao={PERMISSOES.VISUALIZAR}>
+								<VisualizarVersao />
+							</RotaPrivada>
+						}
+					/>
 
-            <Route
-              path="/cadastrarNorma"
-              element={
-                <RotaPrivada permissao={PERMISSOES.CADASTRAR_NORMA}>
-                  <CadastrarNorma />
-                </RotaPrivada>
-              }
-            />
+					<Route
+						path="/cadastrarNorma"
+						element={
+							<RotaPrivada permissao={PERMISSOES.CADASTRAR_NORMA}>
+								<CadastrarNorma />
+							</RotaPrivada>
+						}
+					/>
 
-            <Route
-              path="/cadastrarVersao"
-              element={
-                <RotaPrivada permissao={PERMISSOES.CADASTRAR_VERSAO}>
-                  <CadastrarVersao />
-                </RotaPrivada>
-              }
-            />
+					<Route
+						path="/cadastrarVersao"
+						element={
+							<RotaPrivada permissao={PERMISSOES.CADASTRAR_VERSAO}>
+								<CadastrarVersao />
+							</RotaPrivada>
+						}
+					/>
 
             <Route
               path="/cadastrarTag"
@@ -119,23 +118,23 @@ export default function App() {
               }
             />
 
-            <Route
-              path="/editarUsuario/:id"
-              element={
-                <RotaPrivada permissao={PERMISSOES.EDITAR_USUARIO}>
-                  <EditarUsuario />
-                </RotaPrivada>
-              }
-            />
+					<Route
+						path="/editarUsuario/:id"
+						element={
+							<RotaPrivada permissao={PERMISSOES.EDITAR_USUARIO}>
+								<EditarUsuario />
+							</RotaPrivada>
+						}
+					/>
 
-            <Route
-              path="/visualizarUsuarios"
-              element={
-                <RotaPrivada permissao={PERMISSOES.VISUALIZAR_USUARIOS}>
-                  <VisualizarUsuarios />
-                </RotaPrivada>
-              }
-            />
+					<Route
+						path="/visualizarUsuarios"
+						element={
+							<RotaPrivada permissao={PERMISSOES.VISUALIZAR_USUARIOS}>
+								<VisualizarUsuarios />
+							</RotaPrivada>
+						}
+					/>
 
             <Route
               path="/visualizarSolicitacoes"
@@ -159,6 +158,5 @@ export default function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
   );
 }

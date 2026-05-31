@@ -1,13 +1,35 @@
 import { Forward, Link2Icon, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useNormaContext } from "../hooks/useNormaContext";
+import type { Norma } from "../types/norma";
 import type { Referencia } from "../types/referencia";
 
 interface ReferenciaCardProps {
+	normas: Norma[];
 	referencia: Referencia;
 }
 
-export default function ReferenciaCard({ referencia }: ReferenciaCardProps) {
-	function redirectNormaReferencia(_id: string): void {
-		throw new Error("Function not implemented.");
+export default function ReferenciaCard({
+	normas,
+	referencia,
+}: ReferenciaCardProps) {
+	const navigate = useNavigate();
+	const { setNormaAtual, deleteReferencia } = useNormaContext();
+
+	async function redirectNormaReferencia(idNorma: string) {
+		try {
+			const normaEncontrada = normas.find((d) => d.id === idNorma);
+
+			if (!normaEncontrada) {
+				console.error("Norma não encontrada");
+				return;
+			}
+
+			setNormaAtual(normaEncontrada);
+			navigate("/visualizarNorma");
+		} catch (err) {
+			console.error(err);
+		}
 	}
 
 	return (
@@ -38,7 +60,7 @@ export default function ReferenciaCard({ referencia }: ReferenciaCardProps) {
 				</button>
 				<button
 					type="button"
-					onClick={() => redirectNormaReferencia(referencia.id)}
+					onClick={() => deleteReferencia(referencia.id)}
 					className="rounded-full p-1 hover:bg-red-hover transition-colors group"
 				>
 					<X

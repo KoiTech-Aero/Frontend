@@ -1,93 +1,70 @@
-import { Calendar1, FileText, History, Info } from "lucide-react";
+import { History, InfoIcon } from "lucide-react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import Badge from "../components/badge";
+import type { Versao } from "../types/norma";
 
 export default function VisualizarVersao() {
-	const location = useLocation();
-	const norma = location.state?.norma;
-	const versao = location.state?.versao;
-
+	const location = useLocation()
+	const versao = location.state.versao as Versao;
 	const data_publicacao = new Date(versao.data_publicacao).toLocaleDateString();
-
 	const navigate = useNavigate();
-
 	const [openPdf, setOpenPdf] = useState(false);
 
 	return (
 		<>
-			<div className="overflow-y-auto w-full max-w-4xl mx-auto px-4 md:px-8 flex flex-col rounded-2xl bg-amber-50">
-				{/* STATUS */}
-				<div className="m-5 flex justify-start">
-					<h5
-						className={`text-white rounded-2xl px-3 py-0.5 text-sm md:px-4 md:py-1 md:text-lg font-bold ${
-							versao.status ? "bg-green-500" : "bg-red-500"
-						}`}
-					>
-						{versao.status ? "Revisada" : "Obsoleta"}
-					</h5>
-				</div>
+			<section className="max-w-6xl w-full h-max px-6 my-3 mx-auto flex flex-col gap-5">
+				<section className="flex flex-col gap-1 relative
+				">
+					<Badge point variant={versao.status ? "verde" : "vermelho"} className="w-fit">
+						{versao.status ? "Revisada" : "Datada"}
+					</Badge>
+					<h1 className="text-2xl md:text-3xl lg:text-4xl font-bold">
+						{versao.versao_numero}
+					</h1>
+				</section>
 
-				{/* GRID PRINCIPAL */}
-				<div className="m-5 grid grid-cols-1 md:grid-cols-2 gap-5">
-					<div>
-						<div className="flex gap-2">
-							<History />
-							<h3 className="text-md font-medium">Número da Versão</h3>
-						</div>
-						<p className="border-4 rounded-md p-3 md:p-4 mt-4 border-gray-300 bg-gray-100 font-medium">
-							{versao.versao_numero}
-						</p>
+				<section className="flex flex-col gap-5 bg-white rounded-md p-5 shadow-[0px_0px_5px_5px_rgba(0,0,0,0.1)]">
+					<div className="flex items-center gap-2">
+						<span className="bg-red-200 p-2 rounded-full">
+							<InfoIcon />
+						</span>
+						<h3 className="text-lg md:text-xl font-bold">Descrição</h3>
 					</div>
-
-					<div>
-						<div className="flex gap-2">
-							<Calendar1 />
-							<h3 className="text-md font-medium">Data de Publicação</h3>
-						</div>
-						<p className="border-4 rounded-md p-3 md:p-4 mt-4 border-gray-300 bg-gray-100 font-medium">
-							{data_publicacao}
-						</p>
-					</div>
-				</div>
-
-				{/* DESCRIÇÃO */}
-				<div className="m-5">
-					<div className="flex gap-2">
-						<Info />
-						<h3 className="text-md font-medium">Descrição</h3>
-					</div>
-					<p className="border-4 rounded-md p-3 md:p-4 mt-4 border-gray-300 bg-gray-100 font-medium">
+					<p className="border rounded-xl p-3 md:p-4 lg:p-5 border-gray-300 bg-gray-100 font-medium">
 						{versao.descricao}
 					</p>
-				</div>
+				</section>
 
-				{/* DOCUMENTO */}
-				<div className="m-5">
-					<div className="flex gap-2">
-						<FileText />
-						<h3 className="text-md font-medium">Documento</h3>
+				<section className="flex flex-col gap-5 bg-white rounded-md p-5 shadow-[0px_0px_5px_5px_rgba(0,0,0,0.1)]">
+					<div className="flex items-center gap-2">
+						<span className="bg-red-200 p-2 rounded-full">
+							<History />
+						</span>
+						<h3 className="text-lg md:text-xl font-bold">Data Da Publicação</h3>
 					</div>
+					<p className="border rounded-xl p-3 md:p-4 lg:p-5 border-gray-300 bg-gray-100 font-medium">
+						{data_publicacao}
+					</p>
+				</section>
 
-					<button
-						type="button"
-						onClick={() => setOpenPdf(true)}
-						className="mt-4 w-full md:w-fit bg-blue-600 text-white font-bold px-4 py-2 rounded-md hover:bg-blue-700 cursor-pointer"
-					>
-						Visualizar Documento
-					</button>
-				</div>
-
-				{/* VOLTAR */}
-				<div className="m-5 flex justify-end">
-					<button
-						type="button"
-						className="w-full md:w-auto bg-blue-600 text-white font-bold rounded-md px-4 py-2 hover:bg-blue-700 cursor-pointer"
-						onClick={() => navigate("/visualizarNorma", { state: { norma } })}
-					>
-						VOLTAR
-					</button>
-				</div>
-			</div>
+					<section className="ml-auto space-x-2">
+						<button
+							type="button"
+							onClick={() => setOpenPdf(true)}
+							className="mt-4 w-full md:w-fit bg-red text-white font-bold px-4 py-2 rounded-md hover:bg-red-hover cursor-pointer"
+						>
+							Visualizar Documento
+						</button>
+						<button
+							type="button"
+							className="w-full md:w-auto rounded-md px-4 py-2 border border-black hover:bg-gray-200 cursor-pointer"
+							onClick={() => navigate("/visualizarNorma")}
+						>
+							VOLTAR
+						</button>
+					</section>
+			</section>
 
 			{/* MODAL PDF */}
 			{openPdf && (
@@ -108,7 +85,7 @@ export default function VisualizarVersao() {
 						{/* PDF */}
 						<iframe
 							title="pdf-versao"
-							src={`${import.meta.env.VITE_SERVER_URL}/${versao.path_file}`}
+							src={`${import.meta.env.VITE_SERVER_URL}${versao.path_file}`}
 							className="w-full flex-1"
 						/>
 					</div>

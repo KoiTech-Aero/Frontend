@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
 import z from "zod";
 import { type Tag, TagSchema } from "../types/tags";
-import { tagsMock } from "../utils/tagsMockData";
-
-const tagsMockFormatadas: Tag[] = tagsMock.map((nome, index) => ({
-	id: `mock-${index}`,
-	nome,
-}));
 
 export const useTags = () => {
 	const [tags, setTags] = useState<Tag[]>([]);
@@ -25,16 +19,10 @@ export const useTags = () => {
 
 				if (!parsed.success) throw new Error("Formato inválido");
 
-				const nomesDaApi = tagsJSON.map((t) => t.nome.toLowerCase());
-				const mockSemDuplicatas = tagsMockFormatadas.filter(
-					(t) => !nomesDaApi.includes(t.nome.toLowerCase())
-				);
-
-				setTags([...tagsJSON, ...mockSemDuplicatas])
+				setTags([...tagsJSON])
 			} catch (err) {
 				if (err instanceof Error) {
 					setError(err);
-					setTags(tagsMockFormatadas);
 				}
 			} finally {
 				setLoading(false);

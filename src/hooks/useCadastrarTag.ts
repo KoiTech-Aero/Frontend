@@ -13,7 +13,12 @@ export function useCadastrarTag() {
     return valor
       .trim()
       .toLowerCase()
-      .replace(/\b\w/g, (letra) => letra.toUpperCase());
+      .split(/\s+/)
+      .map(
+        (palavra) =>
+          palavra.charAt(0).toUpperCase() + palavra.slice(1)
+      )
+      .join(" ");
   }
 
   async function handleSubmit(e: React.FormEvent) {

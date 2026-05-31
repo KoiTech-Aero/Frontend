@@ -1,7 +1,6 @@
 import { Eye } from "lucide-react";
-import { useState } from "react";
 import { useNavigate } from "react-router";
-import type { Norma, Versao } from "../types/norma";
+import type { Versao } from "../types/norma";
 import Badge from "./badge";
 
 interface VersaoCardProps {
@@ -10,7 +9,6 @@ interface VersaoCardProps {
 
 export default function VersaoCard({ versao }: VersaoCardProps) {
 	const navigate = useNavigate();
-	const [norma] = useState<Norma>();
 
 	return (
 		<article
@@ -46,7 +44,7 @@ export default function VersaoCard({ versao }: VersaoCardProps) {
 				type="button"
 				onClick={() =>
 					navigate("/visualizarVersao", {
-						state: { norma, versao },
+						state: { versao },
 					})
 				}
 				className="flex items-center gap-1 text-md font-bold text-blue-500 hover:bg-blue-100 p-2 rounded-full w-full md:w-auto md:text-left"
