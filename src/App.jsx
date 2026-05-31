@@ -15,6 +15,7 @@ import VisualizarNorma from "./pages/VisualizarNorma";
 import VisualizarSolicitacoes from "./pages/VisualizarSolicitacoes";
 import VisualizarUsuarios from "./pages/VisualizarUsuarios";
 import VisualizarVersao from "./pages/VisualizarVersao";
+import VisualizarNotas from "./pages/VisualizarNotas";
 import { AuthProvider } from "./providers/AuthProvider";
 import RotaPrivada from "./routes/RotaPrivada";
 
@@ -144,6 +145,17 @@ export default function App() {
                 </RotaPrivada>
               }
             />
+
+            <Route
+              path="/visualizarNotas"
+              element={
+                <RotaPrivada permissao={PERMISSOES.VISUALIZAR_NOTAS}>
+                  <VisualizarNotas />
+                </RotaPrivada>
+              }
+            />
+            
+
           </Route>
         </Routes>
       </BrowserRouter>
