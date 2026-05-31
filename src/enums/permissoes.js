@@ -10,4 +10,5 @@ export const PERMISSOES = Object.freeze({
   VISUALIZAR_SOLICITACOES: "visualizar_solicitacoes",
   SOLICITAR_NOTA: "solicitar_nota",
   CADASTRAR_TAG: "cadastrar_tag",
+  VISUALIZAR_NOTAS: "visualizar_notas",
 });

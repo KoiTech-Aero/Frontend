@@ -40,6 +40,14 @@ export function getItensMenu(usuarioLogado: any): menuItemData[] {
       endpoint: "/solicitarNota",
       permissao: PERMISSOES.SOLICITAR_NOTA,
     },
+
+    {
+      id: 5,
+      icon: ClipboardPlus,
+      children: "Visualizar Notas",
+      endpoint: "/visualizarNotas",
+      permissao: PERMISSOES.VISUALIZAR_NOTAS,
+    }
   ];
 }
 
