@@ -47,7 +47,7 @@ export function getItensMenu(usuarioLogado: any): menuItemData[] {
       children: "Visualizar Notas",
       endpoint: "/visualizarNotas",
       permissao: PERMISSOES.VISUALIZAR_NOTAS,
-    }
+    },
   ];
 }
 
