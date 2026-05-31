@@ -1,4 +1,4 @@
-import { FileText, History, Link as LinkIcon, Plus } from "lucide-react";
+import { FileText, History, Link as LinkIcon, Plus, Tags } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import Badge from "../components/badge";
@@ -31,7 +31,7 @@ export default function VisualizarNorma() {
 			behavior: "smooth",
 		});
 
-		asyncFetch();
+		asyncFetch()
 	}, [normaAtual?.id]);
 
 	if (!normaAtual) return <p>Nenhuma norma recebida</p>;
@@ -83,6 +83,18 @@ export default function VisualizarNorma() {
 							<VersaoCard key={versao.versao_numero} versao={versao} />
 						))}
 					</section>
+				</section>
+				
+				<section className="flex flex-col gap-5 bg-white rounded-md p-5 shadow-[0px_0px_5px_5px_rgba(0,0,0,0.1)]">
+					<div className="flex items-center gap-2">
+						<span className="bg-red-200 p-2 rounded-full">
+							<Tags />
+						</span>
+						<h3 className="text-lg md:text-xl font-bold">Tags</h3>
+					</div>
+					<div className="flex items-center gap-2">
+						{normaAtual.tags?.map(t => <span key={t.id} className="p-2 bg-red text-white rounded-full">{t.nome}</span>)}
+					</div>
 				</section>
 
 				<section className="flex flex-col gap-5 bg-white rounded-md p-5 shadow-[0px_0px_5px_5px_rgba(0,0,0,0.1)]">
