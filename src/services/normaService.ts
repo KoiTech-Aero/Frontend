@@ -76,3 +76,22 @@ export async function atualizarSolicitacao(id: string, status: string) {
 
 	return response.json();
 }
+
+export async function cadastrarNota(data: {
+	text: string;
+	id_norma: string;
+	versao_numero: string;
+	id_usuario: string;
+}) {
+	const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/notas`, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(data),
+	});
+
+	if (!response.ok) {
+		throw new Error("Erro ao cadastrar nota");
+	}
+
+	return response.json();
+}

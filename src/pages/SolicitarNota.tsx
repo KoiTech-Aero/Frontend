@@ -5,7 +5,7 @@ import FormButtons from "../components/form/formButtons";
 import FormSection from "../components/form/formSection";
 import InputField from "../components/form/inputField";
 import TextAreaField from "../components/form/textAreaField";
-import { useCadastrarSolicitacao } from "../hooks/useCadastrarSolicitacao";
+import { useCadastrarNota } from "../hooks/useCadastrarNota";
 import { useNormas } from "../hooks/useNormas";
 
 function NormaModal({
@@ -15,7 +15,7 @@ function NormaModal({
 }: {
   aberto: boolean;
   onFechar: () => void;
-  onSelecionar: (norma: { codigo: string; titulo: string }) => void;
+  onSelecionar: (norma: { codigo: string; titulo: string, versao: string }) => void;
 }) {
   const { normas, loading } = useNormas();
   const [busca, setBusca] = useState("");
@@ -89,7 +89,7 @@ function NormaModal({
                 key={norma.id}
                 type="button"
                 onClick={() => {
-                  onSelecionar({ codigo: norma.codigo, titulo: norma.titulo });
+                  onSelecionar({ codigo: norma.codigo, titulo: norma.titulo, versao: norma.versoes.find((v) => v.status === true)?.versao_numero ?? "" });
                   onFechar();
                 }}
                 className="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-50 transition flex items-start gap-3 group"
@@ -120,9 +120,10 @@ export default function SolicitarNorma() {
     handleSubmit,
     navigate,
     usuarioLogado,
-  } = useCadastrarSolicitacao();
+  } = useCadastrarNota();
 
   const [modalAberto, setModalAberto] = useState(false);
+  const [tituloNormaSelecionada, setTituloNormaSelecionada] = useState("");
 
   const dataAtual = new Date().toLocaleDateString("pt-BR");
 
@@ -132,8 +133,9 @@ export default function SolicitarNorma() {
         aberto={modalAberto}
         onFechar={() => setModalAberto(false)}
         onSelecionar={(norma) => {
-          updateField("codigo_norma", norma.codigo);
-          updateField("titulo", norma.titulo);
+          updateField("id_norma", norma.codigo);
+          updateField("versao_numero", norma.versao);
+          setTituloNormaSelecionada(norma.titulo);
         }}
       />
 
@@ -150,9 +152,9 @@ export default function SolicitarNorma() {
                 {/* Conteúdo da nota */}
                 <TextAreaField
                   label="Conteúdo da Nota"
-                  value={formData.motivo}
+                  value={formData.text}
                   required
-                  onChange={(e) => updateField("motivo", e.target.value)}
+                  onChange={(e) => updateField("text", e.target.value)}
                 />
 
                 {/* Norma atribuída */}
@@ -166,13 +168,13 @@ export default function SolicitarNorma() {
                     onClick={() => setModalAberto(true)}
                     className="w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-left text-sm outline-none transition focus:border-gray-500 focus:ring-2 focus:ring-gray-100 hover:border-gray-400"
                   >
-                    {formData.codigo_norma ? (
+                    {formData.id_norma ? (
                       <span className="flex items-center gap-2 text-gray-800">
                         <CheckCircle size={14} className="text-green-500 flex-shrink-0" />
-                        <span className="font-medium">{formData.codigo_norma}</span>
-                        {formData.titulo && (
+                        <span className="font-medium">{formData.id_norma}</span>
+                        {tituloNormaSelecionada && (
                           <span className="text-gray-400 truncate">
-                            — {formData.titulo}
+                            — {tituloNormaSelecionada}
                           </span>
                         )}
                       </span>
@@ -182,7 +184,7 @@ export default function SolicitarNorma() {
                       </span>
                     )}
                   </button>
-                  {!formData.codigo_norma && (
+                  {!formData.id_norma && (
                     <span className="text-xs text-red-500">Campo obrigatório</span>
                   )}
                 </div>

@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
-type StatusNota = "Pendente" | "Aprovada" | "Rejeitada";
+type StatusNota = "Pendente" | "Aprovado" | "Recusado";
 
 interface Nota {
 	id: string;
@@ -21,8 +21,8 @@ interface AvaliarNotaParams {
 const filtros: Array<{ label: string; value: StatusNota | "todas" }> = [
 	{ label: "Todas", value: "todas" },
 	{ label: "Pendentes", value: "Pendente" },
-	{ label: "Aprovadas", value: "Aprovada" },
-	{ label: "Rejeitadas", value: "Rejeitada" },
+	{ label: "Aprovadas", value: "Aprovado" },
+	{ label: "Rejeitadas", value: "Recusado" },
 ];
 
 function formatarData(data?: string | null) {
@@ -164,9 +164,9 @@ export default function ListarNotas() {
 											<td className="px-6 py-4">
 												<span
 													className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
-														nota.status === "Aprovada"
+														nota.status === "Aprovado"
 															? "bg-green-100 text-green-700"
-															: nota.status === "Rejeitada"
+															: nota.status === "Recusado"
 																? "bg-red-100 text-red-700"
 																: "bg-yellow-100 text-yellow-700"
 													}`}
@@ -210,9 +210,9 @@ export default function ListarNotas() {
 									<div className="flex items-center justify-between mt-1">
 										<span
 											className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
-												nota.status === "Aprovada"
+												nota.status === "Aprovado"
 													? "bg-green-100 text-green-700"
-													: nota.status === "Rejeitada"
+													: nota.status === "Recusado"
 														? "bg-red-100 text-red-700"
 														: "bg-yellow-100 text-yellow-700"
 											}`}
@@ -255,9 +255,9 @@ export default function ListarNotas() {
 
 						<span
 							className={`self-start px-3 py-1 rounded-full text-xs font-medium ${
-								notaSelecionada.status === "Aprovada"
+								notaSelecionada.status === "Aprovado"
 									? "bg-green-100 text-green-700"
-									: notaSelecionada.status === "Rejeitada"
+									: notaSelecionada.status === "Recusado"
 										? "bg-red-100 text-red-700"
 										: "bg-yellow-100 text-yellow-700"
 							}`}
@@ -311,14 +311,14 @@ export default function ListarNotas() {
 						{notaSelecionada.status === "Pendente" && podeAvaliar && (
 							<div className="flex gap-3 pt-2 border-t border-gray-100">
 								<button
-									onClick={() => avaliarNota({ id: notaSelecionada.id, status: "Rejeitada" })}
+									onClick={() => avaliarNota({ id: notaSelecionada.id, status: "Recusado" })}
 									disabled={avaliando}
 									className="flex-1 py-2 rounded-lg border border-red-300 text-red-600 text-sm font-medium hover:bg-red-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
 								>
 									{avaliando ? "Aguarde..." : "Rejeitar"}
 								</button>
 								<button
-									onClick={() => avaliarNota({ id: notaSelecionada.id, status: "Aprovada" })}
+									onClick={() => avaliarNota({ id: notaSelecionada.id, status: "Aprovado" })}
 									disabled={avaliando}
 									className="flex-1 py-2 rounded-lg bg-green-600 text-white text-sm font-medium hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
 								>
