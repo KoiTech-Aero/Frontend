@@ -22,7 +22,7 @@ export function useCadastrarNota() {
 
   function updateField<K extends keyof CadastrarNotaForm>(
     field: K,
-    value: CadastrarNotaForm[K]
+    value: CadastrarNotaForm[K],
   ) {
     setFormData((prev) => ({ ...prev, [field]: value }));
   }
@@ -42,7 +42,7 @@ export function useCadastrarNota() {
       });
 
       alert("Nota cadastrada com sucesso!");
-      navigate("/visualizarNotas");
+      navigate("/pesquisarNorma ");
     } catch (error) {
       console.error(error);
       alert("Erro ao cadastrar nota.");

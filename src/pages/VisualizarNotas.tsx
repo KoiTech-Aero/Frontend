@@ -36,7 +36,7 @@ function formatarData(data?: string | null) {
 
 export default function ListarNotas() {
 	const { usuario: usuarioLogado } = useContext(AuthContext);
-	const podeAvaliar = usuarioLogado?.role === "Gestor";
+	const podeAvaliar = usuarioLogado?.role === "Gestor" || usuarioLogado?.role === "Engenheiro";
 	const [notas, setNotas] = useState<Nota[]>([]);
 	const [carregando, setCarregando] = useState(false);
 	const [erro, setErro] = useState<string | null>(null);
