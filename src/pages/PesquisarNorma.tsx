@@ -8,7 +8,6 @@ export default function PesquisarNorma() {
 	const { normas, error } = useNormas();
 	const [normasFiltradas, setNormasFiltradas] = useState<Norma[]>([]);
 
-	console.log(normasFiltradas)
 	useEffect(() => {
 		setNormasFiltradas(normas);
 		console.log(error);
